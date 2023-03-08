@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MPsE/Wv5kVgLGH6Jf+zZ2N/jABDIiM5e8M+FzT6aL2gk3flB+0JrgbAEqjPcuwxGcf98GwbglOE+IKeypSA2Rg==",
+  "dgSpecHash": "FdS0stNXynoD2Gg1d0DMy6nvAMnG8/S7DKu+RcBdtvlCHnFdh+40dtWuvPRi2bTKLqsbZaF4XR0VTIO66cUg/g==",
   "success": true,
-  "projectFilePath": "C:\\Aaron\\AFour\\FullStackWebApp\\new folde\\AuthSystem\\AuthSystem\\AuthSystem.csproj",
+  "projectFilePath": "C:\\Aaron\\AFour\\FullStackWebApp\\E-commerce_web_app\\AuthSystem\\AuthSystem\\AuthSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Aaron\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Aaron\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

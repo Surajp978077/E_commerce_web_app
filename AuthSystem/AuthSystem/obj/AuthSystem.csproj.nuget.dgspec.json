@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Aaron\\AFour\\FullStackWebApp\\new folde\\AuthSystem\\AuthSystem\\AuthSystem.csproj": {}
+    "C:\\Aaron\\AFour\\FullStackWebApp\\E-commerce_web_app\\AuthSystem\\AuthSystem\\AuthSystem.csproj": {}
   },
   "projects": {
-    "C:\\Aaron\\AFour\\FullStackWebApp\\new folde\\AuthSystem\\AuthSystem\\AuthSystem.csproj": {
+    "C:\\Aaron\\AFour\\FullStackWebApp\\E-commerce_web_app\\AuthSystem\\AuthSystem\\AuthSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Aaron\\AFour\\FullStackWebApp\\new folde\\AuthSystem\\AuthSystem\\AuthSystem.csproj",
+        "projectUniqueName": "C:\\Aaron\\AFour\\FullStackWebApp\\E-commerce_web_app\\AuthSystem\\AuthSystem\\AuthSystem.csproj",
         "projectName": "AuthSystem",
-        "projectPath": "C:\\Aaron\\AFour\\FullStackWebApp\\new folde\\AuthSystem\\AuthSystem\\AuthSystem.csproj",
+        "projectPath": "C:\\Aaron\\AFour\\FullStackWebApp\\E-commerce_web_app\\AuthSystem\\AuthSystem\\AuthSystem.csproj",
         "packagesPath": "C:\\Users\\Aaron\\.nuget\\packages\\",
-        "outputPath": "C:\\Aaron\\AFour\\FullStackWebApp\\new folde\\AuthSystem\\AuthSystem\\obj\\",
+        "outputPath": "C:\\Aaron\\AFour\\FullStackWebApp\\E-commerce_web_app\\AuthSystem\\AuthSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -87,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
