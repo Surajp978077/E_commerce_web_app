@@ -9,9 +9,12 @@ $(document).ready(function () {
         if (clicked == true) {
             $('body').attr('data-bs-theme', 'dark');
             $('#mode i').attr('class', 'bi bi-brightness-high');
+            $('.menu').attr('class', 'menu bi bi-list text-light')
         } else {
             $('body').attr('data-bs-theme', 'light');
             $('#mode i').attr('class', 'bi bi-moon-stars')
+            $('.menu').attr('class', 'menu bi bi-list')
+
         }
     }
     setMode();

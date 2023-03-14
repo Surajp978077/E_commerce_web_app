@@ -8,53 +8,53 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Ecommerce_front-end
 build_property.RootNamespace = Ecommerce_front-end
-build_property.ProjectDir = C:\Users\Suraj.P\Documents\Ecommerce\Ecommerce front-end\
+build_property.ProjectDir = C:\Users\Suraj.P\Documents\Ecommerce1\E_commerce_web_app\Ecommerce front-end\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = true
-build_property.MSBuildProjectDirectory = C:\Users\Suraj.P\Documents\Ecommerce\Ecommerce front-end
+build_property.MSBuildProjectDirectory = C:\Users\Suraj.P\Documents\Ecommerce1\E_commerce_web_app\Ecommerce front-end
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Suraj.P/Documents/Ecommerce/Ecommerce front-end/Views/Actors/Index.cshtml]
+[C:/Users/Suraj.P/Documents/Ecommerce1/E_commerce_web_app/Ecommerce front-end/Views/Actors/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWN0b3JzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Suraj.P/Documents/Ecommerce/Ecommerce front-end/Views/Cinemas/Index.cshtml]
+[C:/Users/Suraj.P/Documents/Ecommerce1/E_commerce_web_app/Ecommerce front-end/Views/Cinemas/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2luZW1hc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Suraj.P/Documents/Ecommerce/Ecommerce front-end/Views/Home/Index.cshtml]
+[C:/Users/Suraj.P/Documents/Ecommerce1/E_commerce_web_app/Ecommerce front-end/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Suraj.P/Documents/Ecommerce/Ecommerce front-end/Views/Home/Privacy.cshtml]
+[C:/Users/Suraj.P/Documents/Ecommerce1/E_commerce_web_app/Ecommerce front-end/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Suraj.P/Documents/Ecommerce/Ecommerce front-end/Views/Movies/Index.cshtml]
+[C:/Users/Suraj.P/Documents/Ecommerce1/E_commerce_web_app/Ecommerce front-end/Views/Movies/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Suraj.P/Documents/Ecommerce/Ecommerce front-end/Views/Producers/Index.cshtml]
+[C:/Users/Suraj.P/Documents/Ecommerce1/E_commerce_web_app/Ecommerce front-end/Views/Producers/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjZXJzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Suraj.P/Documents/Ecommerce/Ecommerce front-end/Views/Shared/Error.cshtml]
+[C:/Users/Suraj.P/Documents/Ecommerce1/E_commerce_web_app/Ecommerce front-end/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Suraj.P/Documents/Ecommerce/Ecommerce front-end/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Suraj.P/Documents/Ecommerce1/E_commerce_web_app/Ecommerce front-end/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Suraj.P/Documents/Ecommerce/Ecommerce front-end/Views/_ViewImports.cshtml]
+[C:/Users/Suraj.P/Documents/Ecommerce1/E_commerce_web_app/Ecommerce front-end/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Suraj.P/Documents/Ecommerce/Ecommerce front-end/Views/_ViewStart.cshtml]
+[C:/Users/Suraj.P/Documents/Ecommerce1/E_commerce_web_app/Ecommerce front-end/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Suraj.P/Documents/Ecommerce/Ecommerce front-end/Views/Shared/_Layout.cshtml]
+[C:/Users/Suraj.P/Documents/Ecommerce1/E_commerce_web_app/Ecommerce front-end/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-8cok14mzgi

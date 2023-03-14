@@ -2779,11 +2779,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Suraj.P\\Documents\\Ecommerce\\Ecommerce front-end\\Ecommerce front-end.csproj",
+      "projectUniqueName": "c:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj",
       "projectName": "Ecommerce front-end",
-      "projectPath": "c:\\Users\\Suraj.P\\Documents\\Ecommerce\\Ecommerce front-end\\Ecommerce front-end.csproj",
+      "projectPath": "c:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj",
       "packagesPath": "C:\\Users\\Suraj.P\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Suraj.P\\Documents\\Ecommerce\\Ecommerce front-end\\obj\\",
+      "outputPath": "c:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Suraj.P\\AppData\\Roaming\\NuGet\\NuGet.Config",

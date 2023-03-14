@@ -10340,19 +10340,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Yasin.H\\.nuget\\packages\\": {}
+    "C:\\Users\\Suraj.P\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\WD\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
+      "projectUniqueName": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
       "projectName": "SimpleLoginRegistration",
-      "projectPath": "D:\\WD\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
-      "packagesPath": "C:\\Users\\Yasin.H\\.nuget\\packages\\",
-      "outputPath": "D:\\WD\\SimpleLoginRegistration\\obj\\",
+      "projectPath": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
+      "packagesPath": "C:\\Users\\Suraj.P\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\SimpleLoginRegistration\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Yasin.H\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Suraj.P\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
