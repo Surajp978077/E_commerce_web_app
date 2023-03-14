@@ -1,0 +1,21 @@
+using Ecommerce_front_end.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+namespace Ecommerce_front_end.Controllers
+{
+    public class CinemasController : Controller
+    {
+        private readonly AppDbContext _context;
+        public CinemasController(AppDbContext context)
+        {
+            _context=context;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var CinemasController= await _context.Cinemas.ToListAsync();
+            return View(CinemasController);
+        }
+        
+    }
+}
