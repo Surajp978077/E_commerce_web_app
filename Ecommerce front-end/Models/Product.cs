@@ -14,19 +14,18 @@ namespace Ecommerce_front_end.Models
         public String ImageURL { get; set; }
         public DateTime StartDate { get; set; }
         public int ItemCount { get; set; }
-        public Category Category { get; set; }
+
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; } // To 
 
         //Relationships
-        public List<Actor_Movie> Actors_Movies { get; set; }
+        public List<ProductVendor> ProductVendors { get; set; }
 
-        //Cinema
         public int VendorId { get; set; }
-        [ForeignKey("VendorId")]
+        
         public Vendor Vendor { get; set; }
 
-        //Producer
-        public int ProducerId { get; set; }
-        [ForeignKey("ProducerId")]
-        public Producer Producer { get; set; }
+
     }
 }

@@ -1,4 +1,8 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Ecommerce_front_end.Data;
+using System.Collections.Generic;
+
 
 namespace Ecommerce_front_end.Models
 {
@@ -20,6 +24,10 @@ namespace Ecommerce_front_end.Models
         public string PhoneNumber { get; set; }
 
         //Relationships
-        public List<Actor_Movie> Actors_Movies { get; set; }
+        public List<ProductVendor> ProductVendors { get; set; }
+
+
+
+
     }
 }

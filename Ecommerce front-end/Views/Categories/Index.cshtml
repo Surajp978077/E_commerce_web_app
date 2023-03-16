@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Index";
+}
+
+@model ICollection<Category>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+
+            <th span="col">Category Name</th>
+            <th span="col">Description</th>
+            <th span="col">Parent Category</th>
+            <th span="col">Child Categories</th>
+            <th span="col">Product Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Name</td>
+                <td>@category.Description</td>
+                <td>@(category.ParentCategory != null ? category.ParentCategory.Name : "-")</td>
+                <td>
+                    @if (category.ChildCategories != null && category.ChildCategories.Count > 0)
+                    {
+                        <ul>
+                            @foreach (var childCategory in category.ChildCategories)
+                            {
+                                <li>@childCategory.Name</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+
+                    }
+                </td>
+                <td>@category.ProductCount</td>
+            </tr>
+        }
+    </tbody>
+</table>
