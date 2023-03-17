@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6EiU9nJ/xpiNU22EEvI1jc99BvuLytp/R4PvG4d/Btw=",
+  "Hash": "zdqGAL4XF7cz+7Gsfz7euysuMyAsIH6IzbIqqOJLIF8=",
   "Source": "Ecommerce front-end",
   "BasePath": "_content/Ecommerce front-end",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "Ecommerce front-end\\wwwroot",
       "Source": "Ecommerce front-end",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Ecommerce front-end.styles.css",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Ecommerce front-end.styles.css",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "Ecommerce front-end.styles.css",
       "AssetKind": "All",
@@ -31,13 +31,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Ecommerce front-end.styles.css"
+      "OriginalItemSpec": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Ecommerce front-end.styles.css"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Ecommerce front-end.bundle.scp.css",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Ecommerce front-end.bundle.scp.css",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "Ecommerce front-end.bundle.scp.css",
       "AssetKind": "All",
@@ -48,13 +48,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Ecommerce front-end.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Ecommerce front-end.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\css\\site.css",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\css\\site.css",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -68,10 +68,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\favicon.ico",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\favicon.ico",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -85,10 +85,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\js\\site.js",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\js\\site.js",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "js/site.js",
       "AssetKind": "All",
@@ -102,10 +102,10 @@
       "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "AssetKind": "All",
@@ -119,10 +119,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "AssetKind": "All",
@@ -136,10 +136,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE.txt",
       "AssetKind": "All",
@@ -153,10 +153,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.js",
       "AssetKind": "All",
@@ -170,10 +170,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.min.js",
       "AssetKind": "All",
@@ -187,10 +187,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.js",
       "AssetKind": "All",
@@ -204,10 +204,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.min.js",
       "AssetKind": "All",
@@ -221,10 +221,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery-validation/LICENSE.md",
       "AssetKind": "All",
@@ -238,10 +238,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery/dist/jquery.js",
       "AssetKind": "All",
@@ -255,10 +255,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery/dist/jquery.min.js",
       "AssetKind": "All",
@@ -272,10 +272,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery/dist/jquery.min.map",
       "AssetKind": "All",
@@ -289,10 +289,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Identity": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "SourceId": "Ecommerce front-end",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\wwwroot\\",
       "BasePath": "_content/Ecommerce front-end",
       "RelativePath": "lib/jquery/LICENSE.txt",
       "AssetKind": "All",

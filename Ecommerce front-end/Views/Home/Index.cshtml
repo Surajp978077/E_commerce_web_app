@@ -1,8 +1,73 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model IEnumerable<Product>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+<div class="d-flex justify-content-center m-5 p-5">
+    <div id="carouselExampleAutoplaying" class="carousel slide rounded-end" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active " data-bs-interval="2000"> 
+                <img src="https://i.pcmag.com/imagery/reviews/03POP0TjDjuXonJXI16Omn2-1.fit_lim.size_840x473.v1663720055.jpg"
+                    class="d-block w-100 " style="max-width:800px; max-height: 500px;">
+            </div>
+            <div class="carousel-item" data-bs-interval="2000">
+                <img src="https://www.cnet.com/a/img/resize/cb4f65b0a78c0d86ea0aeb0a95e9461dcc2f96b3/hub/2022/03/30/e841545d-e55c-47fc-b24a-003bf14e58c8/oneplus-10-pro-cnet-review-12.jpg?auto=webp"
+                    class="d-block w-100" style="max-width:800px; max-height: 500px;">
+            </div>
+            <div class="carousel-item" data-bs-interval="2000">
+                <img src="https://i.pcmag.com/imagery/roundups/07ml3nh3QrzTLZ9UycfQQB2-49..v1668971764.jpg"
+                    class="d-block w-100" style="max-width:800px; max-height: 500px;">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 </div>
+
+<!-- Products -->
+<section>
+  <div class="container my-5">
+    <header class="mb-4">
+      <h3>New products</h3>
+    </header>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            
+        
+      <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+        <a asp-controller="Products" asp-action="details" asp-route-id="@item.Id">
+        <div class="shadow-lg card w-100 my-2 shadow-2-strong">
+          <img src="@item.ImageURL" class="card-img-top" style="aspect-ratio: 1 / 1" />
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">@item.Name</h5>
+            <p class="card-text">@item.Price.ToString("c")</p>
+            <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
+              <a href="#!" class="btn btn-primary shadow-0 me-1">Add to cart</a>
+              <a href="#!" class="btn btn-light border px-2 pt-2 icon-hover"><i class="fas fa-heart fa-lg text-secondary px-1"></i></a>
+            </div>
+          </div>
+        </div>
+        
+      </a>
+      </div>
+      }
+</section>

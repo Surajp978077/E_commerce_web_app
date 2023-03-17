@@ -22,6 +22,10 @@ namespace Ecommerce_front_end.Data
                 .WithMany(c => c.ChildCategories)
                 .HasForeignKey(c => c.ParentCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Category>()
+            .HasMany(c => c.ChildCategories)
+            .WithOne(p => p.ParentCategory)
+            .HasForeignKey(f => f.ParentCategoryId);
 
             modelBuilder.Entity<ProductVendor>()
                 .HasKey(pv => new { pv.ProductId, pv.VendorId });
@@ -38,6 +42,7 @@ namespace Ecommerce_front_end.Data
                 .WithMany(v => v.ProductVendors)
                 .HasForeignKey(pv => pv.VendorId)
                 .OnDelete(DeleteBehavior.NoAction);
+
 
 
 

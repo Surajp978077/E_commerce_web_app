@@ -2779,11 +2779,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj",
+      "projectUniqueName": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj",
       "projectName": "Ecommerce front-end",
-      "projectPath": "c:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj",
+      "projectPath": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj",
       "packagesPath": "C:\\Users\\Suraj.P\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\Ecommerce front-end\\obj\\",
+      "outputPath": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Suraj.P\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2848,7 +2848,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.406\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.407\\RuntimeIdentifierGraph.json"
       }
     }
   }

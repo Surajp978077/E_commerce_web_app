@@ -17,7 +17,7 @@ namespace Ecommerce_frontend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    ParentCategoryId = table.Column<int>(type: "int", nullable: false)
+                    ParentCategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -59,8 +59,7 @@ namespace Ecommerce_frontend.Migrations
                     ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ItemCount = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    VendorId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,12 +69,6 @@ namespace Ecommerce_frontend.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Products_Vendors_VendorId",
-                        column: x => x.VendorId,
-                        principalTable: "Vendors",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -112,11 +105,6 @@ namespace Ecommerce_frontend.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_VendorId",
-                table: "Products",
-                column: "VendorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductVendors_VendorId",
                 table: "ProductVendors",
                 column: "VendorId");
@@ -131,10 +119,10 @@ namespace Ecommerce_frontend.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Vendors");
 
             migrationBuilder.DropTable(
-                name: "Vendors");
+                name: "Categories");
         }
     }
 }

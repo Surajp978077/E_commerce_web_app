@@ -28,6 +28,5 @@ namespace Ecommerce_front_end.Models
 
 
 
-
     }
 }

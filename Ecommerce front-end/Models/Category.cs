@@ -20,11 +20,11 @@ namespace Ecommerce_front_end.Models
         public int? ParentCategoryId { get; set; }
 
         [ForeignKey("ParentCategoryId")]
-        public virtual Category ParentCategory { get; set; }
+        public Category? ParentCategory { get; set; }
 
-        public virtual ICollection<Category> ChildCategories { get; set; }
+        public List<Category> ChildCategories { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual List<Product> Products { get; set; }
 
         [NotMapped]
         public int ProductCount => Products?.Count() ?? 0;

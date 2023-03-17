@@ -22,10 +22,5 @@ namespace Ecommerce_front_end.Models
         //Relationships
         public List<ProductVendor> ProductVendors { get; set; }
 
-        public int VendorId { get; set; }
-        
-        public Vendor Vendor { get; set; }
-
-
     }
 }

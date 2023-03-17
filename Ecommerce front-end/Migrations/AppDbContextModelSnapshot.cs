@@ -41,7 +41,6 @@ namespace Ecommerce_frontend.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("ParentCategoryId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("CategoryId");
@@ -83,14 +82,9 @@ namespace Ecommerce_frontend.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("VendorId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("VendorId");
 
                     b.ToTable("Products");
                 });
@@ -149,8 +143,7 @@ namespace Ecommerce_frontend.Migrations
                     b.HasOne("Ecommerce_front_end.Models.Category", "ParentCategory")
                         .WithMany("ChildCategories")
                         .HasForeignKey("ParentCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ParentCategory");
                 });
@@ -163,15 +156,7 @@ namespace Ecommerce_frontend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ecommerce_front_end.Models.Vendor", "Vendor")
-                        .WithMany()
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Category");
-
-                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("Ecommerce_front_end.Models.ProductVendor", b =>

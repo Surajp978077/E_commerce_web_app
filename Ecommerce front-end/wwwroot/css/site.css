@@ -16,3 +16,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.fixed {
+  position: fixed;
+  top: 50px;
+  left: 95%;
+  z-index: 3;
+
+  /* align-self: flex-end; */
+}
