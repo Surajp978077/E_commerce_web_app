@@ -25,3 +25,11 @@ body {
 
   /* align-self: flex-end; */
 }
+
+.card:hover {
+  transform: translate(-5px, -5px);
+  /* move the card 5px towards top-left */
+  transition: transform 0.3s ease;
+  /* add a smooth transition effect */
+
+}
