@@ -63,44 +63,44 @@ namespace Ecommerce_front_end.Data
                     context.SaveChanges();
                 }
 
+                var parentCategory = new Category();
+                var mobileCategory = new Category();
+                var chargerCategory = new Category();
 
-
-                // Create parent category
-                var parentCategory = new Category
+                if (!context.Categories.Any())
                 {
+                    // Create parent category
 
-                    Name = "Mobiles & Accessories",
-                    Description = "Category for mobiles and accessories"
-                };
 
-                context.Categories.Add(parentCategory);
+                    parentCategory.Name = "Mobiles & Accessories";
+                    parentCategory.Description = "Category for mobiles and accessories";
 
-                // Create child category - Mobile
-                var mobileCategory = new Category
-                {
-                    Name = "Mobile",
-                    Description = "Category for mobile phones",
-                    ParentCategory = parentCategory
-                };
+                    context.Categories.Add(parentCategory);
 
-                context.Categories.Add(mobileCategory);
+                    // Create child category - Mobile
 
-                // Create child category - Charger
-                var chargerCategory = new Category
-                {
-                    Name = "Charger",
-                    Description = "Category for mobile phone chargers",
-                    ParentCategory = parentCategory
+                    mobileCategory.Name = "Mobile";
+                    mobileCategory.Description = "Category for mobile phones";
+                    mobileCategory.ParentCategory = parentCategory;
 
-                };
+                    context.Categories.Add(mobileCategory);
 
-                context.Categories.Add(chargerCategory);
+                    // Create child category - Charger
 
-                context.SaveChanges();
+                    chargerCategory.Name = "Charger";
+                    chargerCategory.Description = "Category for mobile phone chargers";
+                    chargerCategory.ParentCategory = parentCategory;
 
 
 
-                //Actors
+                    context.Categories.Add(chargerCategory);
+
+                    context.SaveChanges();
+                }
+
+
+                //Products
+
                 if (!context.Products.Any())
                 {
                     context.Products.AddRange(new List<Product>()
@@ -149,7 +149,7 @@ namespace Ecommerce_front_end.Data
 
 
 
-                //Producers
+                //ProductVendors
                 if (!context.ProductVendors.Any())
                 {
                     context.ProductVendors.AddRange(new List<ProductVendor>()
