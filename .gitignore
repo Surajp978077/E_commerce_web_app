@@ -1,0 +1,7 @@
+/.vscode
+/AuthSystem/.vs
+/SimpleLoginRegistration/.vscode
+/SimpleLoginRegistration/bin
+/SimpleLoginRegistration/obj
+*obj
+*bin
