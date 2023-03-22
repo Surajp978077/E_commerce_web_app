@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Ecommerce_front_end.Data;
+using Ecommerce_front_end.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,23 +15,28 @@ namespace Ecommerce_front_end.Controllers
     {
         private readonly ILogger<VendorsController> _logger;
 
-        public VendorsController(ILogger<VendorsController> logger)
+        // public VendorsController(ILogger<VendorsController> logger)
+        // {
+        //     _logger = logger;
+        // }
+
+        private readonly IVendorsService _service;
+        public VendorsController(IVendorsService service)
         {
-            _logger = logger;
+            _service = service;
         }
 
-        private readonly AppDbContext _context;
-        public VendorsController(AppDbContext context)
+        public async Task<IActionResult> Index()
         {
-            _context = context;
-        }
-
-        public IActionResult Index()
-        {
-            var ProductsSold= _context.Vendors.ToList();
+            var ProductsSold = await _service.GetAll();
             return View(ProductsSold);
         }
-        
+
+        public async Task<IActionResult> Products()
+        {
+
+        }
+
 
         // [HttpPost]
         // public IActionResult AddProduct(int vendorId, int productId)
