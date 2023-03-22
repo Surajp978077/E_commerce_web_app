@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj": {}
+    "D:\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj": {
+    "D:\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
+        "projectUniqueName": "D:\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
         "projectName": "SimpleLoginRegistration",
-        "projectPath": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
+        "projectPath": "D:\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
         "packagesPath": "C:\\Users\\Suraj.P\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\SimpleLoginRegistration\\obj\\",
+        "outputPath": "D:\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Suraj.P\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -86,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.406\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.407\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "C/mmYmhftxxH3GISkGyS7SbjaWsiAE8oW764rDkt8hyLssUxkCIqmaSQBnXG25pqOntvhdV1nmcy8q8rekrouw==",
+  "dgSpecHash": "LshH18DtVW50x0S5jtIGJbtrDxitEp+XMkcpKTJSFqL02g2kQlZZjAdZLpLrwy69qbpamkTq/UK+nRIV6U6DMA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Suraj.P\\Documents\\Ecommerce1\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
+  "projectFilePath": "D:\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Suraj.P\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Suraj.P\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

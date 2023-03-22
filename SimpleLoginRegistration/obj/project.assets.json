@@ -10345,11 +10345,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
+      "projectUniqueName": "d:\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
       "projectName": "SimpleLoginRegistration",
-      "projectPath": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
+      "projectPath": "d:\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\SimpleLoginRegistration.csproj",
       "packagesPath": "C:\\Users\\Suraj.P\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\obj\\",
+      "outputPath": "d:\\Ecommerce\\E_commerce_web_app\\SimpleLoginRegistration\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Suraj.P\\AppData\\Roaming\\NuGet\\NuGet.Config",

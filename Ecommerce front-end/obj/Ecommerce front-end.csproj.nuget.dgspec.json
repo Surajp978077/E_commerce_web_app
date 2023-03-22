@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj": {}
+    "d:\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj": {
+    "d:\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj",
+        "projectUniqueName": "d:\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj",
         "projectName": "Ecommerce front-end",
-        "projectPath": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj",
+        "projectPath": "d:\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\Ecommerce front-end.csproj",
         "packagesPath": "C:\\Users\\Suraj.P\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Suraj.P\\Documents\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\obj\\",
+        "outputPath": "d:\\Ecommerce\\E_commerce_web_app\\Ecommerce front-end\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Suraj.P\\AppData\\Roaming\\NuGet\\NuGet.Config",
