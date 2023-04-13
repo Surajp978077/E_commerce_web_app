@@ -49,6 +49,12 @@ namespace AuthJwtDbApi.Controllers
                 new Claim("id", user.UserId.ToString()),
                 new Claim("Email", user.Email),
                 new Claim("UserName", user.UserName),
+                new Claim("Phone", user.Phone),
+                new Claim("AddressId", user.AddressId.ToString()),
+                new Claim("Street", user.Address.Street),
+                new Claim("City", user.Address.City),
+                new Claim("State", user.Address.State),
+                new Claim("Pincode", user.Address.Pincode),
                 //new Claim("Password", user.Password), //ency
                 new Claim(ClaimTypes.Role, user.Role)
             };
@@ -75,9 +81,13 @@ namespace AuthJwtDbApi.Controllers
             }
         }
 
+
+
         private async Task<UserInfo?> GetUser(string Email)
         {
-            return await _context.UserInfo.FirstOrDefaultAsync(u => u.Email == Email);
+            return await _context.UserInfo
+                .Include(u => u.Address)
+                .FirstOrDefaultAsync(u => u.Email == Email);
         }
     }
 }
