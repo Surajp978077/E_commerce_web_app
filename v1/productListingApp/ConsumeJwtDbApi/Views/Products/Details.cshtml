@@ -1,0 +1,81 @@
+﻿@model ConsumeJwtDbApi.Models.Products
+@inject IHttpContextAccessor HttpContextAccessor
+
+<div>
+    <h4>Product Specifications</h4>
+    <hr />
+    <dl >
+        <div class="col-lg-3 col-md-6 col-sm-6 d-flex">
+            <div class="shadow-lg card w-100 my-2 shadow-2-strong">
+                <img src="@Html.DisplayFor(model => model.ImageURL)" class="card-img-top" style="aspect-ratio: 1 / 1" />
+            </div>
+        </div> <br/>
+        <div class="row">
+             @if((HttpContextAccessor.HttpContext?.Session?.GetString("UserRole")) == "Admin")
+            {
+                <dt class="col-sm-1">
+                    @Html.DisplayNameFor(model => model.ImageURL)
+                </dt>
+                <dd class="col-sm-11">
+                    @Html.DisplayFor(model => model.ImageURL)
+                </dd>
+
+                <dt class="col-sm-1">
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </dt>
+                <dd class="col-sm-11">
+                    @Html.DisplayFor(model => model.StartDate)
+                </dd>
+            }
+            
+            @if((HttpContextAccessor.HttpContext?.Session?.GetString("UserRole")) == "Admin")
+            {
+                <dt class="col-sm-1">
+                @Html.DisplayNameFor(model => model.ProdId)
+                </dt>
+                <dd class="col-sm-11">
+                    @Html.DisplayFor(model => model.ProdId)
+                </dd>
+            }
+            
+            <dt class="col-sm-1">
+                @Html.DisplayNameFor(model => model.ProdName)
+            </dt>
+            <dd class="col-sm-11">
+                @Html.DisplayFor(model => model.ProdName)
+            </dd>
+            <dt class="col-sm-1">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-11">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-1">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class="col-sm-11">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            
+            
+            <dt class="col-sm-1">
+                @Html.DisplayNameFor(model => model.StockQty)
+            </dt>
+            <dd class="col-sm-11">
+                @Html.DisplayFor(model => model.StockQty)
+            </dd>
+        </div>
+       
+    </dl>
+</div>
+
+@if((HttpContextAccessor.HttpContext?.Session?.GetString("UserRole")) == "Admin")
+{
+    <div>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ProdId }) |
+        <a asp-action="Index">View All Products</a>
+    </div>
+}
+
+<a href="#!" class="btn btn-light border px-3 pt-2 icon-hover m-2" data-toggle="tooltip" data-placement="top" title="Add item to cart"><i class="bi bi-cart4" style="font-size: 2rem;"></i></a>
+<a href="#!" class="btn btn-light border px-3 pt-2 icon-hover m-5" data-toggle="tooltip" data-placement="top" title="Add to wishlist"><i class="bi bi-heart text-danger " style="font-size: 2rem;"></i></a>

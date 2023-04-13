@@ -1,0 +1,35 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.fixed {
+  position: fixed;
+  top: 50px;
+  left: 95%;
+  z-index: 3;
+
+  /* align-self: flex-end; */
+}
+
+.card:hover {
+  transform: translate(-5px, -5px);
+  /* move the card 5px towards top-left */
+  transition: transform 0.3s ease;
+  /* add a smooth transition effect */
+
+}
