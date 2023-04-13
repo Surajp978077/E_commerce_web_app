@@ -9,7 +9,7 @@ export default function Card() {
                 <Info Name="Laura smith" Bio="Frontend Developer" />
 
             </div>
-            <div id="card">
+            {/* <div id="card">
                 <Info Name={name} Bio="Frontend Developer" />
 
             </div>
@@ -48,7 +48,7 @@ export default function Card() {
             <div id="card">
                 <Info Name={3} Bio="Frontend Developer" />
 
-            </div>
+            </div> */}
         </div>
     )
 }
