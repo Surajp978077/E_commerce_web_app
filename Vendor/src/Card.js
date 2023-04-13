@@ -17,6 +17,38 @@ export default function Card() {
                 <Info Name={3} Bio="Frontend Developer" />
 
             </div>
+            <div id="card">
+                <Info Name={3} Bio="Frontend Developer" />
+
+            </div>
+            <div id="card">
+                <Info Name={3} Bio="Frontend Developer" />
+
+            </div>
+            <div id="card">
+                <Info Name={3} Bio="Frontend Developer" />
+
+            </div>
+            <div id="card">
+                <Info Name={3} Bio="Frontend Developer" />
+
+            </div>
+            <div id="card">
+                <Info Name={3} Bio="Frontend Developer" />
+
+            </div>
+            <div id="card">
+                <Info Name={3} Bio="Frontend Developer" />
+
+            </div>
+            <div id="card">
+                <Info Name={3} Bio="Frontend Developer" />
+
+            </div>
+            <div id="card">
+                <Info Name={3} Bio="Frontend Developer" />
+
+            </div>
         </div>
     )
 }
