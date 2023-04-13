@@ -5,13 +5,15 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
+import { Link } from 'react-router-dom'
 
 
-export default function Menu() {
+export default function NavBar() {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
 
     return (
         <>
@@ -42,13 +44,13 @@ export default function Menu() {
             </Navbar>
 
 
-            <Offcanvas style={{ background: 'linear-gradient(#2e005f, #4e0353)', opacity: 2 }} show={show} onHide={handleClose}>
+            <Offcanvas style={{ background: 'linear-gradient(#2e005f, #4e0353)' }} show={show} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
                     Ecommerce
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    Some text as placeholder. In real life you can have the elements you
-                    have chosen. Like, text, images, lists, etc.
+                    <Link to={'/'} onClick={handleClose}>Home</Link>
+                    <Link to={'/about'} onClick={handleClose}>About</Link>
                 </Offcanvas.Body>
             </Offcanvas >
         </>

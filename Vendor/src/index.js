@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Navbar from './Components/Navbar'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Card from './Card';
 import App from './App'
 
 // const Abc = (
@@ -15,8 +13,8 @@ import App from './App'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Navbar />
-    <Card />
+
+
     <App />
   </React.StrictMode >
 );

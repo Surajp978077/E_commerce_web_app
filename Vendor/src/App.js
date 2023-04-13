@@ -1,24 +1,30 @@
 
 import './App.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import About from './Components/About';
+import Root from './Components/Root';
+import Card from './Card';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Root />,
+    children: [
+      {
+        path: '/',
+        element: <Card />
+      },
+      {
+        path: '/about',
+        element: <About />
+      },
+    ]
+  }
+])
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router} />
   );
 }
 

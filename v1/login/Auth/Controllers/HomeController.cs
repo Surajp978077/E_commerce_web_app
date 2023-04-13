@@ -64,30 +64,30 @@ public class HomeController : Controller
     }
 
 
-/*
-public async Task<IActionResult> Login(string clientId)
-    {
-        //ViewBag.redirect = redirect;  //
-        ViewBag.clientId = HttpUtility.UrlEncode(clientId);
-        //StringContent stringContent = new StringContent(JsonConvert.SerializeObject(), Encoding.UTF8, "application/json"); // System.Security.Permissions NuGet package required for this to work. Commented method below works without NuGet package.
+    /*
+    public async Task<IActionResult> Login(string clientId)
+        {
+            //ViewBag.redirect = redirect;  //
+            ViewBag.clientId = HttpUtility.UrlEncode(clientId);
+            //StringContent stringContent = new StringContent(JsonConvert.SerializeObject(), Encoding.UTF8, "application/json"); // System.Security.Permissions NuGet package required for this to work. Commented method below works without NuGet package.
 
-        //using (var response = await HttpClient.GetAsync("https://localhost:7240/api/UserInfo/RedirectUrl?clientId=" + clientId))
-         using (var httpClientHandler = new HttpClientHandler())
-        {
-        httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator; // (NOT SECURE) connect to a server with a certificate that shouldn't be validated
-        var response = string.Empty;
-        using (var client = new HttpClient(httpClientHandler))
-        {
-            HttpResponseMessage result = await client.GetAsync("https://localhost:7240/api/UserInfo/RedirectUrl?clientId=" + clientId);
-            if (result.IsSuccessStatusCode)
+            //using (var response = await HttpClient.GetAsync("https://localhost:7240/api/UserInfo/RedirectUrl?clientId=" + clientId))
+             using (var httpClientHandler = new HttpClientHandler())
             {
-                ViewBag.redirect = await result.Content.ReadAsStringAsync();
+            httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator; // (NOT SECURE) connect to a server with a certificate that shouldn't be validated
+            var response = string.Empty;
+            using (var client = new HttpClient(httpClientHandler))
+            {
+                HttpResponseMessage result = await client.GetAsync("https://localhost:7240/api/UserInfo/RedirectUrl?clientId=" + clientId);
+                if (result.IsSuccessStatusCode)
+                {
+                    ViewBag.redirect = await result.Content.ReadAsStringAsync();
+                }
             }
+            }
+            return View();
         }
-        }
-        return View();
-    }
-*/
+    */
 
 
     // public IActionResult Login(string redirect)
@@ -97,26 +97,26 @@ public async Task<IActionResult> Login(string clientId)
     //     return View();
     // }
 
-[AllowAnonymous]
-public async Task<IActionResult> Login(string clientId)
-{
-    ViewBag.clientId = HttpUtility.UrlEncode(clientId);
-
-    using (var httpClientHandler = new HttpClientHandler())
+    [AllowAnonymous]
+    public async Task<IActionResult> Login(string clientId)
     {
-        httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-        using (var client = new HttpClient(httpClientHandler))
+        ViewBag.clientId = HttpUtility.UrlEncode(clientId);
+
+        using (var httpClientHandler = new HttpClientHandler())
         {
-            var result = await client.GetAsync($"https://localhost:7240/api/UserInfo/RedirectUrl?clientId={clientId}");
-            if (result.IsSuccessStatusCode)
+            httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            using (var client = new HttpClient(httpClientHandler))
             {
-                ViewBag.redirect = await result.Content.ReadAsStringAsync();
+                var result = await client.GetAsync($"https://localhost:7240/api/UserInfo/RedirectUrl?clientId={clientId}");
+                if (result.IsSuccessStatusCode)
+                {
+                    ViewBag.redirect = await result.Content.ReadAsStringAsync();
+                }
             }
         }
+
+        return View();
     }
-    
-    return View();
-}
 
 
     public async Task<IActionResult> LoginUser(UserDto user, string redirect)
@@ -142,7 +142,11 @@ public async Task<IActionResult> Login(string clientId)
                     }
                     HttpContext.Session.SetString("JWToken", token);
 
-                    HttpContext.Session.SetString("Email", user.Email);
+                    if (user != null && !string.IsNullOrEmpty(user.Email))
+                    {
+                        HttpContext.Session.SetString("Email", user.Email);
+                    }
+                    // HttpContext.Session.SetString("Email", user.Email);
 
                     // Setting role in HttpContext.Session to use for conditionally rendering HTML elements.
 
