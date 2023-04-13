@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#navbar {
+  background-color: #b0b0b5;
+}
+
+#menu-collapse-button {
+  position: relative;
+  /* left: -70px; */
+  margin-right: 10px;
+}
+
+#logout {
+  /* margin-left: 10px; */
+}
+
+.offcanvas {
+  background-image: linear-gradient(#2e005f,#4e0353);
+}

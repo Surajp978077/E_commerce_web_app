@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
-import TokenHandler from './TokenHandler';
+// import TokenHandler from './Components/TokenHandler';
+import Menu from './Components/Menu';
 
 function App() {
   return (
     <>
-      <TokenHandler />
+      <Menu />
+      {/* <TokenHandler /> */}
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
