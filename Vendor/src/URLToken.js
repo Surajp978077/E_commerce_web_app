@@ -1,5 +1,5 @@
 // import { useEffect } from 'react';
-import jwtDecode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 
 function URLToken() {
   const clientID = "ff84a00f-99ab-4f81-9f52-26df485a9dcf"
@@ -13,19 +13,19 @@ function URLToken() {
   else {
     token = localStorage.getItem('token');
     if (!token) {
-      window.location.href = 'https://localhost:7140/Home/Login/?redirectUrl=' + encodeURIComponent(window.location.href);
+      // window.location.href = 'https://localhost:7140/Home/Login/?redirectUrl=' + encodeURIComponent(window.location.href);
       window.location.href = 'https://localhost:7085/?ClientId=' + clientID;
     }
   }
   // console.log(decodedToken.Email);
   // console.log(decodedToken);
-  // }, [token]) 
+  // }, [token])
 
-  if (token) {
-    const decodedToken = jwtDecode(token);
-    return (<h4>{decodedToken.Email}</h4>);
-  }
-  console.log(token)
+  // if (token) {
+  //   const decodedToken = jwtDecode(token);
+  //   return (<h4>{decodedToken.Email}</h4>);
+  // }
+  // console.log(token)
   // console.log(decodedToken)
   return null;
 

@@ -6,6 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom'
+import jwtDecode from 'jwt-decode';
 
 
 export default function NavBar() {
@@ -14,6 +15,14 @@ export default function NavBar() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    var token = localStorage.getItem('token');
+    const decodedToken = jwtDecode(token);
+
+    const clientID = "ff84a00f-99ab-4f81-9f52-26df485a9dcf"
+    function logout() {
+        localStorage.removeItem('token');
+        window.location.href = 'https://localhost:7085/?ClientId=' + clientID;
+    }
 
     return (
         <>
@@ -22,14 +31,18 @@ export default function NavBar() {
             <Navbar id="navbar" variant="light" sticky="top" >
                 <Container fluid>
                     <Button id='menu-collapse-button' variant="outline-dark" onClick={handleShow}>
-                        <i class="bi bi-list"></i>
+                        <i className="bi bi-list"></i>
                     </Button>
-                    <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+                    <Link to={'/'}>
+                        <Navbar.Brand> Navbar </Navbar.Brand>
+                    </Link>
                     <Nav className="me-auto">
-                        <Nav.Link href="#features">Features</Nav.Link>
+                        {/* <Nav.Link href="#features">Features</Nav.Link> */}
 
 
                     </Nav>
+                    <Link to={'/Profile'}>
+                        <Button variant="outline-success me-2">Welcome, {decodedToken.UserName}</Button></Link>
                     <Form className="d-flex">
                         <Form.Control
                             type="search"
@@ -39,7 +52,7 @@ export default function NavBar() {
                         />
                         <Button variant="outline-success">Search</Button>
                     </Form>
-                    <Button className='ms-3' variant="danger">Log-out</Button>
+                    <Button className='ms-3' variant="danger" onClick={logout}>Log-out</Button>
                 </Container>
             </Navbar>
 
@@ -49,8 +62,8 @@ export default function NavBar() {
                     Ecommerce
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    <Link to={'/'} onClick={handleClose}>Home</Link>
-                    <Link to={'/about'} onClick={handleClose}>About</Link>
+                    <Link to={'/'} onClick={handleClose}><Button variant="light" >Home</Button></Link><br />
+                    <Link to={'/Profile'} onClick={handleClose}><Button variant="light" className='mt-3'>Profile</Button></Link>
                 </Offcanvas.Body>
             </Offcanvas >
         </>

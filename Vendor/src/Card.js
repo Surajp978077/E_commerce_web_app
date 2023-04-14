@@ -1,12 +1,15 @@
 import Info from "./Components/Info";
-
+import jwtDecode from 'jwt-decode';
 
 export default function Card() {
-    let name = "laura"
+    var token = localStorage.getItem('token');
+
+    const decodedToken = jwtDecode(token);
+    console.log(decodedToken)
     return (
         <div id='flexbox'>
             <div id="card">
-                <Info Name="Laura smith" Bio="Frontend Developer" />
+                <Info Name={decodedToken.UserName} Email={decodedToken.Email} Street={decodedToken.Street} State={decodedToken.State} Pincode={decodedToken.Pincode} />
 
             </div>
             {/* <div id="card">

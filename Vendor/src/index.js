@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App'
+import URLToken from './URLToken';
 
 // const Abc = (
 //   <h1>Hello</h1>
@@ -13,6 +14,7 @@ import App from './App'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <URLToken />
     <App />
   </React.StrictMode >
 );

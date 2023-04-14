@@ -67,10 +67,10 @@ body {
   border-style: dotted;
 }
 
-#card:hover {
+/* #card:hover {
   transform: translate(-5px, -5px);
   transition: transform 0.3s ease;
-}
+} */
 
 #flexbox {
   flex-wrap: wrap;
