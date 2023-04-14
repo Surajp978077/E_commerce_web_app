@@ -21,7 +21,7 @@ function TokenHandler() {
   if (token) {
     const decodedToken = jwtDecode(token);
     console.log(decodedToken.Email);
-    return (<span>{decodedToken.Email}</span>);
+    // return (<span>{decodedToken.Email}</span>);
   }
   return null
 }

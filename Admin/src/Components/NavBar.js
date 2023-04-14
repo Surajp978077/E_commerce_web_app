@@ -5,13 +5,24 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
-import TokenHandler from './TokenHandler';
+import { Link } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 
-export default function Menu() {
+export default function NavBar() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const clientID = "ff84a00f-99ab-4f81-9f52-26df485a9dcf";
+
+  const token = localStorage.getItem('token');
+  const decodedToken = jwtDecode(token);
+
+  function logout() {
+    localStorage.removeItem('token');
+    window.location.href = 'https://localhost:7085/?ClientId=' + clientID;
+  }
 
   return (
     <>
@@ -20,25 +31,29 @@ export default function Menu() {
           <Button id='menu-collapse-button' variant="outline-dark" onClick={handleShow}>
             <i className="bi bi-list"></i>
           </Button>
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+          <Link to={'/'}>
+            <Navbar.Brand>Navbar</Navbar.Brand>
+          </Link>
           <Nav className="me-auto">
-            <Nav.Link href="#features">Features</Nav.Link>
+            {/* <Nav.Link href="#features">Features</Nav.Link> */}
           </Nav>
-          <div className="me-2"><TokenHandler /></div>
+          <Link to={'/profile'}>
+            <Button variant="outline-success" className="me-2">{decodedToken.UserName}</Button>
+          </Link>
           <Form className="d-flex">
             <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />
-            <Button variant="outline-success" className="ms-2">Search</Button>
+            <Button variant="outline-success">Search</Button>
           </Form>
-          <Button id='logout' variant="danger" className="ms-2">Log-out</Button>
+          <Button id="logout" variant="danger" className="ms-2" onClick={logout}>Log-out</Button>
         </Container>
       </Navbar>
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          <Offcanvas.Title>Ecommerce</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
+          <Link to={'/'} onClick={handleClose}>Home</Link><br />
+          <Link to={'/profile'} onClick={handleClose}>Profile</Link>
         </Offcanvas.Body>
       </Offcanvas >
     </>
