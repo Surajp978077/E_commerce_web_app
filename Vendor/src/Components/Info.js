@@ -1,5 +1,5 @@
 import Photo from './pic1.jpg'
-import URLToken from '../URLToken'
+
 // import PropTypes from 'prop-types';
 
 

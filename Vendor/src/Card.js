@@ -1,57 +1,16 @@
 import Info from "./Components/Info";
-import jwtDecode from 'jwt-decode';
+import React, { useContext } from 'react';
+import UserInfoContext from './UserInfoContext';
 
 export default function Card() {
-    var token = localStorage.getItem('token');
+    const userInfo = useContext(UserInfoContext);
 
-    const decodedToken = jwtDecode(token);
-    console.log(decodedToken)
     return (
         <div id='flexbox'>
             <div id="card">
-                <Info Name={decodedToken.UserName} Email={decodedToken.Email} Street={decodedToken.Street} State={decodedToken.State} Pincode={decodedToken.Pincode} />
+                <Info Name={userInfo.UserName} Email={userInfo.Email} Street={userInfo.Address.Street} State={userInfo.Address.State} Pincode={userInfo.Address.Pincode} />
 
             </div>
-            {/* <div id="card">
-                <Info Name={name} Bio="Frontend Developer" />
-
-            </div>
-            <div id="card">
-                <Info Name={3} Bio="Frontend Developer" />
-
-            </div>
-            <div id="card">
-                <Info Name={3} Bio="Frontend Developer" />
-
-            </div>
-            <div id="card">
-                <Info Name={3} Bio="Frontend Developer" />
-
-            </div>
-            <div id="card">
-                <Info Name={3} Bio="Frontend Developer" />
-
-            </div>
-            <div id="card">
-                <Info Name={3} Bio="Frontend Developer" />
-
-            </div>
-            <div id="card">
-                <Info Name={3} Bio="Frontend Developer" />
-
-            </div>
-            <div id="card">
-                <Info Name={3} Bio="Frontend Developer" />
-
-            </div>
-            <div id="card">
-                <Info Name={3} Bio="Frontend Developer" />
-
-            </div>
-            <div id="card">
-                <Info Name={3} Bio="Frontend Developer" />
-
-            </div> */}
         </div>
     )
 }

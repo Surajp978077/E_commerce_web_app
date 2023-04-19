@@ -1,38 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import UserInfoContext from './UserInfoContext';
-import axios from 'axios';
 import jwtDecode from 'jwt-decode';
+
 
 function UserInfoProvider(props) {
     const [userInfo, setUserInfo] = useState(null);
-    var token = localStorage.getItem('token');
+    const [error, setError] = useState(null);
 
-    const decodedToken = jwtDecode(token);
-    const id = decodedToken.id;
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         const response = await axios.get('https://localhost:7240/api/UserInfo/' + decodedToken.id);
-    //         setUserInfo(response.data);
-    //     }
-
-    //     fetchData();
-    // }, []);
-
-    //can go into infinte loop, so better to use useEffect if that happens
-    async function getUserInfo() {
+    useEffect(() => {
         const token = localStorage.getItem('token');
-        const response = await fetch(`https://localhost:7240/api/UserInfo/${id}`, {
+        const decodedToken = jwtDecode(token);
+        const id = decodedToken.id;
+
+        fetch(`https://localhost:7240/api/UserInfo/${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
-            }
-        });
-        const data = await response.json();
-        // return data;
-        console.log(data)
-    }
-    getUserInfo()
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user info');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setUserInfo(data);
+                // console.log(data)
+            })
+            .catch((error) => {
+                setError(error);
+            });
+    }, []);
 
+    if (error) {
+        return <div>{error.message}</div>;
+    }
+
+    if (!userInfo) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <UserInfoContext.Provider value={userInfo}>
@@ -40,5 +47,6 @@ function UserInfoProvider(props) {
         </UserInfoContext.Provider>
     );
 }
+
 
 export default UserInfoProvider;

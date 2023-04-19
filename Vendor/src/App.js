@@ -1,7 +1,7 @@
 
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import About from './Components/Home';
+import Home from './Components/Home';
 import Root from './Components/Root';
 import Card from './Card';
 
@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <About />
+        element: <Home />
       },
       {
         path: '/Profile',

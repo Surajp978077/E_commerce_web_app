@@ -5,7 +5,6 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App'
 import URLToken from './URLToken';
-import UserInfoContext from './UserInfoContext';
 import UserInfoProvider from './UserInfoProvider';
 
 // const Abc = (
@@ -17,8 +16,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <URLToken />
-    <App />
     <UserInfoProvider >
+      <App />
     </UserInfoProvider >
   </React.StrictMode >
 );
