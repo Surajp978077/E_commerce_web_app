@@ -17,16 +17,7 @@ function URLToken() {
       window.location.href = 'https://localhost:7085/?ClientId=' + clientID;
     }
   }
-  // console.log(decodedToken.Email);
-  // console.log(decodedToken);
-  // }, [token])
 
-  // if (token) {
-  //   const decodedToken = jwtDecode(token);
-  //   return (<h4>{decodedToken.Email}</h4>);
-  // }
-  // console.log(token)
-  // console.log(decodedToken)
   return null;
 
 }

@@ -1,7 +1,7 @@
 
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import About from './Components/About';
+import About from './Components/Home';
 import Root from './Components/Root';
 import Card from './Card';
 

@@ -5,7 +5,7 @@ import URLToken from '../URLToken'
 
 
 export default function Info(props) {
-    console.log(props);
+    // console.log(props);
 
     return (
         <>

@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App'
 import URLToken from './URLToken';
+import UserInfoContext from './UserInfoContext';
+import UserInfoProvider from './UserInfoProvider';
 
 // const Abc = (
 //   <h1>Hello</h1>
@@ -16,6 +18,8 @@ root.render(
   <React.StrictMode>
     <URLToken />
     <App />
+    <UserInfoProvider >
+    </UserInfoProvider >
   </React.StrictMode >
 );
 

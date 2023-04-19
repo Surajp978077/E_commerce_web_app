@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 // builder.Services.AddControllers();
-builder.Services.AddControllers().AddJsonOptions(options => 
+builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNamingPolicy = null;
 });
@@ -23,7 +23,7 @@ builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Web API", Version = "v1"} );
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My Web API", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         // Description = "JWT Authorization",
@@ -53,7 +53,7 @@ builder.Services.AddSwaggerGen(c =>
             },
             new string[] {}
         }
-        
+
     });
 });
 
@@ -91,6 +91,14 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// for CORS
+app.UseCors(builder =>
+{
+    builder.WithOrigins("http://localhost:3002")
+           .AllowAnyHeader()
+           .AllowAnyMethod();
+});
 
 app.MapControllers();
 
