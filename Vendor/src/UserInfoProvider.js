@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UserInfoContext from './UserInfoContext';
 import jwtDecode from 'jwt-decode';
+import URLToken from './URLToken';
 
 
 function UserInfoProvider(props) {
@@ -34,7 +35,8 @@ function UserInfoProvider(props) {
     }, []);
 
     if (error) {
-        return <div>{error.message}</div>;
+        const clientID = "ff84a00f-99ab-4f81-9f52-26df485a9dcf"
+        window.location.href = 'https://localhost:7085/?ClientId=' + clientID;
     }
 
     if (!userInfo) {

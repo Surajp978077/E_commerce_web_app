@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './Components/Home';
 import Root from './Components/Root';
 import Card from './Card';
+import UserInfoProvider from './UserInfoProvider';
 
 const router = createBrowserRouter([
   {
@@ -23,8 +24,9 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-  return (
+  return (<UserInfoProvider>
     <RouterProvider router={router} />
+  </UserInfoProvider>
   );
 }
 
