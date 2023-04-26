@@ -1,5 +1,5 @@
 // import { useEffect } from 'react';
-import jwtDecode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 
 function TokenHandler() {
   const clientId = "b6782e13-5669-4156-82a8-1850883214e4";
@@ -18,11 +18,6 @@ function TokenHandler() {
     }
   // }, []);
 
-  if (token) {
-    const decodedToken = jwtDecode(token);
-    console.log(decodedToken.Email);
-    // return (<span>{decodedToken.Email}</span>);
-  }
   return null
 }
 

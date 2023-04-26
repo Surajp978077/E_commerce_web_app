@@ -14,7 +14,7 @@ export default function NavBar() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const clientID = "ff84a00f-99ab-4f81-9f52-26df485a9dcf";
+  const clientID = "b6782e13-5669-4156-82a8-1850883214e4";
 
   const token = localStorage.getItem('token');
   const decodedToken = jwtDecode(token);
@@ -26,13 +26,13 @@ export default function NavBar() {
 
   return (
     <>
-      <Navbar id="navbar" variant="light" sticky="top">
+      <Navbar style={{ backgroundColor: '#b0b0b5' }} variant="light" sticky="top">
         <Container fluid>
-          <Button id='menu-collapse-button' variant="outline-dark" onClick={handleShow}>
+          <Button variant="outline-dark" onClick={handleShow} className='me-2'>
             <i className="bi bi-list"></i>
           </Button>
-          <Link to={'/'}>
-            <Navbar.Brand>Navbar</Navbar.Brand>
+          <Link to={'/'} style={{ textDecoration: 'none' }}>
+            <Navbar.Brand>Dashboard</Navbar.Brand>
           </Link>
           <Nav className="me-auto">
             {/* <Nav.Link href="#features">Features</Nav.Link> */}
@@ -44,16 +44,16 @@ export default function NavBar() {
             <Form.Control type="search" placeholder="Search" className="me-2" aria-label="Search" />
             <Button variant="outline-success">Search</Button>
           </Form>
-          <Button id="logout" variant="danger" className="ms-2" onClick={logout}>Log-out</Button>
+          <Button variant="danger" className="ms-2" onClick={logout}>Log-out</Button>
         </Container>
       </Navbar>
-      <Offcanvas show={show} onHide={handleClose}>
-        <Offcanvas.Header closeButton>
+      <Offcanvas style={{ background: 'linear-gradient(#2e005f, #4e0353)' }} show={show} onHide={handleClose}>
+        <Offcanvas.Header style={{ color: '#ffffff', backgroundColor: '#0f0f3d', height: '3.5rem' }} closeButton>
           <Offcanvas.Title>Ecommerce</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          <Link to={'/'} onClick={handleClose}>Home</Link><br />
-          <Link to={'/profile'} onClick={handleClose}>Profile</Link>
+          <Link to={'/'} onClick={handleClose}><Button variant="light" >Dashboard</Button></Link><br />
+          <Link to={'/profile'} onClick={handleClose}><Button variant="light" className='mt-3'>Profile</Button></Link>
         </Offcanvas.Body>
       </Offcanvas >
     </>
