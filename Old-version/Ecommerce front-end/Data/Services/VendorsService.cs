@@ -39,7 +39,7 @@ namespace Ecommerce_front_end.Data.Services
 
         public Task<IEnumerable<Product>> GetProducts(int Id)
         {
-
+            throw new NotImplementedException();
         }
 
         public Vendor update(int Id, Vendor newVendor)

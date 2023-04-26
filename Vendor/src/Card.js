@@ -1,6 +1,6 @@
-import Info from "./Components/Info";
+import Info from "./components/Info";
 import React, { useContext } from 'react';
-import UserInfoContext from './UserInfoContext';
+import UserInfoContext from './components/userInfo/UserInfoContext'
 
 export default function Card() {
     const userInfo = useContext(UserInfoContext);

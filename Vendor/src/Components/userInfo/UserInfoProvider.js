@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import UserInfoContext from './UserInfoContext';
+import UserInfoContext from './UserInfoContext'
 import jwtDecode from 'jwt-decode';
-import URLToken from './URLToken';
+
 
 
 function UserInfoProvider(props) {

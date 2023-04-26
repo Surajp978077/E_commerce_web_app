@@ -32,10 +32,7 @@ namespace Ecommerce_front_end.Controllers
             return View(ProductsSold);
         }
 
-        public async Task<IActionResult> Products()
-        {
 
-        }
 
 
         // [HttpPost]
