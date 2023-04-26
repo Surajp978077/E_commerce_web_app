@@ -35,8 +35,8 @@ function UserInfoProvider(props) {
     }, []);
 
     if (error) {
-        const clientID = "ff84a00f-99ab-4f81-9f52-26df485a9dcf"
-        window.location.href = 'https://localhost:7085/?ClientId=' + clientID;
+        // const clientID = "ff84a00f-99ab-4f81-9f52-26df485a9dcf"
+        // window.location.href = 'https://localhost:7085/?ClientId=' + clientID;
     }
 
     if (!userInfo) {

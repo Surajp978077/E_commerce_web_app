@@ -95,7 +95,7 @@ app.UseAuthorization();
 // for CORS
 app.UseCors(builder =>
 {
-    builder.WithOrigins("http://localhost:3002")
+    builder.WithOrigins("http://localhost:3000", "http://localhost:3002")
            .AllowAnyHeader()
            .AllowAnyMethod();
 });
