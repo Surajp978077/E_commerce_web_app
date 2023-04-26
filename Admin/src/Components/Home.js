@@ -1,9 +1,5 @@
 import React from 'react'
-<<<<<<< HEAD
 import logo from '../images/logo.svg';
-=======
-import logo from '../logo.svg';
->>>>>>> 11ce597e3b6138237ca770e45a6159baa8f6d6c0
 
 const Home = () => {
     return (

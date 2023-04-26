@@ -1,14 +1,16 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-<<<<<<< HEAD
 import Root from './components/Root';
 import Info from './components/Info';
-import Home from './components/Home';
-=======
-import Root from './Components/Root';
-import Info from './Components/Info';
-import Home from './Components/Home';
->>>>>>> 11ce597e3b6138237ca770e45a6159baa8f6d6c0
+// import Home from './components/Home';
+import UserInfoProvider from './components/UserInfoProvider';
+import Dashboard from './components/Dashboard';
+import Customer from './components/Customer';
+import Vendor from './components/Vendor';
+import Category from './components/Category';
+import Product from './components/product/Product';
+import Order from './components/Order';
+import Offer from './components/Offer';
 
 const router = createBrowserRouter([
   {
@@ -17,11 +19,35 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />
+        element: <Dashboard />
       },
       {
         path: '/profile',
         element: <Info />
+      },
+      {
+        path: '/customer',
+        element: <Customer />
+      },
+      {
+        path: '/vendor',
+        element: <Vendor />
+      },
+      {
+        path: '/category',
+        element: <Category />
+      },
+      {
+        path: '/product',
+        element: <Product />
+      },
+      {
+        path: '/order',
+        element: <Order />
+      },
+      {
+        path: '/offer',
+        element: <Offer />
       },
     ]
   }
@@ -29,7 +55,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <UserInfoProvider>
+      <RouterProvider router={router} />
+    </UserInfoProvider>
   );
 }
 
