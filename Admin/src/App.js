@@ -1,16 +1,16 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root from './components/Root';
-import Info from './components/Info';
+import Root from './Components/Root';
+import Info from './Components/Info';
 // import Home from './components/Home';
-import UserInfoProvider from './components/UserInfoProvider';
-import Dashboard from './components/Dashboard';
-import Customer from './components/Customer';
-import Vendor from './components/Vendor';
-import Category from './components/Category';
-import Product from './components/product/Product';
-import Order from './components/Order';
-import Offer from './components/Offer';
+import UserInfoProvider from './Components/UserInfoProvider';
+import Dashboard from './Components/Dashboard';
+import Customer from './Components/Customer';
+import Vendor from './Components/Vendor';
+import Category from './Components/Category';
+import Product from './Components/product/Product';
+import Order from './Components/Order';
+import Offer from './Components/Offer';
 
 const router = createBrowserRouter([
   {
