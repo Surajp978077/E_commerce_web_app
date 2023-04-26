@@ -1,4 +1,4 @@
-import Photo from './pic1.jpg'
+import Photo from '../assets/images/pic1.jpg'
 
 // import PropTypes from 'prop-types';
 

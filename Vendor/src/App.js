@@ -1,10 +1,10 @@
 
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './Components/Home';
-import Root from './Components/Root';
+import Home from './components/Home';
+import Root from './components/Root';
 import Card from './Card';
-import UserInfoProvider from './UserInfoProvider';
+import UserInfoProvider from './components/userInfo/UserInfoProvider'
 
 const router = createBrowserRouter([
   {
