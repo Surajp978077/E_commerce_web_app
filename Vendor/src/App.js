@@ -1,32 +1,32 @@
-
-import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './components/Home';
-import Root from './components/Root';
-import Card from './Card';
-import UserInfoProvider from './components/userInfo/UserInfoProvider'
+import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./components/Home";
+import Root from "./components/Root";
+import Card from "./components/About/Card";
+import UserInfoProvider from "./components/userInfo/UserInfoProvider";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Root />,
     children: [
       {
-        path: '/',
-        element: <Home />
+        path: "/",
+        element: <Home />,
       },
       {
-        path: '/Profile',
-        element: <Card />
+        path: "/Profile",
+        element: <Card />,
       },
-    ]
-  }
-])
+    ],
+  },
+]);
 
 function App() {
-  return (<UserInfoProvider>
-    <RouterProvider router={router} />
-  </UserInfoProvider>
+  return (
+    <UserInfoProvider>
+      <RouterProvider router={router} />
+    </UserInfoProvider>
   );
 }
 
