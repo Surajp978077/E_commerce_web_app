@@ -1,1 +1,0 @@
-After logging in with a new token into vendor app, it redirects back to login page after throwing an error, works only after logging in second time
