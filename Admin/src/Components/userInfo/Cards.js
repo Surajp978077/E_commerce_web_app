@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
-import logo from '../images/profilePic.png';
+import logo from '../../images/profilePic.png';
 
 export default function Cards(props) {
   console.log(props)
