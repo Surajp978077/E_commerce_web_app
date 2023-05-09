@@ -1,5 +1,5 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
-const UserInfoContext = createContext();
+export const UserInfoContext = createContext();
 
-export default UserInfoContext;
+// export default UserInfoContext;

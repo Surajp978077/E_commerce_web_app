@@ -9,7 +9,7 @@ export const userInfoInstance = axios.create({
 });
 
 export const vendorInstance = axios.create({
-  baseURL: "https://localhost:7044/api",
+  baseURL: "https://localhost:7044/api/Vendors",
   timeout: 5000,
 });
 

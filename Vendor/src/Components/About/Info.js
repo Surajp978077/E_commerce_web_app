@@ -19,6 +19,8 @@ export default function Info(props) {
       <br />
       <small>Pincode: {props.Pincode}</small>
       <br />
+      <small>GSTIN: {props.GSTIN}</small>
+      <br />
     </>
   );
 }

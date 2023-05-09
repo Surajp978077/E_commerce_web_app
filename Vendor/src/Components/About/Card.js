@@ -1,10 +1,10 @@
 import Info from "./Info";
 import React, { useContext } from "react";
-import UserInfoContext from "../userInfo/UserInfoContext";
+import { UserInfoContext } from "../userInfo/UserInfoContext";
 
 export default function Card() {
-  const userInfo = useContext(UserInfoContext);
-
+  const { userInfo } = useContext(UserInfoContext);
+  // const [userInfo1, setUserInfo1] = useState(userInfo);
   return (
     <div id="flexbox">
       <div id="card">
@@ -14,6 +14,7 @@ export default function Card() {
           Street={userInfo.Address.Street}
           State={userInfo.Address.State}
           Pincode={userInfo.Address.Pincode}
+          GSTIN={userInfo.vendor.vendorId}
         />
       </div>
     </div>
