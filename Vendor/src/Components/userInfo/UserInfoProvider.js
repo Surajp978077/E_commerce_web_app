@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { userInfoInstance } from "../../api/axios";
-import UserInfoContext from "./UserInfoContext";
-import { CLIENT_ID } from "../../config/config";
+import { UserInfoContext } from "./UserInfoContext";
+import { CLIENT_ID, LOADING } from "../../config/config";
 
-const UserInfoProvider = (props) => {
+export const UserInfoProvider = (props) => {
   const [userInfo, setUserInfo] = useState(null);
   const [error, setError] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -15,14 +15,14 @@ const UserInfoProvider = (props) => {
         const decodedToken = jwtDecode(token);
         const id = decodedToken.id;
         const response = await userInfoInstance.get(`/${id}`);
-        console.log(response);
+        // console.log(response);
         if (response && response.data) {
           setUserInfo(response.data);
         } else {
           throw new Error("Invalid status code");
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (error.code === "ECONNABORTED") {
           setError("Request timed out");
         } else if (error.response) {
@@ -68,15 +68,30 @@ const UserInfoProvider = (props) => {
     );
   }
 
-  if (!userInfo) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <UserInfoContext.Provider value={userInfo}>
+  return userInfo ? (
+    <UserInfoContext.Provider value={{ userInfo, setUserInfo }}>
       {props.children}
     </UserInfoContext.Provider>
+  ) : (
+    <div className="loading-container">
+      <img className="loading-image" src={LOADING} alt="loading" />
+    </div>
   );
 };
 
-export default UserInfoProvider;
+// {
+//   "UserId": 2,
+//   "UserName": "Suraj",
+//   "Email": "suraj@gmail.com",
+//   "Password": "$2a$11$j6oyA1skIRWugD9zRQnANefGaL6PYDuxmig/5FNSmqyfRTpVaSsOK",
+//   "Role": "Vendor",
+//   "Phone": "123",
+//   "AddressId": 2,
+//   "Address": {
+//       "AddressId": 2,
+//       "Street": "abc",
+//       "City": "panaji",
+//       "State": "Goa",
+//       "Pincode": "403005"
+//   }
+// }

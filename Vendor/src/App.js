@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home";
 import Root from "./components/Root";
 import Card from "./components/About/Card";
-import UserInfoProvider from "./components/userInfo/UserInfoProvider";
+import { UserInfoProvider } from "./components/userInfo/UserInfoProvider";
 
 const router = createBrowserRouter([
   {
