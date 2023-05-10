@@ -14,7 +14,7 @@ export default function Card() {
           Street={userInfo.Address.Street}
           State={userInfo.Address.State}
           Pincode={userInfo.Address.Pincode}
-          GSTIN={userInfo.vendor.vendorId}
+          GSTIN={userInfo.vendor.GSTIN}
         />
       </div>
     </div>
