@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-// import api from './api/products';
 import { productInstance } from './api/axios';
 import { Table } from 'react-bootstrap';
 
@@ -33,24 +32,10 @@ export const ProductGet = () => {
         fetchProducts();
     }, [])
 
-    // return (
-    //     <>
-    //         <h4>
-    //             List of Products:
-    //         </h4>
-    //         <ul>
-    //             {
-    //                 products.map(product => {
-    //                     return <li key={product.ProdId}><img src={product.ImageURL} alt="Example" style={{ width: '50px', height: '50px' }} /> | {product.ProdName} | {product.Price}</li>
-    //                 })
-    //             }
-    //         </ul>
-    //     </>
-    // );
     return (
         <div className='m-2'>
-        <h4>List of Products:</h4>
-        <Table striped bordered hover>
+            <h4>List of Products:</h4>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         <th>Image</th>
