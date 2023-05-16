@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
-import { productInstance } from './api/axios';
-// import Table from 'react-bootstrap/Table';
+import { productInstance } from '../api/axios';
+import { CategoryList } from './CategoryListV5';
+import { CategoryForm } from './CategoryFormV5';
 
 const Category = () => {
     const [categories, setCategories] = useState([]);
+    const [updateCount, setUpdateCount] = useState(0);
+    const [showForm, setShowForm] = useState(false);
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
                 const response = await productInstance.get('/categories');
-                // console.log(response.data);
+                console.log(response);
                 if (response && response.data) {
                     setCategories(response.data);
                 }
@@ -27,36 +30,28 @@ const Category = () => {
             }
         };
         fetchCategories();
-    }, [])
+    }, [updateCount])
+
+    const handleUpdate = () => {
+        setUpdateCount(previousCount => previousCount + 1);
+    }
+
+    // const handleShowForm = () => {
+    //     setShowForm(true);
+    // }
+
+    // const handleCloseForm = () => {
+    //     setShowForm(false);
+    // }
 
     return (
         <div className='m-2'>
-            <h4>List of Categories:</h4>
-            {categories && categories.$values && categories.$values.length > 0 ? (
-                <CategoryList {...categories} />
-            ) : (
-                <p>No categories found.</p>
+            <h4>List of Categories: <span onClick={() => setShowForm(true)} style={{ cursor: 'pointer' }}>➕</span></h4>
+            <CategoryList categories={categories} onCategoryUpdate={handleUpdate} />
+            {showForm && (
+                <CategoryForm handleCloseForm={() => setShowForm(false)} onCategoryUpdate={handleUpdate} />
             )}
         </div>
-    );
-}
-
-const CategoryList = (props) => {
-    const categories = props.$values;
-    console.log(props);
-    return (
-        <ul>
-            {categories.map(category => {
-                return category.$id && (
-                    <li key={category.CategoryId}>
-                        {category.Name}
-                        {category.ChildCategories.$values.length > 0 && (
-                            <CategoryList {...category.ChildCategories} />
-                        )}
-                    </li>
-                )
-            })}
-        </ul>
     );
 }
 
