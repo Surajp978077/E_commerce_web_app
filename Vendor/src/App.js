@@ -1,6 +1,6 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./components/home/Home";
 import Root from "./components/Root";
 import Card from "./components/About/Card";
 import { UserInfoProvider } from "./components/userInfo/UserInfoProvider";
