@@ -13,16 +13,14 @@ export const UserInfoProvider = (props) => {
     const fetchData = async () => {
       try {
         const decodedToken = jwtDecode(token);
-        const id = decodedToken.id;
-        const response = await userInfoInstance.get(`/${id}`);
-        // console.log(response);
+        const response = await userInfoInstance.get(`/${decodedToken.id}`);
         if (response && response.data) {
           setUserInfo(response.data);
         } else {
           throw new Error("Invalid status code");
         }
       } catch (error) {
-        // console.log(error);
+        console.log(error);
         if (error.code === "ECONNABORTED") {
           setError("Request timed out");
         } else if (error.response) {
@@ -32,6 +30,7 @@ export const UserInfoProvider = (props) => {
           if (error.request.status === 401) {
             setError("Invalid request");
           } else {
+            console.log(error);
             setError("Could not connect to API");
           }
         } else {
