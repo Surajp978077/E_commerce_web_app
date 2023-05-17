@@ -12,19 +12,11 @@ export const CategoryForm = ({ category, handleCloseForm, onCategoryUpdate }) =>
         event.preventDefault();
 
         try {
-            let formData;
-            if (category) {
-                formData = {
-                    Name: categoryName,
-                    Description: categoryDescription,
-                    ParentCategoryId: category.CategoryId
-                };
-            } else {
-                formData = {
-                    Name: categoryName,
-                    Description: categoryDescription
-                };
-            }
+            const formData = {
+                Name: categoryName,
+                Description: categoryDescription,
+                ParentCategoryId: category ? category.CategoryId : undefined
+            };
 
             const response = await productInstance.post('/categories', formData);
             console.log(response);
@@ -41,12 +33,12 @@ export const CategoryForm = ({ category, handleCloseForm, onCategoryUpdate }) =>
     return (
         <div className="popup">
             <div className="popup-inner">
-                { category ? (
+                {category ? (
                     <h2>{`Add a new category to ${category.Name}`}</h2>
                 ) : (
                     <h2>Add a new category</h2>
                 )}
-                
+
                 <form onSubmit={handleSubmit}>
                     <label htmlFor='categoryName'>Category Name</label>
                     <input
