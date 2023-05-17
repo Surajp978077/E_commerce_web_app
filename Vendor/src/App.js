@@ -4,6 +4,7 @@ import Home from "./components/home/Home";
 import Root from "./components/Root";
 import Card from "./components/About/Card";
 import { UserInfoProvider } from "./components/userInfo/UserInfoProvider";
+import Listings from "./components/listing/Listings";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/Profile",
         element: <Card />,
+      },
+      {
+        path: "/Listings",
+        element: <Listings />,
       },
     ],
   },

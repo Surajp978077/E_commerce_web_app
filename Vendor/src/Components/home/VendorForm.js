@@ -5,14 +5,7 @@ import { vendorInstance } from "../../api/axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
-const VendorForm = ({
-  field,
-  label,
-  value,
-  setVendor,
-  vendor,
-  setIsVendorSet,
-}) => {
+const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
   const { userInfo } = useContext(UserInfoContext);
   const [vendorNew, setVendorNew] = useState(vendor);
 
@@ -66,7 +59,7 @@ const VendorForm = ({
               id="standard-basic"
               variant="standard"
               label={`Enter ${label}`}
-              value={vendorNew[field]}
+              // value={vendorNew[field] ? vendorNew[field] : " "} // this is a neccesary property required to follow something called as single source of truth, but is commented out in this code bcoz it gives an error when its null or undefined
               onChange={change}
               name={label}
               fullWidth

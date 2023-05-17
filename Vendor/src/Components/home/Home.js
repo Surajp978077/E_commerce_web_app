@@ -3,14 +3,13 @@ import { UserInfoContext } from "../userInfo/UserInfoContext";
 import { vendorInstance } from "../../api/axios";
 import { Container, Row } from "react-bootstrap";
 import VendorForm from "./VendorForm";
+import { Skeleton } from "@mui/material";
 
 function Home() {
   const [vendor, setVendor] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isVendorCreated, setIsVendorCreated] = useState(false);
   const { userInfo, setUserInfo } = useContext(UserInfoContext);
-  // const id = userInfo.UserId;
-  // console.log(id);
   const [nullFields, setNullFields] = useState([]);
   const [vendorFields, setVendorFields] = useState([]);
   const [isAnyFieldNull, setIsAnyFieldNull] = useState(false);
@@ -56,6 +55,7 @@ function Home() {
     };
 
     fetchData();
+
     // console.log(vendor);
   }, [userInfo.UserId, isVendorCreated]);
 
@@ -107,7 +107,7 @@ function Home() {
   console.log(vendor);
   console.log(userInfo);
 
-  return (
+  return userInfo.vendor ? (
     <Container>
       <Row>
         {isAnyFieldNull
@@ -116,7 +116,6 @@ function Home() {
                 field={field}
                 key={field}
                 label={field}
-                value={userInfo.vendor[field]}
                 setVendor={setVendor}
                 vendor={vendor}
                 setIsVendorSet={setIsVendorSet}
@@ -125,6 +124,19 @@ function Home() {
           : null}
       </Row>
     </Container>
+  ) : (
+    <Skeleton
+      animation="wave"
+      variant="rectangular"
+      width={"500px"}
+      height={"210px"}
+      sx={{
+        marginTop: "12px",
+        marginLeft: "8%",
+        bgcolor: "#e8e9eb",
+        borderRadius: "5px",
+      }}
+    />
   );
 }
 

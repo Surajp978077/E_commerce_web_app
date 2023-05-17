@@ -10,7 +10,8 @@ body {
 }
 
 #navbar {
-  background-color: #b0b0b5;
+  background-color: #f7f7f7;
+  border-bottom: #dad8d8 solid 0.5px;
 }
 
 #menu-collapse-button {

@@ -7,11 +7,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-import { CLIENT_ID } from "../config/config";
+import { LOGINPAGE } from "../config/config";
 
-export const Add = (a, b) => {
-  return a + b;
-};
 export default function NavBar() {
   const [show, setShow] = useState(false);
 
@@ -23,7 +20,7 @@ export default function NavBar() {
 
   function logout() {
     localStorage.removeItem("token");
-    window.location.href = "https://localhost:7085/?ClientId=" + CLIENT_ID;
+    window.location.href = LOGINPAGE;
   }
 
   return (
@@ -77,6 +74,12 @@ export default function NavBar() {
           <Link to={"/Profile"} onClick={handleClose}>
             <Button variant="light" className="mt-3">
               Profile
+            </Button>
+          </Link>
+          <br />
+          <Link to={"/Listings"} onClick={handleClose}>
+            <Button variant="light" className="mt-3">
+              Listings
             </Button>
           </Link>
         </Offcanvas.Body>

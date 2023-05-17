@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { userInfoInstance } from "../../api/axios";
 import { UserInfoContext } from "./UserInfoContext";
-import { CLIENT_ID, LOADING } from "../../config/config";
+import { LOADING, LOGINPAGE } from "../../config/config";
+import ErrorPage from "../ErrorPage";
 
 export const UserInfoProvider = (props) => {
   const [userInfo, setUserInfo] = useState(null);
@@ -57,7 +58,7 @@ export const UserInfoProvider = (props) => {
 
   if (error) {
     setTimeout(() => {
-      window.location.href = `https://localhost:7085/?ClientId=${CLIENT_ID}`;
+      window.location.href = LOGINPAGE;
     }, 5000);
 
     return (
@@ -66,7 +67,14 @@ export const UserInfoProvider = (props) => {
       </div>
     );
   }
-
+  if (userInfo && userInfo.Role !== "Vendor") {
+    return (
+      <ErrorPage
+        title="You are not a Vendor"
+        desc="Kindly Register or Login as a Vendor"
+      />
+    );
+  }
   return userInfo ? (
     <UserInfoContext.Provider value={{ userInfo, setUserInfo }}>
       {props.children}
@@ -77,20 +85,3 @@ export const UserInfoProvider = (props) => {
     </div>
   );
 };
-
-// {
-//   "UserId": 2,
-//   "UserName": "Suraj",
-//   "Email": "suraj@gmail.com",
-//   "Password": "$2a$11$j6oyA1skIRWugD9zRQnANefGaL6PYDuxmig/5FNSmqyfRTpVaSsOK",
-//   "Role": "Vendor",
-//   "Phone": "123",
-//   "AddressId": 2,
-//   "Address": {
-//       "AddressId": 2,
-//       "Street": "abc",
-//       "City": "panaji",
-//       "State": "Goa",
-//       "Pincode": "403005"
-//   }
-// }

@@ -1,4 +1,4 @@
-import { CLIENT_ID } from "../config/config";
+import { LOGINPAGE } from "../config/config";
 
 function URLToken() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -11,7 +11,7 @@ function URLToken() {
     token = localStorage.getItem("token");
     if (!token) {
       // window.location.href = 'https://localhost:7140/Home/Login/?redirectUrl=' + encodeURIComponent(window.location.href);
-      window.location.href = "https://localhost:7085/?ClientId=" + CLIENT_ID;
+      window.location.href = LOGINPAGE;
     }
   }
 
