@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CategoryForm } from './CategoryFormV3';
+import { CategoryForm } from './CategoryFormV1';
 
 export const CategoryList = (props) => {
     // console.log(props);
