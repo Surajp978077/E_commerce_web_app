@@ -88,6 +88,12 @@ export default function NavBar() {
               Listings
             </Button>
           </Link>
+          <br />
+          <Link to={"/test"} onClick={handleClose}>
+            <Button variant="light" className="mt-3">
+              Test
+            </Button>
+          </Link>
         </Offcanvas.Body>
       </Offcanvas>
     </>

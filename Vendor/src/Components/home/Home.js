@@ -11,7 +11,6 @@ function Home() {
   const [isVendorCreated, setIsVendorCreated] = useState(false);
   const { userInfo, setUserInfo } = useContext(UserInfoContext);
   const [nullFields, setNullFields] = useState([]);
-  const [vendorFields, setVendorFields] = useState([]);
   const [isAnyFieldNull, setIsAnyFieldNull] = useState(false);
   const [isVendorSet, setIsVendorSet] = useState(false);
 
@@ -21,7 +20,7 @@ function Home() {
         const response = await vendorInstance.get(`/${userInfo.UserId}`);
         if (response && response.data) {
           setVendor(response.data);
-          console.log("vendor");
+
           setIsVendorSet(false);
           setErrorMessage("got");
         }
@@ -30,7 +29,6 @@ function Home() {
         setErrorMessage(error.response.data.message);
         if (error.request.status === 404) {
           if (!isVendorCreated) {
-            console.log("new vendor");
             newVendor();
             setIsVendorCreated(true);
           }
@@ -46,7 +44,7 @@ function Home() {
         // Posting the new vendor data in database by using the user id column
         const response = await vendorInstance.post(`/${userInfo.UserId}`, {});
         setVendor(response.data);
-        console.log("post");
+
         setIsVendorCreated(true);
       } catch (error) {
         setVendor(null);
@@ -55,14 +53,11 @@ function Home() {
     };
 
     fetchData();
-
-    // console.log(vendor);
   }, [userInfo.UserId, isVendorCreated]);
 
   // Had to seperate these two useeffect because of async behaviour of post and get methods of JS
   useEffect(() => {
     const updateUserInfo = () => {
-      console.log("setting vendor in userinfo");
       setUserInfo((prevUserInfo) => ({
         ...prevUserInfo,
         vendor: {
@@ -82,7 +77,6 @@ function Home() {
       updateUserInfo();
     }
 
-    console.log("second useeffect");
     // Calculate nullFields with updated values
     const fields = userInfo.vendor ? Object.keys(userInfo.vendor) : [];
     const nullFields = fields.filter(
@@ -90,7 +84,7 @@ function Home() {
     );
 
     // Set the updated values in state
-    setVendorFields(fields);
+    // setVendorFields(fields);
     setNullFields(nullFields);
     setIsAnyFieldNull(
       userInfo.vendor &&
@@ -101,11 +95,8 @@ function Home() {
   }, [userInfo.vendor, vendor, isVendorSet, setUserInfo]);
 
   if (errorMessage) {
-    console.log(errorMessage);
   }
-  console.log(nullFields);
-  console.log(vendor);
-  console.log(userInfo);
+  console.lo;
 
   return userInfo.vendor ? (
     <Container>
