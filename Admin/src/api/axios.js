@@ -9,7 +9,7 @@ import axios from 'axios';
 // });
 
 export const userInfoInstance = axios.create({
-  baseURL: 'https://localhost:7240/api',
+  baseURL: 'https://localhost:7240/api/UserInfo',
   headers: {
     'Content-Type': 'application/json',
   },

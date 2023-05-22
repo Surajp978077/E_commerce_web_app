@@ -1,4 +1,4 @@
-import { productInstance } from '../api/axios';
+import { productInstance } from '../../api/axios';
 
 export const CategoryDelete = ({ CategoryId, onCategoryUpdate }) => {
 

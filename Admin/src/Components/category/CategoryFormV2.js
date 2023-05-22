@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { productInstance } from '../api/axios';
+import { productInstance } from '../../api/axios';
 
 export const CategoryForm = ({ category, handleCloseForm, onCategoryUpdate }) => {
     console.log(`Category: ${category}`);

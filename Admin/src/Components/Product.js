@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { productInstance } from './api/axios';
+import { productInstance } from '../api/axios';
 import { Table } from 'react-bootstrap';
 
 export const ProductGet = () => {

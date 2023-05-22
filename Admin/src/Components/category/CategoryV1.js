@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { productInstance } from '../api/axios';
+import { productInstance } from '../../api/axios';
 import { CategoryList } from './CategoryListV1';
 
 const Category = () => {
