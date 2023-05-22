@@ -12,6 +12,7 @@ import React from "react";
 import { BADREQUEST, Homepage, LOGINPAGE } from "../config/config";
 
 import IconButton from "@mui/material/IconButton";
+import CallEndOutlinedIcon from "@mui/icons-material/CallEndOutlined";
 
 const styles = {
   container: {
@@ -25,7 +26,7 @@ const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-  // transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  transform: !expand ? "rotate(0deg)" : "rotate(220deg)",
   marginLeft: "auto",
   transition: theme.transitions.create("transform", {
     duration: theme.transitions.duration.shortest,
@@ -79,7 +80,7 @@ export default function ErrorPage(props) {
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <Button size="small">Contact</Button>
+            <CallEndOutlinedIcon />
           </ExpandMore>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>

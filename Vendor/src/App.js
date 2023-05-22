@@ -5,6 +5,7 @@ import Root from "./components/Root";
 import Card from "./components/About/Card";
 import { UserInfoProvider } from "./components/userInfo/UserInfoProvider";
 import Listings from "./components/listing/Listings";
+import Test from "./Test";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/Listings",
         element: <Listings />,
+      },
+      {
+        path: "/test",
+        element: <Test />,
       },
     ],
   },

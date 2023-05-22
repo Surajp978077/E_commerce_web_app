@@ -19,5 +19,113 @@
       "GSTIN": null,
       "DeliveryPinCode": 0
     }
+  },
+
+  "Vendors": {
+    "$id": "1",
+    "$values": [
+      {
+        "$id": "2",
+        "ProdId": 1,
+        "ProdName": "Charger",
+        "Description": "Charger for Samsung",
+        "Price": 450,
+        "ImageURL": "https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T1/images/I/51G529B1p1L._SL1200_.jpg",
+        "StartDate": "2023-05-11T19:06:38.8851491",
+        "CategoryId": 3,
+        "Category": null,
+        "StockQty": 0,
+        "ProductVendors": {
+          "$id": "3",
+          "$values": [
+            {
+              "$id": "4",
+              "ProductId": 1,
+              "Product": {
+                "$ref": "2"
+              },
+              "VendorId": 2,
+              "Vendor": {
+                "$id": "5",
+                "Id": 2,
+                "GSTIN": "30AAAAA0000A1Z5",
+                "DeliveryPinCode": 403002,
+                "UserId": 3,
+                "ProductVendors": {
+                  "$id": "6",
+                  "$values": [
+                    {
+                      "$ref": "4"
+                    },
+                    {
+                      "$id": "7",
+                      "ProductId": 2,
+                      "Product": {
+                        "$id": "8",
+                        "ProdId": 2,
+                        "ProdName": "Samsung",
+                        "Description": "Samsung",
+                        "Price": 10000,
+                        "ImageURL": "https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress\u0026cs=tinysrgb\u0026dpr=1\u0026w=500",
+                        "StartDate": "2023-05-11T19:06:38.8917287",
+                        "CategoryId": 2,
+                        "Category": null,
+                        "StockQty": 0,
+                        "ProductVendors": {
+                          "$id": "9",
+                          "$values": [
+                            {
+                              "$ref": "7"
+                            }
+                          ]
+                        }
+                      },
+                      "VendorId": 2,
+                      "Vendor": {
+                        "$ref": "5"
+                      }
+                    },
+                    {
+                      "$id": "10",
+                      "ProductId": 4,
+                      "Product": {
+                        "$id": "11",
+                        "ProdId": 4,
+                        "ProdName": "Xiaomi",
+                        "Description": "Xiaomi",
+                        "Price": 15000,
+                        "ImageURL": "https://st4.depositphotos.com/11698096/22999/i/600/depositphotos_229999768-stock-photo-kyiv-ukraine-july-2018-xiaomi.jpg",
+                        "StartDate": "2023-05-11T19:06:38.8917355",
+                        "CategoryId": 2,
+                        "Category": null,
+                        "StockQty": 0,
+                        "ProductVendors": {
+                          "$id": "12",
+                          "$values": [
+                            {
+                              "$ref": "10"
+                            }
+                          ]
+                        }
+                      },
+                      "VendorId": 2,
+                      "Vendor": {
+                        "$ref": "5"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "$ref": "8"
+      },
+      {
+        "$ref": "11"
+      }
+    ]
   }
 }

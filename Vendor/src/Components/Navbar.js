@@ -34,8 +34,14 @@ export default function NavBar() {
           >
             <i className="bi bi-list"></i>
           </Button>
-          <Link to={"/"}>
-            <Navbar.Brand> Navbar </Navbar.Brand>
+          <Link to={"/"} style={{ textDecoration: "none" }}>
+            <Navbar.Brand
+              onMouseOver={(e) => (e.target.style.color = "blue")}
+              onMouseOut={(e) => (e.target.style.color = "black")}
+            >
+              {" "}
+              E-commerce{" "}
+            </Navbar.Brand>
           </Link>
           <Nav className="me-auto">
             {/* <Nav.Link href="#features">Features</Nav.Link> */}
@@ -80,6 +86,12 @@ export default function NavBar() {
           <Link to={"/Listings"} onClick={handleClose}>
             <Button variant="light" className="mt-3">
               Listings
+            </Button>
+          </Link>
+          <br />
+          <Link to={"/test"} onClick={handleClose}>
+            <Button variant="light" className="mt-3">
+              Test
             </Button>
           </Link>
         </Offcanvas.Body>
