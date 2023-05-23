@@ -13,6 +13,11 @@ export const vendorInstance = axios.create({
   timeout: 5000,
 });
 
+export const productInstance = axios.create({
+  baseURL: "https://localhost:7044/api/",
+  timeout: 5000,
+});
+
 // Add a request interceptor to set the Authorization header when a token is available
 const setAuthHeaderInterceptor = (config) => {
   const token = localStorage.getItem("token");

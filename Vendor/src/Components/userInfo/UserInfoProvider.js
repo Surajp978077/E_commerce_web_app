@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import jwtDecode from "jwt-decode";
 import { userInfoInstance } from "../../api/axios";
 import { UserInfoContext } from "./UserInfoContext";
@@ -9,7 +9,8 @@ export const UserInfoProvider = (props) => {
   const [userInfo, setUserInfo] = useState(null);
   const [error, setError] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
-
+  const timerId = useRef(5);
+  const [timer, setTimer] = useState(5);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,7 +22,6 @@ export const UserInfoProvider = (props) => {
           throw new Error("Invalid status code");
         }
       } catch (error) {
-        console.log(error);
         if (error.code === "ECONNABORTED") {
           setError("Request timed out");
         } else if (error.response) {
@@ -31,7 +31,6 @@ export const UserInfoProvider = (props) => {
           if (error.request.status === 401) {
             setError("Invalid request");
           } else {
-            console.log(error);
             setError("Could not connect to API");
           }
         } else {
@@ -61,9 +60,14 @@ export const UserInfoProvider = (props) => {
       window.location.href = LOGINPAGE;
     }, 5000);
 
+    setInterval(() => {
+      timerId.current = timer - 1;
+      setTimer(timer - 1);
+    }, 1000);
+
     return (
       <div>
-        Error: {error} <br /> Redirecting back to login page in 5 seconds!
+        Error: {error} <br /> Redirecting back to login page in {timer} seconds!
       </div>
     );
   }
