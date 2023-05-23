@@ -32,7 +32,10 @@ const ExpandMore = styled((props) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-
+function ReLogin() {
+  localStorage.removeItem("token");
+  window.location.href = LOGINPAGE;
+}
 export default function ErrorPage(props) {
   const [expanded, setExpanded] = React.useState(false);
 
@@ -63,7 +66,7 @@ export default function ErrorPage(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" href={LOGINPAGE}>
+          <Button size="small" href="#" onClick={ReLogin}>
             Login
           </Button>
           {props.homeButton ? (
