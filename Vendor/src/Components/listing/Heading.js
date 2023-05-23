@@ -1,5 +1,4 @@
 import React from "react";
-import { styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
 import { Button, Typography } from "@mui/material";
@@ -11,7 +10,12 @@ export default function Heading() {
       <Typography variant="h4" style={{ marginBlockEnd: "50px" }}>
         PRODUCTS
       </Typography>
-      <Button size="large" variant="contained" startIcon={<AddIcon />}>
+      <Button
+        size="large"
+        sx={{ margin: "0 10px" }}
+        variant="contained"
+        startIcon={<AddIcon />}
+      >
         New Product
       </Button>
       <Divider>
