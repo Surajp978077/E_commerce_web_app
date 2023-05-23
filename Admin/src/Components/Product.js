@@ -8,7 +8,7 @@ export const ProductGet = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await productInstance.get('/products');
+                const response = await productInstance.get('/products/all');
                 console.log(response.data);
                 if (response && response.data) {
                     setProducts(response.data);

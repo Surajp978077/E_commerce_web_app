@@ -29,7 +29,7 @@ export const CategoryItem = ({ category, handleShowForm, onCategoryUpdate }) => 
         <li>
             <span className='me-2'>{category.Name}</span>
             <span onClick={() => handleShowForm(category)} style={{ cursor: 'pointer' }}>➕</span>
-            <CategoryDelete CategoryId={category.CategoryId} onCategoryUpdate={onCategoryUpdate} />
+            <CategoryDelete category={category} onCategoryUpdate={onCategoryUpdate} />
             {category.ChildCategories.$values.length > 0 && (
                 <>
                     <span className='' onClick={handleToggleDropdowns} style={{ cursor: 'pointer' }}>
