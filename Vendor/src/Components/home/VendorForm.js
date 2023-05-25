@@ -1,21 +1,24 @@
-import React, { useContext, useState } from "react";
-import { Col, Form } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Grid, TextField, Button, Alert } from "@mui/material";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
 import { vendorInstance } from "../../api/axios";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 
 const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
   const { userInfo } = useContext(UserInfoContext);
   const [vendorNew, setVendorNew] = useState(vendor);
+  const [alert, setAlert] = useState(false);
+
+  // To be able to save the vendor in newvendor only when vendor changes, to prevent loss of data after submitting the form
+  useEffect(() => {
+    setVendorNew(vendor);
+  }, [vendor]);
 
   function change(event) {
-    setVendorNew((prevData) => {
-      return {
-        ...prevData,
-        [event.target.name]: event.target.value,
-      };
-    });
+    event.preventDefault(); // Persist the synthetic event
+    setVendorNew((prevData) => ({
+      ...prevData,
+      [event.target.name]: event.target.value,
+    }));
   }
 
   async function handleSubmit(event) {
@@ -26,6 +29,7 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
         `/${userInfo.vendor.vendorId}`,
         vendorNew
       );
+
       if (response.status === 200) {
         setVendor((prevData) => ({
           ...prevData,
@@ -34,47 +38,58 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
         setIsVendorSet(false);
       }
     } catch (error) {
-      console.error(error);
+      if (error.response.status === 400) {
+        setAlert(true);
+      }
     }
   }
-
   return (
-    <Col xs={12} md={6}>
-      <div
-        style={{
-          backgroundColor: "#e8e9eb",
-          borderRadius: "4px",
-          boxShadow: "0 4px 5px rgba(0, 0, 0, 0.1)",
-          padding: "20px",
-          marginBottom: "20px",
-          marginTop: "10px",
-          maxWidth: "500px",
-        }}
-      >
-        <h3>Update {label}</h3>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>{label}</Form.Label>
-            <TextField
-              id="standard-basic"
-              variant="standard"
-              label={`Enter ${label}`}
-              // value={vendorNew[field] ? vendorNew[field] : " "} // this is a neccesary property required to follow something called as single source of truth, but is commented out in this code bcoz it gives an error when its null or undefined
-              onChange={change}
-              name={label}
-              fullWidth
-            />
-          </Form.Group>
-          <Button
-            variant="contained"
-            type="submit"
-            style={{ marginTop: "10px" }}
-          >
-            Submit
-          </Button>
-        </Form>
-      </div>
-    </Col>
+    <>
+      <Grid item xs={12} md={6}>
+        {alert ? (
+          <Alert severity="error">
+            Please enter the details only in{" "}
+            <strong>{typeof vendor[field]}</strong> format
+          </Alert>
+        ) : (
+          ""
+        )}
+        <div
+          style={{
+            backgroundColor: "#e8e9eb",
+            borderRadius: "4px",
+            boxShadow: "0 4px 5px rgba(0, 0, 0, 0.1)",
+            padding: "20px",
+            marginBottom: "20px",
+            marginTop: "10px",
+          }}
+        >
+          <h3>Update {label}</h3>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>{label}</label>
+              <TextField
+                id="standard-basic"
+                variant="standard"
+                label={`Enter ${label}`}
+                onChange={change}
+                name={label}
+                fullWidth
+                margin="normal"
+                size="small"
+              />
+            </div>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{ marginTop: "10px" }}
+            >
+              Submit
+            </Button>
+          </form>
+        </div>
+      </Grid>
+    </>
   );
 };
 

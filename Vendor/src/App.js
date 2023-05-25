@@ -1,17 +1,16 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/home/Home";
-import Root from "./components/Root";
 import Card from "./components/About/Card";
 import { UserInfoProvider } from "./components/userInfo/UserInfoProvider";
 import Listings from "./components/listing/Listings";
 import Test from "./Test";
-
+import Navbar from "./components/Navbar";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <Navbar />,
     children: [
       {
         path: "/",
