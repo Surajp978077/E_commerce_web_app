@@ -12,6 +12,11 @@ body {
 #navbar {
   background-color: #f7f7f7;
   border-bottom: #dad8d8 solid 0.5px;
+  height: 80px;
+}
+
+.header-logo {
+  max-width: 70px;
 }
 
 #menu-collapse-button {
@@ -30,50 +35,17 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Translucent background */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .loading-image {
-  width: 150px; /* Adjust the width and height as needed */
+  width: 150px;
   height: 150px;
 }
 
-/* nav {
-  display: flex;
-  align-items: center;
-  background-color: #2e303f;
-  height: 60px;
-  padding: 30px 25px;
-}
-
-
-
-.nav--logo_text,
-.nav--title {
-  margin: 0;
-}
-
-.nav--logo_text {
-  margin-right: auto;
-  color: #61DAFB;
-  font-weight: 700;
-  font-size: 22px;
-}
-
-.nav--title {
-  color: #DEEBF8;
-  font-weight: 600;
-}
-
-.nav--icon {
-  height: 30px;
-  margin-right: 7px;
-}
-
-*/
 #card {
   background-color: #1d1e25;
   border-radius: 10px;
@@ -83,11 +55,6 @@ body {
   height: 550px;
   border-style: dotted;
 }
-
-/* #card:hover {
-  transform: translate(-5px, -5px);
-  transition: transform 0.3s ease;
-} */
 
 #flexbox {
   flex-wrap: wrap;
@@ -112,28 +79,33 @@ body {
   color: #d2d2d2;
 }
 
-.offcanvas-header {
-  color: #ffffff;
-  background-color: #0f0f3d;
+#offcanvas-header {
+  /* color: #ffffff; */
+  background-color: #f7f7f7;
+  min-width: 100vw;
+  border-bottom: #dad8d8 solid 0.5px;
+  height: 80px;
 }
 
-/* main {
-  padding: 57px 27px;
-  color: white;
-}
+#drawer-close-btn {
+  margin-left: auto;
 
-.main--title {
-  margin: 0;
-  font-size: 39px;
-  letter-spacing: -0.05em;
+  display: none;
+  width: 50px;
 }
+@media only screen and (max-width: 480px) {
+  .css-4t3x6l-MuiPaper-root-MuiDrawer-paper {
+    /*the drawer width*/
+    width: 100%; /* Width for phone display */
+  }
+  #drawer-close-btn {
+    display: block;
+  }
 
-.main--facts {
-  margin-top: 46px;
-  max-width: 400px;
+  #navbar {
+    height: 60px;
+  }
+  #offcanvas-header {
+    height: 60px;
+  }
 }
-
-.main--facts>li {
-  line-height: 19px;
-  padding-block: 10px; 
-}*/
