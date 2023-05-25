@@ -1,7 +1,7 @@
 import React from "react";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 export default function Heading() {
