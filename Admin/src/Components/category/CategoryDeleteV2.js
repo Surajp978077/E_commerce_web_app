@@ -1,4 +1,6 @@
 import { productInstance } from '../../api/axios';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const CategoryDelete = ({ category, onCategoryUpdate }) => {
 
@@ -20,12 +22,14 @@ export const CategoryDelete = ({ category, onCategoryUpdate }) => {
     }
 
     const displayErrorPopup = (message) => {
-        // Implement your custom popup component here to display the error message
         alert(message);
     }
 
     return (
-        <span onClick={handleDelete} style={{ cursor: 'pointer' }}>➖</span>
+        // <span onClick={handleDelete} style={{ cursor: 'pointer' }}>➖</span>
+        <IconButton onClick={handleDelete} aria-label="delete">
+            <DeleteIcon />
+        </IconButton>
     );
 
 }
