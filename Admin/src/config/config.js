@@ -1,4 +1,4 @@
-import logoImage from '../assets/images/logo.svg';
+import logoImage from '../assets/images/logo.png';
 import loadingImage from '../assets/images/loading.gif';
 import badRequest from '../assets/images/badRequest.png';
 

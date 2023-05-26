@@ -12,11 +12,12 @@ import Product from './Components/Product';
 import Order from './Components/Order';
 import Offer from './Components/Offer';
 import { NotFound } from './Components/NotFound';
+import Navbar from './Components/navigation/NavBar2';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root />,
+    element: <Navbar />,
     children: [
       {
         path: '/',

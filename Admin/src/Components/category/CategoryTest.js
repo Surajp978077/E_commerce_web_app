@@ -69,7 +69,7 @@ const Category = () => {
             defaultExpandIcon={<ChevronRightIcon />}
             sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto', marginBlockStart: "20px", marginLeft: "20px" }}
         >
-            {categoryTree(categories, -1)}
+            {categoryTree(categories)}
         </TreeView>
     );
 }
