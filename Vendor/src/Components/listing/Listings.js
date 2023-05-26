@@ -66,13 +66,17 @@ const Listings = () => {
                 <TableRow>
                   <TableCell align="left">Name</TableCell>
                   <TableCell>Price</TableCell>
+                  <TableCell>Quantity</TableCell>
+                  <TableCell>Base Price</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {products.map((product) => (
-                  <TableRow key={product.ProdId}>
-                    <TableCell>{product.ProdName}</TableCell>
+                  <TableRow key={product.Product.ProdId}>
+                    <TableCell>{product.Product.ProdName}</TableCell>
                     <TableCell>{product.Price}</TableCell>
+                    <TableCell>{product.Quantity}</TableCell>
+                    <TableCell>{product.Product.Price}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

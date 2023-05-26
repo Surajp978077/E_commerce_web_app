@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
 import { vendorInstance } from "../../api/axios";
-import { Container, Row } from "react-bootstrap";
+import { Container, Grid, Alert } from "@mui/material";
 import VendorForm from "./VendorForm";
 import { Skeleton } from "@mui/material";
+import ErrorPage from "../ErrorPage";
 
 function Home() {
   const [vendor, setVendor] = useState(null);
@@ -22,7 +23,6 @@ function Home() {
           setVendor(response.data);
 
           setIsVendorSet(false);
-          setErrorMessage("got");
         }
       } catch (error) {
         setVendor(null);
@@ -34,7 +34,8 @@ function Home() {
           }
         } else {
           setErrorMessage(
-            "Error occurred while fetching vendor info, make sure API is working"
+            error.response.status +
+              "Error occurred while fetching vendor info, make sure API is working"
           );
         }
       }
@@ -95,14 +96,20 @@ function Home() {
   }, [userInfo.vendor, vendor, isVendorSet, setUserInfo]);
 
   if (errorMessage) {
+    return (
+      <ErrorPage title="Error !! " desc={errorMessage} homeButton={true} />
+    );
   }
-  console.lo;
 
   return userInfo.vendor ? (
     <Container>
-      <Row>
-        {isAnyFieldNull
-          ? nullFields.map((field) => (
+      <Grid container spacing={2}>
+        {isAnyFieldNull ? (
+          <>
+            <Alert severity="info" sx={{ marginTop: "30px", width: "100vw" }}>
+              Please complete your profile by filling up these details.
+            </Alert>
+            {nullFields.map((field) => (
               <VendorForm
                 field={field}
                 key={field}
@@ -111,9 +118,18 @@ function Home() {
                 vendor={vendor}
                 setIsVendorSet={setIsVendorSet}
               />
-            ))
-          : null}
-      </Row>
+            ))}
+          </>
+        ) : (
+          <Alert
+            severity="success"
+            sx={{ marginTop: "40px", height: "70px", width: "100vw" }}
+          >
+            <strong> Congratulations!</strong> Your profile details are all
+            filled in
+          </Alert>
+        )}
+      </Grid>
     </Container>
   ) : (
     <Skeleton
