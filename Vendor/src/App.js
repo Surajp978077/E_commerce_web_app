@@ -6,6 +6,24 @@ import { UserInfoProvider } from "./components/userInfo/UserInfoProvider";
 import Listings from "./components/listing/Listings";
 import Test from "./Test";
 import Navbar from "./components/Navbar";
+import Product from "./components/listing/Product";
+import Lost from "./components/Lost";
+
+// const VendorRoutes = () => {
+//   return (
+//     <div>
+//       <h1>Vendor Routes</h1>
+//       <ul>
+//         <li>
+//           <a href="/Listings">Listings</a>
+//         </li>
+//         <li>
+//           <a href="/Listings/products/:id">Products</a>
+//         </li>
+//       </ul>
+//     </div>
+//   );
+// };
 
 const router = createBrowserRouter([
   {
@@ -25,14 +43,27 @@ const router = createBrowserRouter([
         element: <Listings />,
       },
       {
+        path: "/Listings/products/:id",
+        element: <Product />,
+      },
+      {
         path: "/test",
         element: <Test />,
+      },
+      // {
+      //   path: "/Listings/*",
+      //   element: <VendorRoutes />,
+      // },
+      {
+        path: "*",
+        element: <Lost />,
       },
     ],
   },
 ]);
 
 function App() {
+  console.log(router);
   return (
     <UserInfoProvider>
       <RouterProvider router={router} />

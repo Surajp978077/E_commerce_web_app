@@ -1,3 +1,4 @@
-# to check the id of decoded token as int
-
-UserInfoProvider: 17
+- Launch
+-
+- If not Vendor then show error page
+- check the validity of the token
