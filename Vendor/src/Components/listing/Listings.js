@@ -15,6 +15,8 @@ import {
 } from "@mui/material/";
 import { useContext } from "react";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Listings = () => {
   const pageSize = 2;
@@ -23,7 +25,8 @@ const Listings = () => {
   const [products, setProducts] = useState([]);
   const { userInfo } = useContext(UserInfoContext);
   const id = userInfo.vendor.vendorId;
-
+  const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     fetchProducts();
   }, [currentPage]);
@@ -59,29 +62,58 @@ const Listings = () => {
     <>
       <Heading />
       {products.length ? (
-        <div style={{ marginBlockStart: "20px" }}>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead sx={{ backgroundColor: " #e6e6e6" }}>
-                <TableRow>
-                  <TableCell align="left">Name</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell>Base Price</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {products.map((product) => (
-                  <TableRow key={product.Product.ProdId}>
-                    <TableCell>{product.Product.ProdName}</TableCell>
-                    <TableCell>{product.Price}</TableCell>
-                    <TableCell>{product.Quantity}</TableCell>
-                    <TableCell>{product.Product.Price}</TableCell>
+        <div
+          style={{
+            marginBlockStart: "20px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TableContainer
+              component={Paper}
+              sx={{
+                width: "80%",
+              }}
+            >
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left" id="table-heading">
+                      Name
+                    </TableCell>
+                    <TableCell id="table-heading"> Price</TableCell>
+                    <TableCell id="table-heading">Quantity</TableCell>
+                    <TableCell id="table-heading">Base Price</TableCell>
+                    <TableCell id="table-heading"> </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {products.map((product) => (
+                    <TableRow key={product.Product.ProdId}>
+                      <TableCell>{product.Product.ProdName}</TableCell>
+                      <TableCell>{product.Price}</TableCell>
+                      <TableCell>{product.Quantity}</TableCell>
+                      <TableCell>{product.Product.Price}</TableCell>
+                      <TableCell>
+                        <EditOutlinedIcon
+                          onClick={() =>
+                            navigate(
+                              `${location.pathname}/products/${product.Product.ProdId}`
+                            )
+                          }
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
           <div style={{ marginTop: "20px", textAlign: "center" }}>
             <Button
               variant="contained"
