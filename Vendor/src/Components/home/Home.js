@@ -5,6 +5,7 @@ import { Container, Grid, Alert } from "@mui/material";
 import VendorForm from "./VendorForm";
 import { Skeleton } from "@mui/material";
 import ErrorPage from "../ErrorPage";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 function Home() {
   const [vendor, setVendor] = useState(null);
@@ -123,7 +124,12 @@ function Home() {
         ) : (
           <Alert
             severity="success"
-            sx={{ marginTop: "40px", height: "70px", width: "100vw" }}
+            icon={<CheckCircleOutlineIcon sx={{ fontSize: "150%" }} />}
+            sx={{
+              marginTop: "40px",
+              width: "100vw",
+              fontSize: "150%",
+            }}
           >
             <strong> Congratulations!</strong> Your profile details are all
             filled in
