@@ -6,14 +6,14 @@ import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Outlet } from "react-router-dom";
 import { LOGO } from "../config/config";
-import { Link as RouterLink } from "react-router-dom";
+import { useLocation, Link as RouterLink } from "react-router-dom";
 import ClearIcon from "@mui/icons-material/Clear";
+import ListItemButton from "@mui/material/ListItemButton";
 import { LOGINPAGE } from "../config/config";
 import {
   Avatar,
@@ -25,17 +25,27 @@ import {
 } from "@mui/material";
 import jwtDecode from "jwt-decode";
 
-const Link = React.forwardRef(function Link(itemProps, ref) {
-  return <RouterLink ref={ref} {...itemProps} role={undefined} />;
-});
 function ListItemLink(props) {
   const { icon, primary, to } = props;
+  const location = useLocation();
+
+  const CustomRouterLink = React.forwardRef((props, ref) => (
+    <RouterLink ref={ref} to={to} {...props} />
+  ));
 
   return (
-    <ListItem button component={Link} to={to}>
+    <ListItemButton
+      component={CustomRouterLink}
+      sx={{
+        "&.Mui-selected": {
+          backgroundColor: "rgba(0, 0, 0, 0.08)",
+        },
+      }}
+      selected={location.pathname === to}
+    >
       {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
       <ListItemText primary={primary} />
-    </ListItem>
+    </ListItemButton>
   );
 }
 
