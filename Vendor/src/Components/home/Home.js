@@ -9,7 +9,7 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 function Home() {
   const [vendor, setVendor] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const [isVendorCreated, setIsVendorCreated] = useState(false);
   const { userInfo, setUserInfo } = useContext(UserInfoContext);
   const [nullFields, setNullFields] = useState([]);
@@ -97,9 +97,7 @@ function Home() {
   }, [userInfo.vendor, vendor, isVendorSet, setUserInfo]);
 
   if (errorMessage) {
-    return (
-      <ErrorPage title="Error !! " desc={errorMessage} homeButton={true} />
-    );
+    return <ErrorPage title="Error !! " desc={errorMessage} showHome={true} />;
   }
 
   return userInfo.vendor ? (

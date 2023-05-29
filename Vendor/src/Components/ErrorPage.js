@@ -69,7 +69,7 @@ export default function ErrorPage(props) {
           <Button size="small" href="#" onClick={ReLogin}>
             Login
           </Button>
-          {props.homeButton ? (
+          {props.showHome ? (
             <Button size="small" href={Homepage}>
               Home
             </Button>
@@ -100,5 +100,5 @@ export default function ErrorPage(props) {
 ErrorPage.defaultProps = {
   title: "Error",
   desc: "Looks like we ran into an error",
-  homeButton: false,
+  showHome: false,
 };

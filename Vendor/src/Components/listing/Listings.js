@@ -18,6 +18,7 @@ import { useContext } from "react";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { useNavigate, useLocation } from "react-router-dom";
+import ErrorPage from "../ErrorPage";
 
 const Listings = () => {
   const pageSize = 5;
@@ -29,6 +30,7 @@ const Listings = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [checked, Setchecked] = useState();
+  const [error, setError] = useState("");
   useEffect(() => {
     fetchProducts();
   }, [currentPage]);
@@ -46,7 +48,7 @@ const Listings = () => {
         setTotalPages(response.data.TotalPages);
       }
     } catch (error) {
-      console.error("Error fetching products:", error);
+      setError(error);
     }
   };
 
@@ -80,7 +82,7 @@ const Listings = () => {
         });
       }
     } catch (error) {
-      console.error("Error updating visibility:", error);
+      setError(error);
     }
   }
 
@@ -94,6 +96,14 @@ const Listings = () => {
     setCurrentPage(currentPage + 1);
   };
   // console.log(products.length == 0);
+  if (error) {
+    return (
+      <ErrorPage
+        desc="looks like something did not go as planned, Go back to Login or Home page"
+        showHome={true}
+      />
+    );
+  }
   return (
     <>
       <Heading />
@@ -153,7 +163,10 @@ const Listings = () => {
                         <EditOutlinedIcon
                           onClick={() =>
                             navigate(
-                              `${location.pathname}/products/${product.Product.ProdId}`
+                              `${location.pathname}/products/${product.Product.ProdId}`,
+                              {
+                                state: { product: product, vendorId: id },
+                              }
                             )
                           }
                         />

@@ -7,17 +7,88 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
 import InputAdornment from "@mui/material/InputAdornment";
+import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import { productVendorInstance } from "../../api/axios";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
-export default function SimplePaper() {
-  const handleSubmit = (e) => {
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+// Now you have access to the product object in the destination component
+
+export default function Product() {
+  const location = useLocation();
+  const { product, vendorId } = location.state;
+  const [newProduct, setNewProduct] = useState(product);
+  const [open, setOpen] = React.useState(false);
+  const [openError, setOpenError] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    // You can access the form values using e.target.elements
-    // For example: const name = e.target.elements.name.value;
+    try {
+      const response = await productVendorInstance.put(
+        `/${vendorId}`,
+        newProduct,
+        {
+          params: {
+            prodId: newProduct.Product.ProdId,
+          },
+        }
+      );
+      if (response.status === 200) {
+        setOpen(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setOpenError(true);
+    }
+  };
+
+  const handleChange = (e) => {
+    // To see if the input of the Price is a number
+    const isNumber = isNaN(e.target.value);
+    if (
+      !isNumber &&
+      (e.target.name === "Price" || e.target.name === "Quantity")
+    ) {
+      setNewProduct((prevProduct) => ({
+        ...prevProduct,
+        [e.target.name]: e.target.value,
+      }));
+    } else {
+      setNewProduct((prevProduct) => ({
+        ...prevProduct,
+        Product: {
+          ...prevProduct.Product,
+          [e.target.name]: e.target.value,
+        },
+      }));
+    }
   };
 
   return (
     <>
+      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="info" sx={{ width: "100%" }}>
+          Info: Submitted!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openError} autoHideDuration={2000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          An error occurred while saving the details
+        </Alert>
+      </Snackbar>
       <Box
         sx={{ display: "flex", flexWrap: "wrap", margin: "20px", gap: "2%" }}
       >
@@ -29,7 +100,11 @@ export default function SimplePaper() {
             borderRadius: "20px",
           }}
         >
-          product-IMAGE
+          <img
+            src={newProduct.Product.ImageURL}
+            style={{ width: "100%" }}
+            alt="Product"
+          />
         </Card>
         <Card
           id="form"
@@ -50,6 +125,9 @@ export default function SimplePaper() {
                 id="standard-basic"
                 label="Name"
                 variant="standard"
+                name="ProdName"
+                value={newProduct.Product.ProdName}
+                onChange={handleChange}
                 required
                 sx={{ flex: 1 }}
               />
@@ -60,6 +138,9 @@ export default function SimplePaper() {
                 fullWidth
                 id="standard-multiline-static"
                 label="Description"
+                name="Description"
+                value={newProduct.Product.Description}
+                onChange={handleChange}
                 multiline
                 rows={4}
                 variant="standard"
@@ -72,6 +153,9 @@ export default function SimplePaper() {
                 </InputLabel>
                 <Input
                   id="standard-adornment-amount"
+                  name="Price"
+                  value={newProduct.Price}
+                  onChange={handleChange}
                   startAdornment={
                     <InputAdornment position="start">₹</InputAdornment>
                   }
@@ -82,8 +166,11 @@ export default function SimplePaper() {
                 fullWidth
                 sx={{ m: 1 }}
                 id="standard-number"
-                label="Number"
+                label="Quantity"
+                value={newProduct.Quantity}
                 type="number"
+                name="Quantity"
+                onChange={handleChange}
                 InputLabelProps={{
                   shrink: true,
                 }}
