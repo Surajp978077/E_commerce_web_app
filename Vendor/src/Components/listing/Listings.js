@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { vendorInstance } from "../../api/axios";
+import { vendorInstance, productVendorInstance } from "../../api/axios";
 import Heading from "./Heading";
 import {
   TableBody,
@@ -12,6 +12,7 @@ import {
   Button,
   Alert,
   AlertTitle,
+  Switch,
 } from "@mui/material/";
 import { useContext } from "react";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
@@ -19,7 +20,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Listings = () => {
-  const pageSize = 2;
+  const pageSize = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [products, setProducts] = useState([]);
@@ -27,6 +28,7 @@ const Listings = () => {
   const id = userInfo.vendor.vendorId;
   const navigate = useNavigate();
   const location = useLocation();
+  const [checked, Setchecked] = useState();
   useEffect(() => {
     fetchProducts();
   }, [currentPage]);
@@ -47,6 +49,40 @@ const Listings = () => {
       console.error("Error fetching products:", error);
     }
   };
+
+  async function handleVisibilityChange(event, prodId) {
+    const visibility = event.target.checked ? 1 : 0;
+    Setchecked(event.target.checked);
+
+    try {
+      const response = await productVendorInstance.put(
+        `/visibility/${id}`,
+        visibility,
+        {
+          params: {
+            prodId: prodId,
+          },
+        }
+      );
+      if (response.status === 200) {
+        // Update the visibility of the product in the state
+        setProducts((prevProducts) => {
+          const updatedProducts = prevProducts.map((product) => {
+            if (product.Product.ProdId === prodId) {
+              return {
+                ...product,
+                Visibility: visibility,
+              };
+            }
+            return product;
+          });
+          return updatedProducts;
+        });
+      }
+    } catch (error) {
+      console.error("Error updating visibility:", error);
+    }
+  }
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
@@ -89,6 +125,7 @@ const Listings = () => {
                     <TableCell id="table-heading"> Price</TableCell>
                     <TableCell id="table-heading">Quantity</TableCell>
                     <TableCell id="table-heading">Base Price</TableCell>
+                    <TableCell id="table-heading">Listing status</TableCell>
                     <TableCell id="table-heading"> </TableCell>
                   </TableRow>
                 </TableHead>
@@ -99,6 +136,19 @@ const Listings = () => {
                       <TableCell>{product.Price}</TableCell>
                       <TableCell>{product.Quantity}</TableCell>
                       <TableCell>{product.Product.Price}</TableCell>
+                      <TableCell>
+                        {" "}
+                        <Switch
+                          checked={product.Visibility === 1 ? true : false}
+                          onChange={(event) =>
+                            handleVisibilityChange(
+                              event,
+                              product.Product.ProdId
+                            )
+                          }
+                          inputProps={{ "aria-label": "controlled" }}
+                        />
+                      </TableCell>
                       <TableCell>
                         <EditOutlinedIcon
                           onClick={() =>

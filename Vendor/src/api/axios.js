@@ -13,9 +13,12 @@ export const vendorInstance = axios.create({
   timeout: 5000,
 });
 
-export const productInstance = axios.create({
-  baseURL: "https://localhost:7044/api/",
+export const productVendorInstance = axios.create({
+  baseURL: "https://localhost:7044/api/ProductVendor",
   timeout: 5000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 // Add a request interceptor to set the Authorization header when a token is available
@@ -29,3 +32,4 @@ const setAuthHeaderInterceptor = (config) => {
 
 userInfoInstance.interceptors.request.use(setAuthHeaderInterceptor);
 vendorInstance.interceptors.request.use(setAuthHeaderInterceptor);
+productVendorInstance.interceptors.request.use(setAuthHeaderInterceptor);
