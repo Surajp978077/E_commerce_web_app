@@ -15,10 +15,10 @@ import Lost from "./components/Lost";
 //       <h1>Vendor Routes</h1>
 //       <ul>
 //         <li>
-//           <a href="/Listings">Listings</a>
+//           <a href="/listings">Listings</a>
 //         </li>
 //         <li>
-//           <a href="/Listings/products/:id">Products</a>
+//           <a href="/listings/products/:id">Products</a>
 //         </li>
 //       </ul>
 //     </div>
@@ -35,15 +35,15 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/Profile",
+        path: "/profile",
         element: <Card />,
       },
       {
-        path: "/Listings",
+        path: "/listings",
         element: <Listings />,
       },
       {
-        path: "/Listings/products/:id",
+        path: "/listings/products/:id",
         element: <Product />,
       },
       {
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
         element: <Test />,
       },
       // {
-      //   path: "/Listings/*",
+      //   path: "/listings/*",
       //   element: <VendorRoutes />,
       // },
       {

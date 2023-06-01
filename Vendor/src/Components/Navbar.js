@@ -109,9 +109,9 @@ export default function Navbar() {
       <List>
         <ListItemLink to="/" primary="Home" />
 
-        <ListItemLink to="/Profile" primary="Profile" />
+        <ListItemLink to="/profile" primary="Profile" />
 
-        <ListItemLink to="/Listings" primary="Listings" />
+        <ListItemLink to="/listings" primary="Listings" />
 
         <ListItemLink to="/Test" primary="Test" />
       </List>
@@ -179,7 +179,7 @@ export default function Navbar() {
             <MenuItem
               key="Profile"
               component={RouterLink}
-              to="/Profile"
+              to="/profile"
               onClick={handleCloseUserMenu}
             >
               <Typography textAlign="center">Profile</Typography>

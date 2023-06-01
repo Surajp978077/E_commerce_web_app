@@ -7,11 +7,12 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { productVendorInstance } from "../../api/axios";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -21,10 +22,11 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export default function Product() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { product, vendorId } = location.state;
   const [newProduct, setNewProduct] = useState(product);
-  const [open, setOpen] = React.useState(false);
-  const [openError, setOpenError] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -32,6 +34,7 @@ export default function Product() {
     }
 
     setOpen(false);
+    setOpenError(false);
   };
 
   const handleSubmit = async (e) => {
@@ -57,16 +60,16 @@ export default function Product() {
 
   const handleChange = (e) => {
     // To see if the input of the Price is a number
-    const isNumber = isNaN(e.target.value);
+    const isText = isNaN(e.target.value);
     if (
-      !isNumber &&
+      !isText &&
       (e.target.name === "Price" || e.target.name === "Quantity")
     ) {
       setNewProduct((prevProduct) => ({
         ...prevProduct,
         [e.target.name]: e.target.value,
       }));
-    } else {
+    } else if (e.target.name !== "Price" && e.target.name !== "Quantity") {
       setNewProduct((prevProduct) => ({
         ...prevProduct,
         Product: {
@@ -89,15 +92,25 @@ export default function Product() {
           An error occurred while saving the details
         </Alert>
       </Snackbar>
+      <div style={{ margin: "20px 30px" }}>
+        <ArrowBackIosOutlinedIcon onClick={() => navigate(-1)} />
+      </div>
       <Box
         sx={{ display: "flex", flexWrap: "wrap", margin: "20px", gap: "2%" }}
       >
         <Card
           style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center", // Align content vertically at the center
+            alignItems: "center", // Align items horizontally at the center
+            gap: "10px",
+            // minWidth: "300px",
             width: "28%",
             height: "500px",
             backgroundColor: "#ebeae8",
             borderRadius: "20px",
+            position: "relative",
           }}
         >
           <img
@@ -113,6 +126,7 @@ export default function Product() {
             flexDirection: "column",
             gap: "10px",
             width: "70%",
+            // minWidth: "300px",
             backgroundColor: "#ebeae8",
             borderRadius: "20px",
             padding: "10px",

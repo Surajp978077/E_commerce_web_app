@@ -9,10 +9,10 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
   Alert,
   AlertTitle,
   Switch,
+  Pagination,
 } from "@mui/material/";
 import { useContext } from "react";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
@@ -22,17 +22,21 @@ import ErrorPage from "../ErrorPage";
 
 const Listings = () => {
   const pageSize = 5;
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    sessionStorage.getItem("listingPage") || 1
+  );
   const [totalPages, setTotalPages] = useState(0);
   const [products, setProducts] = useState([]);
   const { userInfo } = useContext(UserInfoContext);
   const id = userInfo.vendor.vendorId;
   const navigate = useNavigate();
   const location = useLocation();
-  const [checked, Setchecked] = useState();
+
   const [error, setError] = useState("");
+
   useEffect(() => {
     fetchProducts();
+    sessionStorage.setItem("listingPage", currentPage);
   }, [currentPage]);
 
   const fetchProducts = async () => {
@@ -54,7 +58,6 @@ const Listings = () => {
 
   async function handleVisibilityChange(event, prodId) {
     const visibility = event.target.checked ? 1 : 0;
-    Setchecked(event.target.checked);
 
     try {
       const response = await productVendorInstance.put(
@@ -86,24 +89,15 @@ const Listings = () => {
     }
   }
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    setCurrentPage(currentPage + 1);
-  };
-  // console.log(products.length == 0);
   if (error) {
     return (
       <ErrorPage
-        desc="looks like something did not go as planned, Go back to Login or Home page"
+        desc="Looks like something did not go as planned. Go back to the Login or Home page."
         showHome={true}
       />
     );
   }
+
   return (
     <>
       <Heading />
@@ -124,30 +118,49 @@ const Listings = () => {
               component={Paper}
               sx={{
                 width: "80%",
+                border: " 2px solid #f5f5f5 ",
+                borderRadius: "10px",
               }}
             >
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
+                <TableHead
+                  sx={{
+                    backgroundColor: "#f5f5f5",
+                  }}
+                >
                   <TableRow>
+                    <TableCell id="table-heading"></TableCell>
                     <TableCell align="left" id="table-heading">
                       Name
                     </TableCell>
-                    <TableCell id="table-heading"> Price</TableCell>
+                    <TableCell id="table-heading">Price</TableCell>
                     <TableCell id="table-heading">Quantity</TableCell>
                     <TableCell id="table-heading">Base Price</TableCell>
                     <TableCell id="table-heading">Listing status</TableCell>
-                    <TableCell id="table-heading"> </TableCell>
+                    <TableCell id="table-heading">Edit</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {products.map((product) => (
                     <TableRow key={product.Product.ProdId}>
+                      <TableCell>
+                        <img
+                          src={product.Product.ImageURL}
+                          style={{
+                            height: "100px",
+                            width: "auto",
+                            borderRadius: "10px",
+                            objectFit: "cover", // Ensures the image covers the entire container
+                            backgroundColor: "transparent",
+                          }}
+                          alt="product"
+                        />
+                      </TableCell>
                       <TableCell>{product.Product.ProdName}</TableCell>
                       <TableCell>{product.Price}</TableCell>
                       <TableCell>{product.Quantity}</TableCell>
                       <TableCell>{product.Product.Price}</TableCell>
                       <TableCell>
-                        {" "}
                         <Switch
                           checked={product.Visibility === 1 ? true : false}
                           onChange={(event) =>
@@ -177,29 +190,33 @@ const Listings = () => {
               </Table>
             </TableContainer>
           </div>
-          <div style={{ marginTop: "20px", textAlign: "center" }}>
-            <Button
-              variant="contained"
-              onClick={handlePreviousPage}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </Button>
-            <span style={{ margin: "0 10px" }}>Page {currentPage}</span>
-            <Button
-              variant="contained"
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </Button>
+          <div
+            style={{
+              display: "inline",
+              placeitems: "center",
+              margin: "38px",
+              position: "relative",
+            }}
+          >
+            <Pagination
+              count={totalPages}
+              page={parseInt(currentPage)}
+              onChange={(event, page) => setCurrentPage(page)} // event is required even though it is not used, because the onChange function expects it, otherwise it throws an error
+              color="primary"
+              disabled={!products.length}
+              size="large"
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            />
           </div>
         </div>
       ) : (
         <Alert sx={{ marginBlockStart: "10px" }} severity="info">
           <AlertTitle>No products</AlertTitle>
-          You don't have any products listed, Click on{" "}
-          <strong>New Product</strong> button to add a product
+          You don't have any products listed. Click on{" "}
+          <strong>New Product</strong> button to add a product.
         </Alert>
       )}
     </>
