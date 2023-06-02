@@ -1,5 +1,9 @@
 import "./App.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useRoutes,
+} from "react-router-dom";
 import Home from "./components/home/Home";
 import Card from "./components/About/Card";
 import { UserInfoProvider } from "./components/userInfo/UserInfoProvider";
@@ -29,6 +33,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Navbar />,
+    errorElement: <Lost />,
     children: [
       {
         path: "/",
@@ -54,10 +59,10 @@ const router = createBrowserRouter([
       //   path: "/listings/*",
       //   element: <VendorRoutes />,
       // },
-      {
-        path: "*",
-        element: <Lost />,
-      },
+      // {
+      //   path: "*",
+      //   element: <Lost />,
+      // },
     ],
   },
 ]);

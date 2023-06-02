@@ -18,7 +18,6 @@ import { useContext } from "react";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { useNavigate, useLocation } from "react-router-dom";
-import ErrorPage from "../ErrorPage";
 
 const Listings = () => {
   const pageSize = 5;
@@ -31,13 +30,31 @@ const Listings = () => {
   const id = userInfo.vendor.vendorId;
   const navigate = useNavigate();
   const location = useLocation();
-
   const [error, setError] = useState("");
-
+  // const scrollPosition = useRef( sessionStorage.getItem("scrollPosition") || 0); // Store the scroll position
+  // console.log(scrollPosition.current);
   useEffect(() => {
     fetchProducts();
     sessionStorage.setItem("listingPage", currentPage);
   }, [currentPage]);
+
+  // useEffect(() => {
+  //   // Restore the scroll position on component mount
+  //   sessionStorage.setItem("scrollPosition", scrollPosition.current);
+  //   window.scrollTo(0, scrollPosition.current);
+  // }, []);
+
+  // useEffect(() => {
+  //   // Store the scroll position on scroll
+  //   const handleScroll = () => {
+  //     scrollPosition.current = window.scrollY;
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
   const fetchProducts = async () => {
     try {
@@ -89,14 +106,14 @@ const Listings = () => {
     }
   }
 
-  if (error) {
-    return (
-      <ErrorPage
-        desc="Looks like something did not go as planned. Go back to the Login or Home page."
-        showHome={true}
-      />
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <ErrorPage
+  //       desc="Looks like something did not go as planned. Go back to the Login or Home page."
+  //       showHome={true}
+  //     />
+  //   );
+  // }
 
   return (
     <>
