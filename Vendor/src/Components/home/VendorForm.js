@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Grid, TextField, Button, Alert } from "@mui/material";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
 import { vendorInstance } from "../../api/axios";
+import WarningIcon from "@mui/icons-material/Warning";
+import { CloseOutlined } from "@mui/icons-material";
 
 const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
   const { userInfo } = useContext(UserInfoContext);
@@ -47,13 +49,21 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
     <>
       <Grid item xs={12} md={6}>
         {alert ? (
-          <Alert severity="error">
-            Please enter the details only in{" "}
+          <Alert
+            severity="error"
+            icon={<WarningIcon sx={{ fontSize: 15 }} />}
+            sx={{ fontSize: 15 }}
+          >
+            <strong>Error:</strong> Please enter the details only in{" "}
             <strong>{typeof vendor[field]}</strong> format
+            <Button
+              sx={{ color: "inherit", marginLeft: "10vh" }}
+              onClick={() => setAlert(false)}
+            >
+              <CloseOutlined />
+            </Button>
           </Alert>
-        ) : (
-          ""
-        )}
+        ) : null}
         <div
           style={{
             backgroundColor: "#e8e9eb",
@@ -79,6 +89,7 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
                 size="small"
               />
             </div>
+            `{" "}
             <Button
               variant="contained"
               type="submit"
@@ -86,6 +97,7 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
             >
               Submit
             </Button>
+            `
           </form>
         </div>
       </Grid>

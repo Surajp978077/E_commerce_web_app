@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { vendorInstance } from "../../api/axios";
+import { vendorInstance, productVendorInstance } from "../../api/axios";
 import Heading from "./Heading";
 import {
   TableBody,
@@ -9,24 +9,52 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
   Alert,
   AlertTitle,
+  Switch,
+  Pagination,
 } from "@mui/material/";
 import { useContext } from "react";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Listings = () => {
-  const pageSize = 2;
-  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
+  const [currentPage, setCurrentPage] = useState(
+    sessionStorage.getItem("listingPage") || 1
+  );
   const [totalPages, setTotalPages] = useState(0);
   const [products, setProducts] = useState([]);
   const { userInfo } = useContext(UserInfoContext);
   const id = userInfo.vendor.vendorId;
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [error, setError] = useState("");
+  // const scrollPosition = useRef( sessionStorage.getItem("scrollPosition") || 0); // Store the scroll position
+  // console.log(scrollPosition.current);
   useEffect(() => {
     fetchProducts();
+    sessionStorage.setItem("listingPage", currentPage);
   }, [currentPage]);
+
+  // useEffect(() => {
+  //   // Restore the scroll position on component mount
+  //   sessionStorage.setItem("scrollPosition", scrollPosition.current);
+  //   window.scrollTo(0, scrollPosition.current);
+  // }, []);
+
+  // useEffect(() => {
+  //   // Store the scroll position on scroll
+  //   const handleScroll = () => {
+  //     scrollPosition.current = window.scrollY;
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
   const fetchProducts = async () => {
     try {
@@ -41,70 +69,171 @@ const Listings = () => {
         setTotalPages(response.data.TotalPages);
       }
     } catch (error) {
-      console.error("Error fetching products:", error);
+      setError(error);
     }
   };
 
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+  async function handleVisibilityChange(event, prodId) {
+    const visibility = event.target.checked ? 1 : 0;
 
-  const handleNextPage = () => {
-    setCurrentPage(currentPage + 1);
-  };
-  // console.log(products.length == 0);
+    try {
+      const response = await productVendorInstance.put(
+        `/visibility/${id}`,
+        visibility,
+        {
+          params: {
+            prodId: prodId,
+          },
+        }
+      );
+      if (response.status === 200) {
+        // Update the visibility of the product in the state
+        setProducts((prevProducts) => {
+          const updatedProducts = prevProducts.map((product) => {
+            if (product.Product.ProdId === prodId) {
+              return {
+                ...product,
+                Visibility: visibility,
+              };
+            }
+            return product;
+          });
+          return updatedProducts;
+        });
+      }
+    } catch (error) {
+      setError(error);
+    }
+  }
+
+  // if (error) {
+  //   return (
+  //     <ErrorPage
+  //       desc="Looks like something did not go as planned. Go back to the Login or Home page."
+  //       showHome={true}
+  //     />
+  //   );
+  // }
+
   return (
     <>
       <Heading />
       {products.length ? (
-        <div style={{ marginBlockStart: "20px" }}>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead sx={{ backgroundColor: " #e6e6e6" }}>
-                <TableRow>
-                  <TableCell align="left">Name</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell>Base Price</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {products.map((product) => (
-                  <TableRow key={product.Product.ProdId}>
-                    <TableCell>{product.Product.ProdName}</TableCell>
-                    <TableCell>{product.Price}</TableCell>
-                    <TableCell>{product.Quantity}</TableCell>
-                    <TableCell>{product.Product.Price}</TableCell>
+        <div
+          style={{
+            marginBlockStart: "20px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TableContainer
+              component={Paper}
+              sx={{
+                width: "80%",
+                border: " 2px solid #f5f5f5 ",
+                borderRadius: "10px",
+              }}
+            >
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead
+                  sx={{
+                    backgroundColor: "#f5f5f5",
+                  }}
+                >
+                  <TableRow>
+                    <TableCell id="table-heading"></TableCell>
+                    <TableCell align="left" id="table-heading">
+                      Name
+                    </TableCell>
+                    <TableCell id="table-heading">Price</TableCell>
+                    <TableCell id="table-heading">Quantity</TableCell>
+                    <TableCell id="table-heading">Base Price</TableCell>
+                    <TableCell id="table-heading">Listing status</TableCell>
+                    <TableCell id="table-heading">Edit</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <div style={{ marginTop: "20px", textAlign: "center" }}>
-            <Button
-              variant="contained"
-              onClick={handlePreviousPage}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </Button>
-            <span style={{ margin: "0 10px" }}>Page {currentPage}</span>
-            <Button
-              variant="contained"
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </Button>
+                </TableHead>
+                <TableBody>
+                  {products.map((product) => (
+                    <TableRow key={product.Product.ProdId}>
+                      <TableCell>
+                        <img
+                          src={product.Product.ImageURL}
+                          style={{
+                            height: "100px",
+                            width: "auto",
+                            borderRadius: "10px",
+                            objectFit: "cover", // Ensures the image covers the entire container
+                            backgroundColor: "transparent",
+                          }}
+                          alt="product"
+                        />
+                      </TableCell>
+                      <TableCell>{product.Product.ProdName}</TableCell>
+                      <TableCell>{product.Price}</TableCell>
+                      <TableCell>{product.Quantity}</TableCell>
+                      <TableCell>{product.Product.Price}</TableCell>
+                      <TableCell>
+                        <Switch
+                          checked={product.Visibility === 1 ? true : false}
+                          onChange={(event) =>
+                            handleVisibilityChange(
+                              event,
+                              product.Product.ProdId
+                            )
+                          }
+                          inputProps={{ "aria-label": "controlled" }}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <EditOutlinedIcon
+                          onClick={() =>
+                            navigate(
+                              `${location.pathname}/products/${product.Product.ProdId}`,
+                              {
+                                state: { product: product, vendorId: id },
+                              }
+                            )
+                          }
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+          <div
+            style={{
+              display: "inline",
+              placeitems: "center",
+              margin: "38px",
+              position: "relative",
+            }}
+          >
+            <Pagination
+              count={totalPages}
+              page={parseInt(currentPage)}
+              onChange={(event, page) => setCurrentPage(page)} // event is required even though it is not used, because the onChange function expects it, otherwise it throws an error
+              color="primary"
+              disabled={!products.length}
+              size="large"
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            />
           </div>
         </div>
       ) : (
         <Alert sx={{ marginBlockStart: "10px" }} severity="info">
           <AlertTitle>No products</AlertTitle>
-          You don't have any products listed, Click on{" "}
-          <strong>New Product</strong> button to add a product
+          You don't have any products listed. Click on{" "}
+          <strong>New Product</strong> button to add a product.
         </Alert>
       )}
     </>
