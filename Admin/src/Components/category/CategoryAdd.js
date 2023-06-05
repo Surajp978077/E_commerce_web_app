@@ -67,22 +67,22 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
 
     return (
         <div>
-            <Button variant="text" onClick={handleClickOpen} startIcon={<AddIcon />}>
+            <Button variant='text' onClick={handleClickOpen} startIcon={<AddIcon />}>
                 Category
             </Button>
             <Dialog
                 fullScreen={fullScreen}
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="responsive-dialog-title"
+                aria-labelledby='responsive-dialog-title'
             >
-                <DialogTitle id="responsive-dialog-title">
+                <DialogTitle id='responsive-dialog-title'>
                     {category ? (
-                        <Typography variant="h5" component="div">
+                        <Typography variant='h5' component='div'>
                             Add subcategory to {category.Name}
                         </Typography>
                     ) : (
-                        <Typography variant="h4" component="div">
+                        <Typography variant='h4' component='div'>
                             Add main category
                         </Typography>
                     )}
@@ -90,9 +90,9 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                 <DialogContent>
                     <TextField
                         autoFocus
-                        id="categoryName"
-                        label="Category Name"
-                        placeholder="Category Name"
+                        id='categoryName'
+                        label='Category Name'
+                        placeholder='Category Name'
                         required
                         value={categoryName}
                         onChange={(e) => {
@@ -100,15 +100,15 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                             setNameError('');
                         }}
                         fullWidth
-                        margin="normal"
-                        variant="outlined"
+                        margin='normal'
+                        variant='outlined'
                         error={!!nameError}
                         helperText={nameError}
                     />
                     <TextField
-                        id="categoryDescription"
-                        label="Category Description"
-                        placeholder="Category Description"
+                        id='categoryDescription'
+                        label='Category Description'
+                        placeholder='Category Description'
                         required
                         value={categoryDescription}
                         onChange={(e) => {
@@ -116,8 +116,8 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                             setDescriptionError('');
                         }}
                         fullWidth
-                        margin="normal"
-                        variant="outlined"
+                        margin='normal'
+                        variant='outlined'
                         error={!!descriptionError}
                         helperText={descriptionError}
                     />
@@ -126,7 +126,7 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                     <Button autoFocus onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button type="submit" onClick={handleSubmit} autoFocus>
+                    <Button type='submit' onClick={handleSubmit} autoFocus>
                         Add
                     </Button>
                 </DialogActions>
@@ -170,10 +170,10 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
 
 //     return (
 //         <>
-//             <Button onClick={() => setShowForm(true)} sx={{ marginLeft: "0", width: 'fit-content', height: "inherit" }} variant='text' startIcon={<AddIcon />}>Category</Button>
+//             <Button onClick={() => setShowForm(true)} sx={{ marginLeft: '0', width: 'fit-content', height: 'inherit' }} variant='text' startIcon={<AddIcon />}>Category</Button>
 //             {showForm && (
-//                 <div className="popup">
-//                     <div className="popup-inner">
+//                 <div className='popup'>
+//                     <div className='popup-inner'>
 //                         {category ? (
 //                             <h2>{`Add a new category to ${category.Name}`}</h2>
 //                         ) : (
@@ -201,8 +201,8 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
 //                                 value={categoryDescription}
 //                                 onChange={(e) => setcategoryDescription(e.target.value)}
 //                             />
-//                             <button type="submit">Submit</button>
-//                             <button type="button" onClick={() => setShowForm(false)}>Cancel</button>
+//                             <button type='submit'>Submit</button>
+//                             <button type='button' onClick={() => setShowForm(false)}>Cancel</button>
 //                         </form>
 //                     </div>
 //                 </div>

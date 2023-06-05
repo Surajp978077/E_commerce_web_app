@@ -63,11 +63,11 @@ const Category = () => {
 
     return (
         <TreeView
-            aria-label="rich object"
+            aria-label='rich object'
             defaultCollapseIcon={<ExpandMoreIcon />}
             defaultExpanded={['root']}
             defaultExpandIcon={<ChevronRightIcon />}
-            sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto', marginBlockStart: "20px", marginLeft: "20px" }}
+            sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto', marginBlockStart: '20px', marginLeft: '20px' }}
         >
             {categoryTree(categories)}
         </TreeView>

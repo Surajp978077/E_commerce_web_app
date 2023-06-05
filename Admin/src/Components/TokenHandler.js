@@ -1,4 +1,4 @@
-import { LOGINPAGE } from "../config/config";
+import { LOGINPAGE } from '../config/config';
 
 function TokenHandler() {
   const urlParams = new URLSearchParams(window.location.search);

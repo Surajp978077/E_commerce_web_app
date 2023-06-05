@@ -1,4 +1,3 @@
-import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -24,12 +23,13 @@ import {
   ListItemButton,
 } from '@mui/material';
 import jwtDecode from 'jwt-decode';
+import { Fragment, forwardRef, useState } from 'react';
 
 function ListItemLink(props) {
   const { icon, primary, to } = props;
   const location = useLocation();
 
-  const CustomRouterLink = React.forwardRef((props, ref) => (
+  const CustomRouterLink = forwardRef((props, ref) => (
     <RouterLink ref={ref} to={to} {...props} />
   ));
 
@@ -51,9 +51,9 @@ function ListItemLink(props) {
 
 export default function Navbar() {
   const anchor = 'left';
-  const [state, setState] = React.useState({ [anchor]: false });
+  const [state, setState] = useState({ [anchor]: false });
 
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
   var token = localStorage.getItem('token');
   const decodedToken = jwtDecode(token);
 
@@ -127,7 +127,7 @@ export default function Navbar() {
         }}
       >
         <Toolbar>
-          <React.Fragment key={anchor}>
+          <Fragment key={anchor}>
             <Button
               onClick={toggleDrawer(anchor, true)}
               sx={{ color: 'black' }}
@@ -144,7 +144,7 @@ export default function Navbar() {
             <RouterLink to='/' className='header-title'>
               <img src={LOGO} className='header-logo' alt='header-Logo' />
             </RouterLink>
-          </React.Fragment>
+          </Fragment>
           <Box sx={{ flexGrow: 1 }} />
 
           <Tooltip title='Open account' sx={{ marginLeft: 'auto' }}>

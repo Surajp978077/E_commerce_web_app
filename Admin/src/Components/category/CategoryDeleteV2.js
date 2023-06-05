@@ -52,7 +52,7 @@ export const CategoryDelete = ({ category, onCategoryUpdate }) => {
 
     return (
         <>
-            <IconButton onClick={handleOpen} aria-label="delete">
+            <IconButton onClick={handleOpen} aria-label='delete'>
                 <DeleteIcon />
             </IconButton>
             <Dialog open={open} onClose={handleClose}>
@@ -67,7 +67,7 @@ export const CategoryDelete = ({ category, onCategoryUpdate }) => {
                 </DialogActions>
             </Dialog>
             <Snackbar open={!!error} autoHideDuration={4000} onClose={handleSnackbarClose}>
-                <MuiAlert onClose={handleSnackbarClose} severity="error" sx={{ width: '100%' }}>
+                <MuiAlert onClose={handleSnackbarClose} severity='error' sx={{ width: '100%' }}>
                     {error}
                 </MuiAlert>
             </Snackbar>
@@ -106,7 +106,7 @@ export const CategoryDelete = ({ category, onCategoryUpdate }) => {
 
 //     return (
 //         // <span onClick={handleDelete} style={{ cursor: 'pointer' }}>➖</span>
-//         <IconButton onClick={handleDelete} aria-label="delete">
+//         <IconButton onClick={handleDelete} aria-label='delete'>
 //             <DeleteIcon />
 //         </IconButton>
 //     );
