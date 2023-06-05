@@ -1,9 +1,5 @@
 import "./App.css";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useRoutes,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/home/Home";
 import Card from "./components/About/Card";
 import { UserInfoProvider } from "./components/userInfo/UserInfoProvider";
@@ -44,13 +40,22 @@ const router = createBrowserRouter([
         element: <Card />,
       },
       {
-        path: "/listings",
+        path: "/listings/",
         element: <Listings />,
+        children: [
+          {
+            path: "products/:id",
+            element: <Product />,
+          },
+          {
+            path: "new-product",
+          },
+        ],
       },
-      {
-        path: "/listings/products/:id",
-        element: <Product />,
-      },
+      // {
+      //   path: "/listings/products/:id",
+      //   element: <Product />,
+      // },
       {
         path: "/test",
         element: <Test />,

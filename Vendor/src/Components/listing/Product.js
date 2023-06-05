@@ -7,12 +7,11 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { productVendorInstance } from "../../api/axios";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -20,10 +19,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 // Now you have access to the product object in the destination component
 
-export default function Product() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { product, vendorId } = location.state;
+export default function Product(props) {
+  const { product, vendorId } = props;
   const [newProduct, setNewProduct] = useState(product);
   const [open, setOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
@@ -81,7 +78,7 @@ export default function Product() {
   };
 
   return (
-    <>
+    <div>
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="info" sx={{ width: "100%" }}>
           Info: Submitted!
@@ -92,11 +89,23 @@ export default function Product() {
           An error occurred while saving the details
         </Alert>
       </Snackbar>
-      <div style={{ margin: "20px 30px" }}>
-        <ArrowBackIosOutlinedIcon onClick={() => navigate(-1)} />
+      <div
+        style={{
+          margin: "20px 30px",
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <CloseIcon onClick={() => props.setOpen(false)} />
       </div>
       <Box
-        sx={{ display: "flex", flexWrap: "wrap", margin: "20px", gap: "2%" }}
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          margin: "20px",
+
+          gap: "2%",
+        }}
       >
         <Card
           style={{
@@ -108,7 +117,7 @@ export default function Product() {
             // minWidth: "300px",
             width: "28%",
             height: "500px",
-            backgroundColor: "#ebeae8",
+            // backgroundColor: "#ebeae8",
             borderRadius: "20px",
             position: "relative",
           }}
@@ -127,7 +136,7 @@ export default function Product() {
             gap: "10px",
             width: "70%",
             // minWidth: "300px",
-            backgroundColor: "#ebeae8",
+            // backgroundColor: "#ebeae8",
             borderRadius: "20px",
             padding: "10px",
             position: "relative",
@@ -207,6 +216,6 @@ export default function Product() {
           </form>
         </Card>
       </Box>
-    </>
+    </div>
   );
 }

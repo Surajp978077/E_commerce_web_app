@@ -3,6 +3,8 @@ import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { Link } from "react-router-dom";
+import { fonts } from "../../config/config";
 
 export default function Heading() {
   return (
@@ -11,10 +13,10 @@ export default function Heading() {
         style={{
           margin: "40px 30px 30px",
           fontSize: "40px",
-          fontFamily: "Open Sans, 'sans-serif'",
+          fontFamily: fonts.main,
         }}
       >
-        Products
+        Lisitings managment
       </h3>
       <Button
         size="large"
@@ -22,7 +24,12 @@ export default function Heading() {
         variant="contained"
         startIcon={<AddIcon />}
       >
-        New Product
+        <Link
+          to="/listings/new-product"
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          New Product
+        </Link>
       </Button>
       <Divider sx={{ marginBlockStart: "20px" }}>
         <Chip label="PRODUCTS" />

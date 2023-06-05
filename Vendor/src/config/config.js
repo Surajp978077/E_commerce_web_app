@@ -8,3 +8,8 @@ export const LOADING = loadingImage;
 export const BADREQUEST = badRequest;
 export const LOGINPAGE = `https://localhost:7085/?ClientId=${CLIENT_ID}`;
 export const Homepage = `http://localhost:3002`;
+export const fonts = {
+  main: "Open Sans, 'sans-serif'",
+  secondary: "Roboto, 'sans-serif'",
+  tertiary: "Montserrat, 'sans-serif'",
+};
