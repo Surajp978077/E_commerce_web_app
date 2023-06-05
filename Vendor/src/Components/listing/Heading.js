@@ -16,7 +16,7 @@ export default function Heading() {
           fontFamily: fonts.main,
         }}
       >
-        Lisitings managment
+        Listing managment
       </h3>
       <Button
         size="large"
