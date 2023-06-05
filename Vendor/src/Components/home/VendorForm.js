@@ -72,6 +72,7 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
             padding: "20px",
             marginBottom: "20px",
             marginTop: "10px",
+            maxWidth: "500px",
           }}
         >
           <h3>Update {label}</h3>

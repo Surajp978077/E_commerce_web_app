@@ -18,7 +18,6 @@ import {
 import { useContext } from "react";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { useNavigate, useLocation, Link, Outlet } from "react-router-dom";
 import Product from "./Product";
 
 const Listings = () => {
@@ -30,12 +29,12 @@ const Listings = () => {
   const [products, setProducts] = useState([]);
   const { userInfo } = useContext(UserInfoContext);
   const id = userInfo.vendor.vendorId;
-  const navigate = useNavigate();
-  const location = useLocation();
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null); // Track the selected product for the Dialog
-
+  const [productsCount, setProductsCount] = useState(null);
+  const [activeListings, setActiveListings] = useState(null);
+  const [inactiveListings, setInactiveListings] = useState(null);
   useEffect(() => {
     fetchProducts();
     sessionStorage.setItem("listingPage", currentPage);
@@ -52,6 +51,9 @@ const Listings = () => {
       if (response && response.data) {
         setProducts(response.data.Products);
         setTotalPages(response.data.TotalPages);
+        setProductsCount(response.data.TotalProducts);
+        setActiveListings(response.data.ActiveListings);
+        setInactiveListings(response.data.InactiveListings);
       }
     } catch (error) {
       setError(error);
@@ -85,6 +87,7 @@ const Listings = () => {
           });
           return updatedProducts;
         });
+        fetchProducts();
       }
     } catch (error) {
       setError(error);
@@ -103,7 +106,11 @@ const Listings = () => {
 
   return (
     <>
-      <Heading />
+      <Heading
+        productsCount={productsCount}
+        ActiveListings={activeListings}
+        InactiveListings={inactiveListings}
+      />
       {products.length ? (
         <>
           <div style={{ marginBlockStart: "20px" }}>
