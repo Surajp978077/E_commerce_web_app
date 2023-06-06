@@ -1,11 +1,19 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
-import { vendorInstance } from "../../api/axios";
+import { productVendorInstance, vendorInstance } from "../../api/axios";
 import { Container, Grid, Alert } from "@mui/material";
 import VendorForm from "./VendorForm";
 import { Skeleton } from "@mui/material";
 import ErrorPage from "../ErrorPage";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import {
+  Card,
+  CardContent,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import Divider from "@mui/material/Divider";
 
 function Home() {
   const [vendor, setVendor] = useState(null);
@@ -15,6 +23,7 @@ function Home() {
   const [nullFields, setNullFields] = useState([]);
   const [isAnyFieldNull, setIsAnyFieldNull] = useState(false);
   const [isVendorSet, setIsVendorSet] = useState(false);
+  const [lowQuantityItems, setLowQuantityItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,16 +105,37 @@ function Home() {
     );
   }, [userInfo.vendor, vendor, isVendorSet, setUserInfo]);
 
+  useEffect(() => {
+    const fetchLowQuantityItems = async () => {
+      try {
+        const response = await productVendorInstance.get(
+          `/low-stock/${userInfo.vendor.vendorId}`
+        );
+        if (response && response.data) {
+          setLowQuantityItems(response.data);
+        }
+      } catch (error) {
+        setLowQuantityItems([]);
+        console.error(
+          "Error occurred while fetching low quantity items:",
+          error
+        );
+      }
+    };
+    console.log("working");
+    fetchLowQuantityItems();
+  }, [userInfo.vendor]);
+
   if (errorMessage) {
     return <ErrorPage title="Error !! " desc={errorMessage} showHome={true} />;
   }
 
   return userInfo.vendor ? (
-    <Container>
+    <Container sx={{ marginTop: "30px" }}>
       <Grid container spacing={2}>
         {isAnyFieldNull ? (
           <>
-            <Alert severity="info" sx={{ marginTop: "30px", width: "100vw" }}>
+            <Alert severity="info" sx={{ width: "100vw" }}>
               Please complete your profile by filling up these details.
             </Alert>
             {nullFields.map((field) => (
@@ -120,18 +150,54 @@ function Home() {
             ))}
           </>
         ) : (
-          <Alert
-            severity="success"
-            icon={<CheckCircleOutlineIcon sx={{ fontSize: "150%" }} />}
+          ""
+        )}
+        {lowQuantityItems.length > 0 && (
+          <Card
             sx={{
-              marginTop: "40px",
-              width: "100vw",
-              fontSize: "150%",
+              margin: "5px 0 0 15px",
+              width: "500px",
+              backgroundColor: "",
+              border: "1px solid grey",
             }}
           >
-            <strong> Congratulations!</strong> Your profile details are all
-            filled in
-          </Alert>
+            <CardContent>
+              <Typography
+                variant="h6"
+                sx={{
+                  color: "red",
+                  fontWeight: "bold",
+                }}
+              >
+                {lowQuantityItems.length} items are running low on stock !
+              </Typography>
+              <List
+                sx={{
+                  overflowY: "scroll",
+                  height: "200px",
+                }}
+              >
+                {lowQuantityItems.map((item) => (
+                  <ListItem key={item.ProductId}>
+                    <ListItemText
+                      primary={item.ProdName}
+                      secondary={`Quantity: ${item.Quantity}`}
+                    />
+                    <img
+                      src={item.ImageURL}
+                      alt={item.ProdName}
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "contain",
+                      }}
+                    />
+                    <Divider />
+                  </ListItem>
+                ))}
+              </List>
+            </CardContent>
+          </Card>
         )}
       </Grid>
     </Container>
@@ -142,7 +208,7 @@ function Home() {
       width={"500px"}
       height={"210px"}
       sx={{
-        marginTop: "12px",
+        marginTop: "30px",
         marginLeft: "8%",
         bgcolor: "#e8e9eb",
         borderRadius: "5px",

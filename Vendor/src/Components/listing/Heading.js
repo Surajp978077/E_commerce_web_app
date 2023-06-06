@@ -1,28 +1,117 @@
 import React from "react";
 import Divider from "@mui/material/Divider";
 import Chip from "@mui/material/Chip";
-import { Button } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  CardContent,
+  Typography,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { Link } from "react-router-dom";
+import { fonts } from "../../config/config";
 
-export default function Heading() {
+const styles = {
+  card: {
+    "& .MuiTypography-root": {
+      padding: "0 ",
+      margin: "-10px -15px 0 -15px ",
+      width: "inherit",
+    },
+    width: "170px",
+    border: "1px solid black",
+    height: "65px",
+    padding: "3px 10px 0 ",
+  },
+};
+
+export default function Heading(props) {
   return (
     <div>
       <h3
         style={{
           margin: "40px 30px 30px",
           fontSize: "40px",
-          fontFamily: "Open Sans, 'sans-serif'",
+          fontFamily: fonts.main,
         }}
       >
-        Products
+        Listing management
       </h3>
+      <Box
+        sx={{
+          display: "flex",
+          margin: "0 20px",
+          width: "fit-content",
+        }}
+      >
+        <Link to="/listings/total-listings" style={{ textDecoration: "none" }}>
+          <Card sx={styles.card}>
+            <CardActionArea>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {props.productsCount}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  // color="text.secondary"
+                  sx={{ fontFamily: fonts.tertiary }}
+                >
+                  Total listings
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Link>
+        <Link to="/listings/number" style={{ textDecoration: "none" }}>
+          <Card sx={styles.card}>
+            <CardActionArea>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {props.ActiveListings}
+                </Typography>
+                <Typography variant="h6" sx={{ fontFamily: fonts.tertiary }}>
+                  Active listings
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Link>
+        <Link
+          to="/listings/inactive-listings"
+          style={{ textDecoration: "none" }}
+        >
+          <Card sx={styles.card}>
+            <CardActionArea>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {props.InactiveListings}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  // color="text.secondary"
+                  sx={{ fontFamily: fonts.tertiary }}
+                >
+                  Inactive listings
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Link>
+      </Box>
       <Button
         size="large"
         sx={{ margin: "8px 20px 0px" }}
         variant="contained"
         startIcon={<AddIcon />}
       >
-        New Product
+        <Link
+          to="/listings/new-product"
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          New Product
+        </Link>
       </Button>
       <Divider sx={{ marginBlockStart: "20px" }}>
         <Chip label="PRODUCTS" />
