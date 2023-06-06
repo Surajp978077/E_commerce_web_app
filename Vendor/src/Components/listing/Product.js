@@ -20,7 +20,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 // Now you have access to the product object in the destination component
 
 export default function Product(props) {
-  const { product, vendorId } = props;
+  const { product, vendorId, setRender } = props;
   const [newProduct, setNewProduct] = useState(product);
   const [open, setOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
@@ -48,6 +48,7 @@ export default function Product(props) {
       );
       if (response.status === 200) {
         setOpen(true);
+        setRender((prev) => !prev);
       }
     } catch (error) {
       console.log(error);

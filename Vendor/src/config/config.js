@@ -13,3 +13,17 @@ export const fonts = {
   secondary: "Roboto, 'sans-serif'",
   tertiary: "Poppins, 'sans-serif'",
 };
+
+export const colors = {
+  theme: "#0080ff",
+  primary: "#1E88E5",
+  secondary: "#FFC107",
+  tertiary: "#FF5722",
+  quaternary: "#4CAF50",
+  quinary: "#9C27B0",
+  senary: "#F44336",
+  septenary: "#FF9800",
+  octonary: "#795548",
+  nonary: "#607D8B",
+  denary: "#9E9E9E",
+};

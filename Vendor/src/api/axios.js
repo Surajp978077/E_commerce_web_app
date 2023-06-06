@@ -12,6 +12,10 @@ export const vendorInstance = axios.create({
   baseURL: "https://localhost:7044/api/Vendors",
   timeout: 5000,
 });
+export const productInstance = axios.create({
+  baseURL: "https://localhost:7044/api/Products",
+  timeout: 5000,
+});
 
 export const productVendorInstance = axios.create({
   baseURL: "https://localhost:7044/api/ProductVendor",
