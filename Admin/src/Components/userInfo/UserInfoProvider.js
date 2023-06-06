@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { UserInfoContext } from './UserInfoContext';
 import jwtDecode from 'jwt-decode';
-import { LOGINPAGE } from '../../config/config';
-import { LOADING } from '../../config/config';
+import { LOGINPAGE, LOADING } from '../../config/config';
 import { userInfoInstance } from '../../api/axios';
+import { Grid, Typography } from '@mui/material';
 
 export const UserInfoProvider = (props) => {
   const [userInfo, setUserInfo] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [redirectTimer, setRedirectTimer] = useState(1);
 
@@ -18,20 +17,16 @@ export const UserInfoProvider = (props) => {
       try {
         const decodedToken = jwtDecode(token);
         const response = await userInfoInstance.get(`/${decodedToken.id}`);
-        if (response && response.data) {
+        if (response?.data) {
           setUserInfo(response.data);
         }
       } catch (error) {
         handleApiError(error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
     if (token) {
       getUserInfo(token);
-    } else {
-      setIsLoading(false);
     }
   }, []);
 
@@ -54,7 +49,7 @@ export const UserInfoProvider = (props) => {
       if (error.response.status === 401) {
         setError('Not Authorized');
       } else {
-        const errorMessage = error.response.data && error.response.data.message
+        const errorMessage = error.response.data?.message
           ? `Error: ${error.response.data.message}`
           : 'An unknown error occurred';
         setError(errorMessage);
@@ -78,11 +73,18 @@ export const UserInfoProvider = (props) => {
     );
   }
 
-  if (isLoading) {
+  if (!userInfo) {
     return (
-      <div>
-        <img src={LOADING} alt='loading' />
-      </div>
+      <Grid container justifyContent='center' alignItems='center' sx={{ height: '100vh', backgroundColor: 'rgba(0, 0, 0, 0.622)' }}>
+        <Grid item>
+          <div>
+            <img src={LOADING} alt='loading' style={{ height: '150px' }} />
+          </div>
+          <Typography variant='h5' align='center'>
+            Loading...
+          </Typography>
+        </Grid>
+      </Grid>
     );
   }
 

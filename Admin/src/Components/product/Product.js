@@ -29,18 +29,18 @@ export const Product = () => {
     }, []);
 
     return (
-        <div className='m-2'>
+        <div className='m-4'>
             <Button
                 component={Link}
                 to='/product-listing'
-                variant="contained"
-                color="primary"
+                variant='contained'
+                color='primary'
                 sx={{ marginBottom: '16px' }}
                 startIcon={<AddIcon />}
             >
                 New Product
             </Button>
-            <Typography variant="h4" component="h4">List of Products:</Typography>
+            <Typography variant='h4' component='h4'>List of Products:</Typography>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }}>
                     <TableHead sx={{ backgroundColor: '#f5f5f5' }}>

@@ -9,7 +9,7 @@ import Customer from './Components/Customer';
 import Vendor from './Components/Vendor';
 import Category from './Components/category/CategoryTest';
 import { Product } from './Components/product/Product';
-import  ProductListing  from './Components/product/ProductListing';
+import { ProductListing } from './Components/product/ProductListing';
 import Order from './Components/Order';
 import Offer from './Components/Offer';
 import { NotFound } from './Components/NotFound';
