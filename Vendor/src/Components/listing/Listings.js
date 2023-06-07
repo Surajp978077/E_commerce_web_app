@@ -35,10 +35,11 @@ const Listings = () => {
   const [productsCount, setProductsCount] = useState(null);
   const [activeListings, setActiveListings] = useState(null);
   const [inactiveListings, setInactiveListings] = useState(null);
+  const [render, setRender] = useState(false);
   useEffect(() => {
     fetchProducts();
     sessionStorage.setItem("listingPage", currentPage);
-  }, [currentPage]);
+  }, [currentPage, render]);
 
   const fetchProducts = async () => {
     try {
@@ -124,7 +125,7 @@ const Listings = () => {
               <TableContainer
                 component={Paper}
                 sx={{
-                  width: "80%",
+                  width: "90%",
                   border: " 2px solid #f5f5f5 ",
                   borderRadius: "10px",
                 }}
@@ -136,6 +137,7 @@ const Listings = () => {
                       <TableCell align="left" id="table-heading">
                         Name
                       </TableCell>
+                      <TableCell id="table-heading">Category</TableCell>
                       <TableCell id="table-heading">Price</TableCell>
                       <TableCell id="table-heading">Quantity</TableCell>
                       <TableCell id="table-heading">Base Price</TableCell>
@@ -160,6 +162,7 @@ const Listings = () => {
                           />
                         </TableCell>
                         <TableCell>{product.Product.ProdName}</TableCell>
+                        <TableCell>{product.Product.Category}</TableCell>
                         <TableCell>{product.Price}</TableCell>
                         <TableCell>{product.Quantity}</TableCell>
                         <TableCell>{product.Product.Price}</TableCell>
@@ -232,7 +235,12 @@ const Listings = () => {
         }}
       >
         {selectedProduct && (
-          <Product product={selectedProduct} vendorId={id} setOpen={setOpen} />
+          <Product
+            product={selectedProduct}
+            vendorId={id}
+            setOpen={setOpen}
+            setRender={setRender}
+          />
         )}
       </Dialog>
 

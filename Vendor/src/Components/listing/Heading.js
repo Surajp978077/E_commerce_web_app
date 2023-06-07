@@ -12,6 +12,8 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import { fonts } from "../../config/config";
+import Search from "./Search";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const styles = {
   card: {
@@ -28,22 +30,37 @@ const styles = {
 };
 
 export default function Heading(props) {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   return (
     <div>
-      <h3
+      <div
         style={{
-          margin: "40px 30px 30px",
-          fontSize: "40px",
-          fontFamily: fonts.main,
+          display: "flex",
+          justifyContent: "space-between",
+          height: isMobile ? "fit-content" : "150px",
+          flexDirection: isMobile ? "column" : "row",
         }}
       >
-        Listing management
-      </h3>
+        <h3
+          style={{
+            margin: "40px 30px 30px",
+            fontSize: "40px",
+            fontFamily: fonts.main,
+          }}
+        >
+          Listing management
+        </h3>
+
+        <Search />
+      </div>
       <Box
         sx={{
           display: "flex",
-          margin: "0 20px",
-          width: "fit-content",
+          margin: isMobile ? 0 : "0 20px",
+          width: isMobile ? "100%" : "fit-content",
+          // overflowX: isMobile ? "scroll" : "",
+          overflow: isMobile ? "scroll" : "hidden",
         }}
       >
         <Link to="/listings/total-listings" style={{ textDecoration: "none" }}>
