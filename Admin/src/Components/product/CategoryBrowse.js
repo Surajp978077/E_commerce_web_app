@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { productInstance } from '../../api/axios';
+import { Typography } from '@mui/material';
 
 const CategoryList = ({ categories, onCategorySelect, categoriesSelected, level }) => {
 
@@ -9,10 +10,19 @@ const CategoryList = ({ categories, onCategorySelect, categoriesSelected, level 
 
     return (
         <div
-            style={{ height: '400px', overflowY: 'scroll', minWidth: '200px', padding: '0 10px' }}
+            style={{ height: '400px', overflowY: 'scroll', minWidth: '200px' }}
         >
-            {categories.map((category) => (
-                <p onClick={() => handleToggle(category)} style={{ fontWeight: categoriesSelected[level] === category.CategoryId ? 'bold' : 'normal' }}>
+            {categories.map((category, index) => (
+                <p
+                    key={`${category.CategoryId}-${index}`}
+                    onClick={() => handleToggle(category)}
+                    style={{
+                        fontWeight:
+                            categoriesSelected[level]?.CategoryId === category.CategoryId
+                                ? 'bold'
+                                : 'normal'
+                    }}
+                >
                     {category.Name}
                 </p>
             ))}
@@ -20,9 +30,18 @@ const CategoryList = ({ categories, onCategorySelect, categoriesSelected, level 
     );
 }
 
-export const CategoryBrowse = () => {
+export const CategoryBrowse = ({ selectedResult, categoriesNestedSearch }) => {
     const [categoriesNested, setCategoriesNested] = useState([]);
     const [categoriesSelected, setCategoriesSelected] = useState([]);
+
+    useEffect(() => {
+        if (selectedResult && categoriesNestedSearch) {
+            setCategoriesNested(categoriesNestedSearch);
+            setCategoriesSelected(selectedResult);
+            console.log(categoriesNestedSearch);
+        }
+    }, [selectedResult, categoriesNestedSearch])
+    
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -38,33 +57,51 @@ export const CategoryBrowse = () => {
     }, [])
 
     const handleCategorySelect = (category, level) => {
-        if (categoriesSelected[level] === category.CategoryId) {
+        console.log(level);
+        if (categoriesSelected[level]?.CategoryId === category.CategoryId) {
             return;
         }
+        console.log(level);
+        setCategoriesNested((categoriesNestedPrev) => categoriesNestedPrev.slice(0, level + 1));
 
-        setCategoriesNested((categoriesNestedPrev) => categoriesNestedPrev.slice(0, level));
         if (category.ChildCategories && category.ChildCategories.$values.length > 0) {
             setCategoriesNested((categoriesNestedPrev) => [...categoriesNestedPrev, category.ChildCategories.$values]);
         }
-        setCategoriesSelected((categoriesSelectedPrev) => categoriesSelectedPrev.slice(0, level));
+
+        setCategoriesSelected((categoriesSelectedPrev) => categoriesSelectedPrev.slice(0, level + 1));
+
         setCategoriesSelected((categoriesSelectedPrev) => {
             const newArray = [...categoriesSelectedPrev];
-            newArray[level] = category.CategoryId;
+            newArray[level] = {
+                CategoryId: category.CategoryId,
+                Name: category.Name
+            };
             return newArray;
         });
     }
 
     return (
-        <div className='m-3' style={{ display: 'flex' }}>
-            {categoriesNested.map((categories, index) => (
-                <CategoryList
-                    key={index}
-                    categories={categories}
-                    onCategorySelect={handleCategorySelect}
-                    categoriesSelected={categoriesSelected}
-                    level={index + 1}
-                />
-            ))}
+        <div>
+            <Typography className='mx-4' variant='subtitle2' sx={{ color: 'rgba(0, 0, 0, 0.54)' }}>Browse Categories:&nbsp;
+                <span style={{ fontWeight: 'bold' }}>
+                    {categoriesSelected.map((category, index) => (
+                        index === 0 ?
+                            <span key={category.CategoryId}>{category.Name}</span>
+                            : <span key={category.CategoryId}> / {category.Name}</span>
+                    ))}
+                </span>
+            </Typography>
+            <div className='m-4' style={{ display: 'flex' }}>
+                {categoriesNested.map((categories, index) => (
+                    <CategoryList
+                        key={index}
+                        categories={categories}
+                        onCategorySelect={handleCategorySelect}
+                        categoriesSelected={categoriesSelected}
+                        level={index}
+                    />
+                ))}
+            </div>
         </div>
     );
 }

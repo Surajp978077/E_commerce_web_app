@@ -1,8 +1,11 @@
 import { Typography } from '@mui/material';
 import { CategoryBrowse } from './CategoryBrowse';
 import CategorySearch from './CategorySearch';
+import { useState } from 'react';
 
 export const ProductListing = () => {
+    const [selectedResult, setSelectedResult] = useState(null);
+    const [categoriesNestedSearch, setCategoriesNestedSearch] = useState([]);
 
     return (
         <div>
@@ -10,9 +13,13 @@ export const ProductListing = () => {
                 <Typography variant='h5'>Select The Category For Your Product</Typography>
                 <Typography variant='subtitle2'>You can use the Search or Browse options</Typography>
             </div>
-            <CategorySearch />
-            <Typography className='mx-4' variant='subtitle2' sx={{ color: 'rgba(0, 0, 0, 0.54)' }}>Browse Categories: </Typography>
-            <CategoryBrowse />
+            <CategorySearch
+                selectedResult={selectedResult}
+                setSelectedResult={setSelectedResult}
+                categoriesNestedSearch={categoriesNestedSearch}
+                setCategoriesNestedSearch={setCategoriesNestedSearch}
+            />
+            <CategoryBrowse selectedResult={selectedResult} categoriesNestedSearch={categoriesNestedSearch} />
         </div>
     );
 }

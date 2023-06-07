@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { productInstance } from '../../api/axios';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Box, Divider, Chip } from '@mui/material';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -29,42 +29,54 @@ export const Product = () => {
     }, []);
 
     return (
-        <div className='m-4'>
-            <Button
-                component={Link}
-                to='/product-listing'
-                variant='contained'
-                color='primary'
-                sx={{ marginBottom: '16px' }}
-                startIcon={<AddIcon />}
-            >
-                New Product
-            </Button>
-            <Typography variant='h4' component='h4'>List of Products:</Typography>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }}>
-                    <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
-                        <TableRow>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem'}}>Image</TableCell>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem'}}>Name</TableCell>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem'}}>Description</TableCell>
-                            <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem'}}>Price</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {products.map((product) => (
-                            <TableRow key={product.ProdId} sx={{ '&:hover': { backgroundColor: '#f5f5f5' } }}>
-                                <TableCell>
-                                    <img src={product.ImageURL} alt='Product' style={{ width: '50px', height: '50px' }} />
-                                </TableCell>
-                                <TableCell>{product.ProdName}</TableCell>
-                                <TableCell>{product.Description}</TableCell>
-                                <TableCell>{product.Price}</TableCell>
+        <div>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-start', margin: '3%' }}>
+                <Button
+                    component={Link}
+                    to='/product-listing'
+                    variant='contained'
+                    color='primary'
+                    startIcon={<AddIcon />}
+                >
+                    New Product
+                </Button>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Divider sx={{ width: '100%', marginBottom: '16px' }} >
+                    <Chip label="PRODUCTS" />
+                </Divider>
+                <TableContainer
+                    component={Paper}
+                    sx={{
+                        width: '95%',
+                        border: '2px solid #f5f5f5',
+                        borderRadius: '10px',
+                    }}
+                >
+                    <Table sx={{ minWidth: 650 }}>
+                        <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
+                            <TableRow>
+                                <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem' }}>Image</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem' }}>Name</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem' }}>Description</TableCell>
+                                <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem' }}>Price</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {products.map((product) => (
+                                <TableRow key={product.ProdId} sx={{ '&:hover': { backgroundColor: '#f5f5f5' } }}>
+                                    <TableCell>
+                                        <img src={product.ImageURL} alt='Product' style={{ width: '50px', height: '50px' }} />
+                                    </TableCell>
+                                    <TableCell>{product.ProdName}</TableCell>
+                                    <TableCell>{product.Description}</TableCell>
+                                    <TableCell>{product.Price}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Box>
         </div>
     );
-}
+};
