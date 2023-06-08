@@ -1,9 +1,10 @@
 import Info from "./Info";
 import React, { useContext } from "react";
-import { UserInfoContext } from "../userInfo/UserInfoContext";
+
+import { VendorInfoContext } from "../context_api/vendorInfo/VendorInfoContext";
 
 export default function Card() {
-  const { userInfo } = useContext(UserInfoContext);
+  const { userInfo } = useContext(VendorInfoContext);
   // const [userInfo1, setUserInfo1] = useState(userInfo);
   return (
     <div id="flexbox">

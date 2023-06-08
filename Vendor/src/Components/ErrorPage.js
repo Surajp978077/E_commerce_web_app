@@ -45,11 +45,11 @@ export default function ErrorPage(props) {
   return (
     <div style={styles.container}>
       <Card sx={{ maxWidth: 345, backgroundColor: "#e6e8f5" }}>
-        <div style={{ padding: "40px 60px" }}>
+        <div style={{ padding: "30px 50px" }}>
           <CardMedia
             sx={{
-              height: 200,
-              width: 200,
+              height: 250,
+              width: 250,
               objectFit: "contain",
             }}
             image={BADREQUEST}
@@ -98,7 +98,7 @@ export default function ErrorPage(props) {
 }
 
 ErrorPage.defaultProps = {
-  title: "Error",
+  title: "Error !!",
   desc: "Looks like we ran into an error",
   showHome: false,
 };

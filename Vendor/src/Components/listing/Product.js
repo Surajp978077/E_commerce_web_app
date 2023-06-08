@@ -51,7 +51,6 @@ export default function Product(props) {
         setRender((prev) => !prev);
       }
     } catch (error) {
-      console.log(error);
       setOpenError(true);
     }
   };

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import jwtDecode from "jwt-decode";
-import { userInfoInstance } from "../../api/axios";
+import { userInfoInstance } from "../../../api/axios";
 import { UserInfoContext } from "./UserInfoContext";
-import { LOGINPAGE } from "../../config/config";
-import ErrorPage from "../ErrorPage";
-import LoadingScreen from "../LoadingScreen";
+import { LOGINPAGE } from "../../../config/config";
+import ErrorPage from "../../ErrorPage";
+import LoadingScreen from "../../LoadingScreen";
 
 export const UserInfoProvider = (props) => {
   const [userInfo, setUserInfo] = useState(null);

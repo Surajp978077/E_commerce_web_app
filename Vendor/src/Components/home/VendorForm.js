@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Grid, TextField, Button, Alert } from "@mui/material";
-import { UserInfoContext } from "../userInfo/UserInfoContext";
+import { UserInfoContext } from "../context_api/userInfo/UserInfoContext";
 import { vendorInstance } from "../../api/axios";
 import WarningIcon from "@mui/icons-material/Warning";
 import { CloseOutlined } from "@mui/icons-material";
@@ -45,14 +45,24 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
       }
     }
   }
+
+  const fieldDisplayLabels = {
+    Id: "ID",
+    GSTIN: "GSTIN number",
+    DeliveryPinCode: "Delivery pin code",
+    UserId: "User ID",
+  };
+
   return (
     <>
       <Grid item xs={12} md={6}>
         {alert ? (
           <Alert
             severity="error"
-            icon={<WarningIcon sx={{ fontSize: 15 }} />}
-            sx={{ fontSize: 15 }}
+            icon={
+              <WarningIcon sx={{ fontSize: "inherit", marginTop: "5px" }} />
+            }
+            sx={{ fontSize: 15, paddingBottom: 0 }}
           >
             <strong>Error:</strong> Please enter the details only in{" "}
             <strong>{typeof vendor[field]}</strong> format
@@ -75,14 +85,14 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
             maxWidth: "500px",
           }}
         >
-          <h3>Update {label}</h3>
+          <h3>Update {fieldDisplayLabels[label]}</h3>
           <form onSubmit={handleSubmit}>
             <div>
-              <label>{label}</label>
+              <label>{fieldDisplayLabels[label]}</label>
               <TextField
                 id="standard-basic"
                 variant="standard"
-                label={`Enter ${label}`}
+                label={`Enter ${fieldDisplayLabels[label]}`}
                 onChange={change}
                 name={label}
                 fullWidth

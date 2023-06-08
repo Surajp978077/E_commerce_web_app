@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { UserInfoContext } from "../userInfo/UserInfoContext";
-import { productVendorInstance, vendorInstance } from "../../api/axios";
+import { productVendorInstance } from "../../api/axios";
 import { Container, Grid, Alert } from "@mui/material";
 import VendorForm from "./VendorForm";
 import { Skeleton } from "@mui/material";
@@ -14,96 +13,15 @@ import {
   ListItemText,
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
+import { VendorInfoContext } from "../context_api/vendorInfo/VendorInfoContext";
 
 function Home() {
-  const [vendor, setVendor] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isVendorCreated, setIsVendorCreated] = useState(false);
-  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+  const { vendor, setIsVendorSet, setVendor, userInfo } =
+    useContext(VendorInfoContext);
   const [nullFields, setNullFields] = useState([]);
   const [isAnyFieldNull, setIsAnyFieldNull] = useState(false);
-  const [isVendorSet, setIsVendorSet] = useState(false);
   const [lowQuantityItems, setLowQuantityItems] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await vendorInstance.get(`/${userInfo.UserId}`);
-        if (response && response.data) {
-          setVendor(response.data);
-
-          setIsVendorSet(false);
-        }
-      } catch (error) {
-        setVendor(null);
-        setErrorMessage(error.response.data.message);
-        if (error.request.status === 404) {
-          if (!isVendorCreated) {
-            newVendor();
-            setIsVendorCreated(true);
-          }
-        } else {
-          setErrorMessage(
-            error.response.status +
-              "Error occurred while fetching vendor info, make sure API is working"
-          );
-        }
-      }
-    };
-    const newVendor = async () => {
-      try {
-        // Posting the new vendor data in database by using the user id column
-        const response = await vendorInstance.post(`/${userInfo.UserId}`, {});
-        setVendor(response.data);
-
-        setIsVendorCreated(true);
-      } catch (error) {
-        setVendor(null);
-        setErrorMessage("Error occurred while creating new vendor");
-      }
-    };
-
-    fetchData();
-  }, [userInfo.UserId, isVendorCreated]);
-
-  // Had to seperate these two useeffect because of async behaviour of post and get methods of JS
-  useEffect(() => {
-    const updateUserInfo = () => {
-      setUserInfo((prevUserInfo) => ({
-        ...prevUserInfo,
-        vendor: {
-          vendorId: vendor.Id,
-          GSTIN: vendor.GSTIN,
-          DeliveryPinCode: vendor.DeliveryPinCode,
-        },
-      }));
-      setIsVendorSet(true);
-    };
-
-    if (
-      vendor &&
-      JSON.stringify(userInfo.vendor) !== JSON.stringify(vendor) &&
-      !isVendorSet
-    ) {
-      updateUserInfo();
-    }
-
-    // Calculate nullFields with updated values
-    const fields = userInfo.vendor ? Object.keys(userInfo.vendor) : [];
-    const nullFields = fields.filter(
-      (field) => userInfo.vendor[field] === null || userInfo.vendor[field] === 0
-    );
-
-    // Set the updated values in state
-    // setVendorFields(fields);
-    setNullFields(nullFields);
-    setIsAnyFieldNull(
-      userInfo.vendor &&
-        Object.values(userInfo.vendor).some(
-          (value) => value === null || value === 0
-        )
-    );
-  }, [userInfo.vendor, vendor, isVendorSet, setUserInfo]);
 
   useEffect(() => {
     const fetchLowQuantityItems = async () => {
@@ -116,15 +34,30 @@ function Home() {
         }
       } catch (error) {
         setLowQuantityItems([]);
-        console.error(
-          "Error occurred while fetching low quantity items:",
-          error
+        setErrorMessage(
+          "Error occurred while fetching low quantity items:" + error
         );
       }
     };
-    console.log("working");
     fetchLowQuantityItems();
   }, [userInfo.vendor]);
+
+  useEffect(() => {
+    // Calculate nullFields with updated values
+    const fields = userInfo.vendor ? Object.keys(userInfo.vendor) : [];
+    const nullFields = fields.filter(
+      (field) => userInfo.vendor[field] === null || userInfo.vendor[field] === 0
+    );
+
+    // Set the updated values in state
+    setNullFields(nullFields);
+    setIsAnyFieldNull(
+      userInfo.vendor &&
+        Object.values(userInfo.vendor).some(
+          (value) => value === null || value === 0
+        )
+    );
+  }, [userInfo.vendor, vendor]);
 
   if (errorMessage) {
     return <ErrorPage title="Error !! " desc={errorMessage} showHome={true} />;
@@ -133,7 +66,7 @@ function Home() {
   return userInfo.vendor ? (
     <Container sx={{ marginTop: "30px" }}>
       <Grid container spacing={2}>
-        {isAnyFieldNull ? (
+        {isAnyFieldNull && (
           <>
             <Alert severity="info" sx={{ width: "100vw" }}>
               Please complete your profile by filling up these details.
@@ -143,14 +76,12 @@ function Home() {
                 field={field}
                 key={field}
                 label={field}
-                setVendor={setVendor}
                 vendor={vendor}
                 setIsVendorSet={setIsVendorSet}
+                setVendor={setVendor}
               />
             ))}
           </>
-        ) : (
-          ""
         )}
         {lowQuantityItems.length > 0 && (
           <Card
@@ -169,7 +100,7 @@ function Home() {
                   fontWeight: "bold",
                 }}
               >
-                {lowQuantityItems.length} items are running low on stock !
+                {lowQuantityItems.length} items are running low on stock!
               </Typography>
               <List
                 sx={{

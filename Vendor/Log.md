@@ -33,3 +33,6 @@
       - Edit the product quantity by that vendor
       - Submit button for editing the listing
     - Store the page number in the session
+  - Search bar to add a new listing from the existing products
+    - Search by product name
+    - Display the listings grouped by the category of the product
