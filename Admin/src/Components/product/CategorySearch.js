@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { productInstance } from '../../api/axios';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-// import { Typography } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
-const CategorySearch = ({ selectedResult, setSelectedResult, setCategoriesNestedSearch }) => {
+const CategorySearch = ({ setSelectedResult, setCategoriesNestedSearch }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
-    // const [selectedResult, setSelectedResult] = useState(null);
     const [categories, setCategories] = useState([]);
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -98,20 +96,19 @@ const CategorySearch = ({ selectedResult, setSelectedResult, setCategoriesNested
                         label='Search Categories'
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        InputProps={{
+                            ...params.InputProps,
+                            endAdornment: (
+                                <>
+                                    {params.InputProps.endAdornment}
+                                    <SearchIcon sx={{ ml: 1, color: 'action.active', cursor: 'pointer' }} />
+                                </>
+                            ),
+                        }}
                     />
                 )}
                 sx={{ width: '50%' }}
             />
-
-            {/* {selectedResult && (
-                <div className='my-3'>
-                    <Typography variant='subtitle2' sx={{ color: 'rgba(0, 0, 0, 0.54)' }}>Selected Category:&nbsp;
-                        <span style={{ fontWeight: 'bold' }}>
-                            {selectedResult.map((item) => item.Name).join(' / ')}
-                        </span>
-                    </Typography>
-                </div>
-            )} */}
         </div>
     );
 };

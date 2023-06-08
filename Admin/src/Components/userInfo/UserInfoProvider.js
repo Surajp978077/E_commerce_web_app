@@ -44,7 +44,8 @@ export const UserInfoProvider = (props) => {
 
   const handleApiError = (error) => {
     if (error.code === 'ECONNABORTED') {
-      setError('Request timed out');
+      // setError('Request timed out');
+      setError(error.message);
     } else if (error.response) {
       if (error.response.status === 401) {
         setError('Not Authorized');

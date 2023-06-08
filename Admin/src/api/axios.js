@@ -13,6 +13,7 @@ export const userInfoInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000,
 });
 
 export const productInstance = axios.create({
@@ -20,6 +21,7 @@ export const productInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 10000,
 });
 
 // Add a request interceptor to set the Authorization header when a token is available

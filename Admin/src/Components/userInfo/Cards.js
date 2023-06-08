@@ -7,10 +7,10 @@ export default function Cards(props) {
   console.log(props.Name);
   console.log(props.Bio);
   return (
-    <Container className="d-flex justify-content-center align-items-center">
-      <Card className="w-25 my-2">
-        <Card.Img variant="top" src={logo} />
-        <Card.Body className="text-center">
+    <Container className='d-flex justify-content-center align-items-center'>
+      <Card className='w-25 my-2'>
+        <Card.Img variant='top' src={logo} />
+        <Card.Body className='text-center'>
           <Card.Title>{props.Name}</Card.Title>
           <Card.Text>Email: {props.Email}</Card.Text>
           <Card.Text>Street: {props.Street}</Card.Text>

@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { CategoryBrowse } from './CategoryBrowse';
 import CategorySearch from './CategorySearch';
 import { useState } from 'react';
@@ -19,6 +19,7 @@ export const ProductListing = () => {
                 categoriesNestedSearch={categoriesNestedSearch}
                 setCategoriesNestedSearch={setCategoriesNestedSearch}
             />
+            <Divider sx={{ width: '100%', marginBottom: '16px', borderColor: 'darkGrey' }} />
             <CategoryBrowse selectedResult={selectedResult} categoriesNestedSearch={categoriesNestedSearch} />
         </div>
     );
