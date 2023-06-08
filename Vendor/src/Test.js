@@ -1,5 +1,8 @@
-import React from "react";
+import { React, useContext } from "react";
+import { VendorInfoContext } from "./components/context_api/vendorInfo/VendorInfoContext";
 
 export default function Test() {
-  return <div>Test</div>;
+  const { userInfo } = useContext(VendorInfoContext);
+
+  return <div>{userInfo.vendor.GSTIN}</div>;
 }

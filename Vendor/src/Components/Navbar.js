@@ -10,7 +10,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Outlet } from "react-router-dom";
-import { LOGO } from "../config/config";
+import { LOGO, colors } from "../config/config";
 import { useLocation, Link as RouterLink } from "react-router-dom";
 import ClearIcon from "@mui/icons-material/Clear";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -94,7 +94,7 @@ export default function Navbar() {
         <IconButton sx={{ p: 0 }}>
           <Avatar
             src={decodedToken.profilePic}
-            sx={{ backgroundColor: "#1593f7" }}
+            sx={{ backgroundColor: colors.theme }}
           ></Avatar>
         </IconButton>
         <Typography sx={{ marginLeft: "10px" }}>
@@ -154,7 +154,7 @@ export default function Navbar() {
               <Avatar
                 alt={decodedToken.UserName.charAt(0)}
                 src={decodedToken.profilePic}
-                sx={{ backgroundColor: "#1593f7" }}
+                sx={{ backgroundColor: colors.theme }}
               >
                 {decodedToken.UserName ? decodedToken.UserName.charAt(0) : ""}
               </Avatar>

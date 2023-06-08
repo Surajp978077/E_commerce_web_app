@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import { productInstance } from "../../api/axios";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ManageSearchOutlinedIcon from "@mui/icons-material/ManageSearchOutlined";
-import { colors } from "../../config/config";
+import { colors, fonts } from "../../config/config";
 const OptionWrapper = styled("li")({
   display: "flex",
   alignItems: "center",
@@ -53,7 +53,12 @@ const ProductSearch = () => {
         margin: isMobile ? "50px 5px" : "50px 0",
       }}
     >
-      <Typography variant="body" width={400} paddingBottom={2}>
+      <Typography
+        variant="h6"
+        width={400}
+        paddingBottom={2}
+        fontFamily={fonts.tertiary}
+      >
         Create listing using products available on E-shop
       </Typography>
       <div

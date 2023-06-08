@@ -16,9 +16,10 @@ import {
   Dialog,
 } from "@mui/material/";
 import { useContext } from "react";
-import { UserInfoContext } from "../userInfo/UserInfoContext";
+import { UserInfoContext } from "../context_api/userInfo/UserInfoContext";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import Product from "./Product";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Listings = () => {
   const pageSize = 5;
@@ -36,6 +37,9 @@ const Listings = () => {
   const [activeListings, setActiveListings] = useState(null);
   const [inactiveListings, setInactiveListings] = useState(null);
   const [render, setRender] = useState(false);
+
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   useEffect(() => {
     fetchProducts();
     sessionStorage.setItem("listingPage", currentPage);
@@ -125,7 +129,7 @@ const Listings = () => {
               <TableContainer
                 component={Paper}
                 sx={{
-                  width: "90%",
+                  width: isMobile ? "auto" : "90%",
                   border: " 2px solid #f5f5f5 ",
                   borderRadius: "10px",
                 }}
