@@ -1,19 +1,19 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-// import Root from './Components/navigation/Root';
-import Info from './Components/userInfo/Info';
+// import Root from './components/navigation/Root';
+import Info from './components/userInfo/Info';
 // import Home from './components/Home';
-import { UserInfoProvider } from './Components/userInfo/UserInfoProvider';
-import Dashboard from './Components/Dashboard';
-import Customer from './Components/Customer';
-import Vendor from './Components/Vendor';
-import Category from './Components/category/CategoryTest';
-import { Product } from './Components/product/Product';
-import { ProductListing } from './Components/product/ProductListing';
-import Order from './Components/Order';
-import Offer from './Components/Offer';
-import { NotFound } from './Components/NotFound';
-import Navbar from './Components/navigation/NavBar2';
+import { UserInfoProvider } from './components/userInfo/UserInfoProvider';
+import Dashboard from './components/Dashboard';
+import Customer from './components/Customer';
+import Vendor from './components/Vendor';
+import Category from './components/category/CategoryTest';
+import { Product } from './components/product/Product';
+import { ProductListing } from './components/product/ProductListing';
+import Order from './components/Order';
+import Offer from './components/Offer';
+import { NotFound } from './components/NotFound';
+import Navbar from './components/navigation/NavBar2';
 
 const router = createBrowserRouter([
   {
