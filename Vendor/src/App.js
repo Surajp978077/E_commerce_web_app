@@ -10,22 +10,6 @@ import Product from "./components/listing/Product";
 import Lost from "./components/Lost";
 import VendorInfoProvider from "./components/context_api/vendorInfo/VendorInfoProvider";
 
-// const VendorRoutes = () => {
-//   return (
-//     <div>
-//       <h1>Vendor Routes</h1>
-//       <ul>
-//         <li>
-//           <a href="/listings">Listings</a>
-//         </li>
-//         <li>
-//           <a href="/listings/products/:id">Products</a>
-//         </li>
-//       </ul>
-//     </div>
-//   );
-// };
-
 const router = createBrowserRouter([
   {
     path: "/",

@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Hidden, TextField } from "@mui/material";
+import React, { useState, useEffect, useContext } from "react";
+import { Dialog, TextField } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import { styled } from "@mui/material/styles";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Typography from "@mui/material/Typography";
-import { productInstance } from "../../api/axios";
+import { productInstance, productVendorInstance } from "../../api/axios";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ManageSearchOutlinedIcon from "@mui/icons-material/ManageSearchOutlined";
 import { colors, fonts } from "../../config/config";
+import { VendorInfoContext } from "../context_api/vendorInfo/VendorInfoContext";
+import Product from "./Product";
+
 const OptionWrapper = styled("li")({
   display: "flex",
   alignItems: "center",
@@ -22,25 +25,59 @@ const ProductSearch = () => {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const isMobile = useMediaQuery("(max-width:600px)");
+  const { vendor } = useContext(VendorInfoContext);
+  const [open, setOpen] = useState(false); // Track the Dialog open state
+  const [selectedProduct, setSelectedProduct] = useState(null); // Track the selected product for the Dialog
+  const [render, setRender] = useState(false); // To re-render the component when the product is edited and closed the dialog
+  const [message, setMessage] = useState("");
 
   const handleSearchTextChange = (e, value) => {
     setSearchText(e.target.value);
   };
 
+  const handleCloseDialog = () => {
+    setOpen(false);
+    setSelectedProduct(null);
+  };
   useEffect(() => {
+    const fetchSearchResults = async () => {
+      if (searchText.length < 2) return setSearchResults([]);
+      try {
+        const response = await productInstance.get(
+          `/search?name=${searchText}`
+        );
+        setSearchResults(response.data);
+      } catch (error) {
+        console.error("Error occurred while fetching search results:", error);
+      }
+    };
+
     fetchSearchResults();
   }, [searchText]);
 
-  const fetchSearchResults = async () => {
-    if (searchText.length < 2) return setSearchResults([]);
+  // have to make a function to handle the selection of the product
+  const handleSelect = (prodId) => async () => {
     try {
-      const response = await productInstance.get(`/search?name=${searchText}`);
-      setSearchResults(response.data);
+      const response = await productVendorInstance.get(`/${vendor.Id}`, {
+        params: {
+          productId: prodId,
+        },
+      });
+
+      if (response.status === 200) {
+        // setSelectedProduct(product);
+        // setOpen(true);
+        console.log(response.data);
+        setSelectedProduct(response.data.productVendor);
+        setMessage(response.data.message);
+        setOpen(true);
+        // product , vendorId, setrender, message
+      }
     } catch (error) {
+      setOpen(false);
       console.error("Error occurred while fetching search results:", error);
     }
   };
-
   const options = searchResults.map((option) => ({
     category: option.Category,
     ...option,
@@ -50,7 +87,7 @@ const ProductSearch = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        margin: isMobile ? "50px 5px" : "50px 0",
+        margin: isMobile ? "50px 5px" : "10px 0",
       }}
     >
       <Typography
@@ -87,7 +124,7 @@ const ProductSearch = () => {
           groupBy={(option) => option.category}
           getOptionLabel={(option) => option.ProdName}
           renderOption={(props, option) => (
-            <li {...props}>
+            <li {...props} onClick={handleSelect(option.ProdId)}>
               <OptionWrapper>
                 <OptionIcon>
                   <img
@@ -119,6 +156,32 @@ const ProductSearch = () => {
           }}
         />
       </div>
+      <Dialog
+        open={open}
+        onClose={handleCloseDialog}
+        sx={{
+          "& .MuiPaper-root.MuiDialog-paper": {
+            background: "rgba( 255, 255, 255, 0.05 )",
+            boxShadow: " 0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+            backdropFilter: "blur( 3px )",
+            WebkitBackdropFilter: "blur( 3px )",
+            borderRadius: "10px",
+            border: "1px solid rgba(255, 255, 255, 0.18)",
+            minWidth: "80%",
+          },
+        }}
+      >
+        {selectedProduct && (
+          <Product
+            product={selectedProduct}
+            vendorId={vendor.Id}
+            setOpen={setOpen}
+            setRender={setRender}
+            message={message ? message : null}
+            isAProduct={message ? false : true}
+          />
+        )}
+      </Dialog>
     </div>
   );
 };
