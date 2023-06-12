@@ -13,7 +13,7 @@ import { ProductListing } from './components/product/ProductListing';
 import Order from './components/Order';
 import Offer from './components/Offer';
 import { NotFound } from './components/NotFound';
-import Navbar from './components/navigation/NavBar2';
+import Navbar from './components/navigation/NavBar';
 
 const router = createBrowserRouter([
   {

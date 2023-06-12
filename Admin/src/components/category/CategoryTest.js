@@ -50,10 +50,10 @@ const Category = () => {
                             <TreeItem
                                 key={category.$id}
                                 nodeId={category.$id}
-                                sx={{ border: '2px solid #f5f5f5', borderRadius: '10px', borderColor: 'darkGrey' }}
+                                sx={{ border: '2px solid #A9A9A9', borderRadius: '10px' }}
                                 label={
                                     <>
-                                        <img src={category.CategoryImageUrl} alt='Image' style={{ width: '80px', margin: '4%' }} />
+                                        <img src={category.CategoryImageUrl} alt='' style={{ width: '50px', height: '50px', margin: '4%' }} />
                                         {category.Name}
                                         <CategoryDelete category={category} onCategoryUpdate={handleUpdate} />
                                     </>}
