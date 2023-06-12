@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { productInstance } from '../../api/axios';
-import { Typography, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
+import { Typography, List, ListItem, ListItemText, ListItemButton, ListItemAvatar, Avatar } from '@mui/material';
 
 const CategoryList = ({ categories, onCategorySelect, categoriesSelected, level }) => {
     const handleToggle = (category) => {
@@ -9,14 +9,19 @@ const CategoryList = ({ categories, onCategorySelect, categoriesSelected, level 
 
     return (
         <List
-            sx={{ overflowY: 'scroll', maxHeight: 400, border: '2px solid #f5f5f5', borderRadius: '5px', maxWidth: '200px', minWidth: '150px' }}>
+            sx={{ overflowY: 'scroll', border: '2px solid #f5f5f5', borderRadius: '5px', maxHeight: 400, maxWidth: 250, minWidth: 200 }}>
             {categories.map((category, index) => (
                 category.$id &&
                 <ListItem
                     key={`${category.CategoryId}-${index}`}
                     onClick={() => handleToggle(category)}
+                    sx={{ borderBottom: '1px solid darkGrey' }}
                 >
                     <ListItemButton selected={categoriesSelected[level]?.CategoryId === category.CategoryId}>
+                        <img src={category.CategoryImageUrl} alt='Image' style={{ width: '50px', height: '50px', marginRight: '4%' }} />
+                        {/* <ListItemAvatar>
+                            <Avatar alt='Image' src={category.CategoryImageUrl} sx={{ height: '50px', width: '50px' }}/>
+                        </ListItemAvatar> */}
                         <ListItemText primary={category.Name} />
                     </ListItemButton>
                 </ListItem>

@@ -47,10 +47,17 @@ const Category = () => {
                 <>
                     {categories.$values.map(category => {
                         return category.$id && (
-                            <TreeItem key={category.$id} nodeId={category.$id} label={<>
-                                {category.Name}
-                                <CategoryDelete category={category} onCategoryUpdate={handleUpdate} />
-                            </>}>
+                            <TreeItem
+                                key={category.$id}
+                                nodeId={category.$id}
+                                sx={{ border: '2px solid #f5f5f5', borderRadius: '10px', borderColor: 'darkGrey' }}
+                                label={
+                                    <>
+                                        <img src={category.CategoryImageUrl} alt='Image' style={{ width: '80px', margin: '4%' }} />
+                                        {category.Name}
+                                        <CategoryDelete category={category} onCategoryUpdate={handleUpdate} />
+                                    </>}
+                            >
                                 {
                                     categoryTree(category.ChildCategories, category)
                                 }
@@ -67,7 +74,7 @@ const Category = () => {
             defaultCollapseIcon={<ExpandMoreIcon />}
             defaultExpanded={['root']}
             defaultExpandIcon={<ChevronRightIcon />}
-            sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto', marginBlockStart: '20px', marginLeft: '20px' }}
+            sx={{ flexGrow: 1, maxWidth: 500, overflowY: 'auto', margin: '2%' }}
         >
             {categoryTree(categories)}
         </TreeView>

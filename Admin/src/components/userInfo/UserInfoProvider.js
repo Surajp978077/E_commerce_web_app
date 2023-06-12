@@ -42,6 +42,42 @@ export const UserInfoProvider = (props) => {
     }
   }, [error, userInfo, redirectTimer]);
 
+  // const redirect = () => {
+  //   window.location.href = LOGINPAGE;
+  // }
+
+  // const handleApiError = (error) => {
+  //   console.log(error);
+  //   if (error.response) {
+  //     if (error.response.status === 401) {
+  //       redirect();
+  //     } else {
+  //       const errorMessage = error.response.data?.message
+  //         ? `Error: ${error.response.data.message}`
+  //         : error.message;
+  //       setError(
+  //         <>
+  //           Error code: {error.code}
+  //           <br />
+  //           Error status: {error.response.status}
+  //           <br />
+  //           Error message: {errorMessage}
+  //         </>
+  //       );
+  //     }
+  //   } else if (error.request) {
+  //     setError(
+  //       <>
+  //         Error code: {error.code}
+  //         <br />
+  //         Error message: {error.message}
+  //       </>
+  //     );
+  //   } else {
+  //     redirect();
+  //   }
+  // };
+
   const handleApiError = (error) => {
     if (error.code === 'ECONNABORTED') {
       // setError('Request timed out');
@@ -61,8 +97,24 @@ export const UserInfoProvider = (props) => {
       setError('An error occurred');
     }
 
-    setRedirectTimer(1);
+    setRedirectTimer(2);
   };
+
+  // if (userInfo && userInfo.Role !== 'Admin') {
+  //   redirect();
+  // }
+
+  // if (error) {
+  //   return (
+  //     <div>
+  //       Could not connect to the server.
+  //       <br />
+  //       {error}
+  //       <br />
+  //       Kindly contact the development team.
+  //     </div>
+  //   );
+  // }
 
   if (error || (userInfo && userInfo.Role !== 'Admin')) {
     return (
