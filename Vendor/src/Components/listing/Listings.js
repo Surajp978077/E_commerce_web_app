@@ -36,7 +36,7 @@ const Listings = () => {
   const [productsCount, setProductsCount] = useState(null);
   const [activeListings, setActiveListings] = useState(null);
   const [inactiveListings, setInactiveListings] = useState(null);
-  const [render, setRender] = useState(false);
+  const [render, setRender] = useState(false); // To re-render the component when the product is edited and closed the dialog
 
   const isMobile = useMediaQuery("(max-width:600px)");
 
@@ -61,7 +61,7 @@ const Listings = () => {
         setInactiveListings(response.data.InactiveListings);
       }
     } catch (error) {
-      setError(error);
+      setError(error.message);
     }
   };
 
@@ -95,7 +95,7 @@ const Listings = () => {
         fetchProducts();
       }
     } catch (error) {
-      setError(error);
+      setError(error.message);
     }
   }
 
@@ -108,7 +108,13 @@ const Listings = () => {
     setOpen(false);
     setSelectedProduct(null);
   };
-
+  if (error) {
+    <Alert severity="error">
+      <AlertTitle>Error</AlertTitle>
+      {error}
+      Kindly refresh the page
+    </Alert>;
+  }
   return (
     <>
       <Heading

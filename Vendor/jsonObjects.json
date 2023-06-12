@@ -76,5 +76,21 @@
         "Quantity": 0
       }
     ]
+  },
+  "ProductVedors": {
+    "message": "Product is already listed by you",
+    "productVendor": {
+      "Price": 9993,
+      "Quantity": 60,
+      "Visible": 0,
+      "Product": {
+        "ProdId": 2,
+        "ProdName": "Samsung",
+        "Description": "Samsung Galaxy S7 Edge G935F 32GB 64GB 128GB",
+        "ImageURL": "https://freepngimg.com/thumb/samsung_mobile_phone/5-2-samsung-mobile-phone-png-hd.png",
+        "StartDate": "2023-06-09T18:56:09.4589892",
+        "Name": "Mobile"
+      }
+    }
   }
 }

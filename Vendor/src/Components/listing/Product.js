@@ -1,6 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { Button } from "@mui/material/";
+import { Button, Typography } from "@mui/material/";
 import Card from "@mui/material/Card";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
@@ -12,18 +12,24 @@ import { productVendorInstance } from "../../api/axios";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
+import { fonts } from "../../config/config";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 // Now you have access to the product object in the destination component
-
 export default function Product(props) {
-  const { product, vendorId, setRender } = props;
+  const { product, vendorId, setRender, message, isAProduct } = props;
   const [newProduct, setNewProduct] = useState(product);
   const [open, setOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const [productVendor, setProductVendor] = useState({
+    ProductId: newProduct.Product.ProdId,
+    Price: newProduct.Price,
+    Quantity: newProduct.Quantity,
+    visible: 1,
+  }); // for the post request for a new lisitng of a product
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -34,8 +40,7 @@ export default function Product(props) {
     setOpenError(false);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const putProduct = async () => {
     try {
       const response = await productVendorInstance.put(
         `/${vendorId}`,
@@ -55,6 +60,27 @@ export default function Product(props) {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isAProduct) {
+      console.log(productVendor);
+      try {
+        const response = await productVendorInstance.post(
+          `/${vendorId}`,
+          productVendor
+        );
+        if (response.status === 200) {
+          setOpen(true);
+          setRender((prev) => !prev);
+        }
+      } catch (error) {
+        setOpenError(true);
+      }
+    } else {
+      putProduct(e);
+    }
+  };
+
   const handleChange = (e) => {
     // To see if the input of the Price is a number
     const isText = isNaN(e.target.value);
@@ -63,6 +89,10 @@ export default function Product(props) {
       (e.target.name === "Price" || e.target.name === "Quantity")
     ) {
       setNewProduct((prevProduct) => ({
+        ...prevProduct,
+        [e.target.name]: e.target.value,
+      }));
+      setProductVendor((prevProduct) => ({
         ...prevProduct,
         [e.target.name]: e.target.value,
       }));
@@ -96,6 +126,19 @@ export default function Product(props) {
           justifyContent: "flex-end",
         }}
       >
+        <Typography
+          variant="h5"
+          sx={{
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "white",
+            fontFamily: fonts.tertiary,
+          }}
+        >
+          {isAProduct ? (message ? message : "Add a new listing") : message}
+        </Typography>
         <CloseIcon onClick={() => props.setOpen(false)} />
       </div>
       <Box
@@ -114,10 +157,8 @@ export default function Product(props) {
             justifyContent: "center", // Align content vertically at the center
             alignItems: "center", // Align items horizontally at the center
             gap: "10px",
-            // minWidth: "300px",
             width: "28%",
             height: "500px",
-            // backgroundColor: "#ebeae8",
             borderRadius: "20px",
             position: "relative",
           }}
