@@ -5,13 +5,16 @@ import { userInfoInstance } from '../api/axios';
 
 const User = () => {
   const [users, setUsers] = useState([]);
-  const [pagination, setPagination] = useState({
-    page: 1,
-    pageSize: 3,
-    sortBy: 'UserName',
-    sortDesc: false,
-    totalItems: 0,
-    totalPages: 0
+  const [pagination, setPagination] = useState(() => {
+    const storedPagination = localStorage.getItem('pagination');
+    return storedPagination ? JSON.parse(storedPagination) : {
+      page: 1,
+      pageSize: 3,
+      sortBy: 'UserName',
+      sortDesc: false,
+      totalItems: 0,
+      totalPages: 0
+    };
   });
 
   useEffect(() => {
@@ -36,6 +39,10 @@ const User = () => {
 
     fetchUsers();
   }, [pagination.page, pagination.pageSize, pagination.sortBy, pagination.sortDesc]);
+
+  useEffect(() => {
+    localStorage.setItem('pagination', JSON.stringify(pagination));
+  }, [pagination]);
 
   const handleChangePage = (event, newPage) => {
     setPagination(prevPagination => ({ ...prevPagination, page: newPage }));

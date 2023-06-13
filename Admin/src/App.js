@@ -7,7 +7,7 @@ import { UserInfoProvider } from './components/userInfo/UserInfoProvider';
 import Dashboard from './components/Dashboard';
 import User from './components/User';
 import Vendor from './components/Vendor';
-import Category from './components/category/CategoryTest';
+import Category from './components/category/Category';
 import { Product } from './components/product/Product';
 import { ProductListing } from './components/product/ProductListing';
 import Order from './components/Order';

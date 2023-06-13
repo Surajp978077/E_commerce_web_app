@@ -4,8 +4,8 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
-import { CategoryDelete } from './CategoryDeleteV2';
 import { CategoryAdd } from './CategoryAdd';
+import { CategoryDelete } from './CategoryDelete';
 
 const Category = () => {
     const [categories, setCategories] = useState([]);

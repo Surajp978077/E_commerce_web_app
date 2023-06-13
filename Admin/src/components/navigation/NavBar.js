@@ -8,9 +8,8 @@ import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, Link as RouterLink } from 'react-router-dom';
 import { LOGO } from '../../config/config';
-import { Link as RouterLink } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
 import { LOGINPAGE } from '../../config/config';
 import {
