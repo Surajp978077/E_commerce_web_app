@@ -109,6 +109,8 @@ export default function Navbar() {
       <List>
         <ListItemLink to='/' primary='Dashboard' />
 
+        <ListItemLink to='/user' primary='User' />
+
         <ListItemLink to='/category' primary='Category' />
 
         <ListItemLink to='/product' primary='Product' />

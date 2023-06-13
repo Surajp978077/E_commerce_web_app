@@ -7,11 +7,11 @@ const Dashboard = () => {
         <Container fluid className='mt-5 w-75'>
             <Row>
                 <Col md={4} className='mb-4'>
-                    <Link to={'/customer'} style={{ textDecoration: 'none' }}>
+                    <Link to={'/user'} style={{ textDecoration: 'none' }}>
                         <Card>
-                            <Card.Header>Customer</Card.Header>
+                            <Card.Header>User</Card.Header>
                             <Card.Body>
-                                This is the content for Customer.
+                                This is the content for User.
                             </Card.Body>
                         </Card>
                     </Link>

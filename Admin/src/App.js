@@ -5,7 +5,7 @@ import Info from './components/userInfo/Info';
 // import Home from './components/Home';
 import { UserInfoProvider } from './components/userInfo/UserInfoProvider';
 import Dashboard from './components/Dashboard';
-import Customer from './components/Customer';
+import User from './components/User';
 import Vendor from './components/Vendor';
 import Category from './components/category/CategoryTest';
 import { Product } from './components/product/Product';
@@ -29,8 +29,8 @@ const router = createBrowserRouter([
         element: <Info />
       },
       {
-        path: 'customer',
-        element: <Customer />
+        path: 'user',
+        element: <User />
       },
       {
         path: 'vendor',
