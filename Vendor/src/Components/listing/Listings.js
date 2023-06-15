@@ -216,7 +216,6 @@ const Listings = () => {
                         width={"200px"}
                         sx={{
                           alignItems: "center",
-                          cursor: "pointer",
                         }}
                       >
                         <span
@@ -224,14 +223,30 @@ const Listings = () => {
                           style={{
                             marginRight: "5px",
                             fontWeight: "bold",
-                            // fontFamily: fonts.tertiary,
                             fontSize: "15px",
+                            cursor: "pointer",
                           }}
                         >
                           Name
                         </span>
                         {sortBy.current === "name" &&
-                          (sortOrder.current === "asc" ? " ▲" : " ▼")}
+                          (sortOrder.current === "asc" ? (
+                            <span
+                              onClick={() => handleSort("name")}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {" "}
+                              ▲{" "}
+                            </span>
+                          ) : (
+                            <span
+                              onClick={() => handleSort("name")}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {" "}
+                              ▼{" "}
+                            </span>
+                          ))}
                         {sortBy.current === "name" && (
                           <ClearIcon
                             onClick={clearSort}
@@ -308,7 +323,23 @@ const Listings = () => {
                           Listing status
                         </span>
                         {sortBy.current === "visibility" &&
-                          (sortOrder.current === "asc" ? " ▲" : " ▼")}
+                          (sortOrder.current === "asc" ? (
+                            <span
+                              onClick={() => handleSort("visibility")}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {" "}
+                              ▲{" "}
+                            </span>
+                          ) : (
+                            <span
+                              onClick={() => handleSort("visibility")}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {" "}
+                              ▼{" "}
+                            </span>
+                          ))}
                         {sortBy.current === "visibility" && (
                           <ClearIcon
                             onClick={clearSort}
