@@ -19,7 +19,6 @@ function VendorInfoProvider(props) {
           setIsVendorSet(false);
         }
       } catch (error) {
-        console.log(error);
         setVendor(null);
         const errorMessage = error.response?.data?.message
           ? `Error: ${error.response.data.message}`

@@ -104,7 +104,7 @@ function Home() {
               </Typography>
               <List
                 sx={{
-                  overflowY: "scroll",
+                  overflowY: "auto",
                   height: "200px",
                 }}
               >

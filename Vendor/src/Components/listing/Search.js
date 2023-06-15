@@ -21,14 +21,14 @@ const OptionIcon = styled(ListItemIcon)({
   minWidth: "auto",
   marginRight: "8px",
 });
-const ProductSearch = () => {
+const Search = (props) => {
+  const { setRender, setOpenSnackbar } = props; // To re-render the component when the product is edited and closed the dialog
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const isMobile = useMediaQuery("(max-width:600px)");
   const { vendor } = useContext(VendorInfoContext);
   const [open, setOpen] = useState(false); // Track the Dialog open state
   const [selectedProduct, setSelectedProduct] = useState(null); // Track the selected product for the Dialog
-  const [render, setRender] = useState(false); // To re-render the component when the product is edited and closed the dialog
   const [message, setMessage] = useState("");
 
   const handleSearchTextChange = (e, value) => {
@@ -65,9 +65,6 @@ const ProductSearch = () => {
       });
 
       if (response.status === 200) {
-        // setSelectedProduct(product);
-        // setOpen(true);
-        console.log(response.data);
         setSelectedProduct(response.data.productVendor);
         setMessage(response.data.message);
         setOpen(true);
@@ -179,6 +176,7 @@ const ProductSearch = () => {
             setRender={setRender}
             message={message ? message : null}
             isAProduct={message ? false : true}
+            setOpenSnackbar={setOpenSnackbar}
           />
         )}
       </Dialog>
@@ -186,7 +184,7 @@ const ProductSearch = () => {
   );
 };
 
-export default ProductSearch;
+export default Search;
 
 /* <List>
         {searchResults.length > 0 &&

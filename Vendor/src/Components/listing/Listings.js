@@ -15,28 +15,36 @@ import {
   Pagination,
   Dialog,
 } from "@mui/material/";
+import Snackbar from "@mui/material/Snackbar";
 import { useContext } from "react";
 import { UserInfoContext } from "../context_api/userInfo/UserInfoContext";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import Product from "./Product";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useRef } from "react";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const Listings = () => {
   const pageSize = 5;
-  const [currentPage, setCurrentPage] = useState(
-    sessionStorage.getItem("listingPage") || 1
-  );
   const [totalPages, setTotalPages] = useState(0);
   const [products, setProducts] = useState([]);
   const { userInfo } = useContext(UserInfoContext);
   const id = userInfo.vendor.vendorId;
   const [error, setError] = useState("");
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); // For the dialog
+  const [openSnackbar, setOpenSnackbar] = useState(false); // For the snackbar
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false); // For the snackbar error
   const [selectedProduct, setSelectedProduct] = useState(null); // Track the selected product for the Dialog
   const [productsCount, setProductsCount] = useState(null);
   const [activeListings, setActiveListings] = useState(null);
   const [inactiveListings, setInactiveListings] = useState(null);
   const [render, setRender] = useState(false); // To re-render the component when the product is edited and closed the dialog
+  const sortBy = useRef(null);
+  const [currentPage, setCurrentPage] = useState(
+    sessionStorage.getItem("listingPage") || 1
+  );
+
+  const sortOrder = useRef(null);
 
   const isMobile = useMediaQuery("(max-width:600px)");
 
@@ -51,10 +59,19 @@ const Listings = () => {
         params: {
           page: currentPage,
           pageSize: pageSize,
+          sortBy: sortBy.current ? sortBy.current : null, // Sort by name or visibility
+          sortOrder: sortOrder.current ? sortOrder.current : null, // Sort order (asc or desc)
         },
       });
       if (response && response.data) {
+        console.log(id);
         setProducts(response.data.Products);
+        setCurrentPage(
+          sessionStorage.getItem("listingPage") <= response.data.TotalPages
+            ? parseInt(sessionStorage.getItem("listingPage"))
+            : 1
+        );
+        console.log(response.data.Products);
         setTotalPages(response.data.TotalPages);
         setProductsCount(response.data.TotalProducts);
         setActiveListings(response.data.ActiveListings);
@@ -69,6 +86,7 @@ const Listings = () => {
     const visibility = event.target.checked ? 1 : 0;
 
     try {
+      console.log(prodId + " " + " " + id + " " + visibility);
       const response = await productVendorInstance.put(
         `/visibility/${id}`,
         visibility,
@@ -80,6 +98,7 @@ const Listings = () => {
       );
       if (response.status === 200) {
         // Update the visibility of the product in the state
+        console.log("Visibility updated");
         setProducts((prevProducts) => {
           const updatedProducts = prevProducts.map((product) => {
             if (product.Product.ProdId === prodId) {
@@ -99,6 +118,20 @@ const Listings = () => {
     }
   }
 
+  function handleSort(column) {
+    const newSortOrder = sortOrder.current === "asc" ? "desc" : "asc";
+    sortOrder.current = newSortOrder;
+    sortBy.current = column;
+
+    fetchProducts();
+  }
+
+  function clearSort() {
+    sortBy.current = null;
+    sortOrder.current = null;
+    fetchProducts();
+  }
+
   const handleEditClick = (product) => {
     setSelectedProduct(product);
     setOpen(true);
@@ -108,6 +141,15 @@ const Listings = () => {
     setOpen(false);
     setSelectedProduct(null);
   };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+    setOpenErrorSnackbar(false);
+  };
+
   if (error) {
     <Alert severity="error">
       <AlertTitle>Error</AlertTitle>
@@ -117,10 +159,32 @@ const Listings = () => {
   }
   return (
     <>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        sx={{ width: "20%" }}
+      >
+        <Alert onClose={handleClose} severity="info" sx={{ width: "100%" }}>
+          Info: Submitted!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openErrorSnackbar}
+        autoHideDuration={2000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          An error occurred while saving the details
+        </Alert>
+      </Snackbar>
       <Heading
         productsCount={productsCount}
         ActiveListings={activeListings}
         InactiveListings={inactiveListings}
+        setRender={setRender}
+        setOpenSnackbar={setOpenSnackbar}
+        setOpen={setOpen}
       />
       {products.length ? (
         <>
@@ -135,7 +199,8 @@ const Listings = () => {
               <TableContainer
                 component={Paper}
                 sx={{
-                  width: isMobile ? "auto" : "90%",
+                  minWidth: isMobile ? "auto" : "90%",
+                  maxWidth: isMobile ? "auto" : "90%",
                   border: " 2px solid #f5f5f5 ",
                   borderRadius: "10px",
                 }}
@@ -144,15 +209,125 @@ const Listings = () => {
                   <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
                     <TableRow>
                       <TableCell id="table-heading"></TableCell>
-                      <TableCell align="left" id="table-heading">
-                        Name
+                      <TableCell
+                        align="left"
+                        id="table-heading"
+                        display="flex"
+                        width={"200px"}
+                        sx={{
+                          alignItems: "center",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <span
+                          onClick={() => handleSort("name")}
+                          style={{
+                            marginRight: "5px",
+                            fontWeight: "bold",
+                            // fontFamily: fonts.tertiary,
+                            fontSize: "15px",
+                          }}
+                        >
+                          Name
+                        </span>
+                        {sortBy.current === "name" &&
+                          (sortOrder.current === "asc" ? " ▲" : " ▼")}
+                        {sortBy.current === "name" && (
+                          <ClearIcon
+                            onClick={clearSort}
+                            sx={{ cursor: "pointer", width: "20px" }}
+                          />
+                        )}
                       </TableCell>
-                      <TableCell id="table-heading">Category</TableCell>
-                      <TableCell id="table-heading">Price</TableCell>
-                      <TableCell id="table-heading">Quantity</TableCell>
-                      <TableCell id="table-heading">Base Price</TableCell>
-                      <TableCell id="table-heading">Listing status</TableCell>
-                      <TableCell id="table-heading">Edit</TableCell>
+
+                      <TableCell id="table-heading">
+                        <span
+                          style={{
+                            marginRight: "5px",
+                            fontWeight: "bold",
+                            // fontFamily: fonts.tertiary,
+                            fontSize: "15px",
+                          }}
+                        >
+                          Category
+                        </span>
+                      </TableCell>
+                      <TableCell id="table-heading">
+                        <span
+                          style={{
+                            marginRight: "5px",
+                            fontWeight: "bold",
+                            // fontFamily: fonts.tertiary,
+                            fontSize: "15px",
+                          }}
+                        >
+                          Price
+                        </span>
+                      </TableCell>
+                      <TableCell id="table-heading">
+                        <span
+                          style={{
+                            marginRight: "5px",
+                            fontWeight: "bold",
+                            // fontFamily: fonts.tertiary,
+                            fontSize: "15px",
+                          }}
+                        >
+                          Quantity
+                        </span>
+                      </TableCell>
+                      <TableCell id="table-heading">
+                        <span
+                          style={{
+                            marginRight: "5px",
+                            fontWeight: "bold",
+                            // fontFamily: fonts.tertiary,
+                            fontSize: "15px",
+                          }}
+                        >
+                          Base Price
+                        </span>
+                      </TableCell>
+                      <TableCell
+                        id="table-heading"
+                        display="flex"
+                        width={"200px"}
+                        sx={{
+                          alignItems: "center",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <span
+                          onClick={() => handleSort("visibility")}
+                          style={{
+                            marginRight: "5px",
+                            fontWeight: "bold",
+                            // fontFamily: fonts.tertiary,
+                          }}
+                        >
+                          Listing status
+                        </span>
+                        {sortBy.current === "visibility" &&
+                          (sortOrder.current === "asc" ? " ▲" : " ▼")}
+                        {sortBy.current === "visibility" && (
+                          <ClearIcon
+                            onClick={clearSort}
+                            sx={{ cursor: "pointer", width: "20px" }}
+                          />
+                        )}
+                      </TableCell>
+
+                      <TableCell id="table-heading">
+                        <span
+                          style={{
+                            marginRight: "5px",
+                            fontWeight: "bold",
+                            // fontFamily: fonts.tertiary,
+                          }}
+                        >
+                          Edit
+                        </span>
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -163,7 +338,7 @@ const Listings = () => {
                             src={product.Product.ImageURL}
                             style={{
                               height: "100px",
-                              width: "auto",
+                              width: "100px",
                               borderRadius: "10px",
                               objectFit: "cover",
                               backgroundColor: "transparent",
@@ -171,11 +346,17 @@ const Listings = () => {
                             alt="product"
                           />
                         </TableCell>
-                        <TableCell>{product.Product.ProdName}</TableCell>
-                        <TableCell>{product.Product.Category}</TableCell>
-                        <TableCell>{product.Price}</TableCell>
-                        <TableCell>{product.Quantity}</TableCell>
-                        <TableCell>{product.Product.Price}</TableCell>
+                        <TableCell width={"200px"}>
+                          {product.Product.ProdName}
+                        </TableCell>
+                        <TableCell width={"200px"}>
+                          {product.Product.Category}
+                        </TableCell>
+                        <TableCell align="right">{product.Price}</TableCell>
+                        <TableCell align="right">{product.Quantity}</TableCell>
+                        <TableCell align="right">
+                          {product.Product.Price}
+                        </TableCell>
                         <TableCell>
                           <Switch
                             checked={product.Visibility === 1}
@@ -250,6 +431,7 @@ const Listings = () => {
             vendorId={id}
             setOpen={setOpen}
             setRender={setRender}
+            setOpenSnackbar={setOpenSnackbar}
           />
         )}
       </Dialog>

@@ -20,9 +20,17 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 // Now you have access to the product object in the destination component
 export default function Product(props) {
-  const { product, vendorId, setRender, message, isAProduct } = props;
+  const {
+    product,
+    vendorId,
+    setRender,
+    message,
+    isAProduct,
+    setOpenSnackbar,
+    setOpen,
+  } = props;
   const [newProduct, setNewProduct] = useState(product);
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
   const [productVendor, setProductVendor] = useState({
     ProductId: newProduct.Product.ProdId,
@@ -30,15 +38,6 @@ export default function Product(props) {
     Quantity: newProduct.Quantity,
     visible: 1,
   }); // for the post request for a new lisitng of a product
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-    setOpenError(false);
-  };
 
   const putProduct = async () => {
     try {
@@ -52,7 +51,8 @@ export default function Product(props) {
         }
       );
       if (response.status === 200) {
-        setOpen(true);
+        setOpen(false);
+        setOpenSnackbar(true);
         setRender((prev) => !prev);
       }
     } catch (error) {
@@ -63,15 +63,16 @@ export default function Product(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isAProduct) {
-      console.log(productVendor);
+      console.log("is a product");
       try {
         const response = await productVendorInstance.post(
           `/${vendorId}`,
           productVendor
         );
         if (response.status === 200) {
-          setOpen(true);
+          setOpenSnackbar(true);
           setRender((prev) => !prev);
+          setOpen(false);
         }
       } catch (error) {
         setOpenError(true);
@@ -106,14 +107,14 @@ export default function Product(props) {
       }));
     }
   };
-
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenError(false);
+  };
   return (
     <div>
-      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="info" sx={{ width: "100%" }}>
-          Info: Submitted!
-        </Alert>
-      </Snackbar>
       <Snackbar open={openError} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           An error occurred while saving the details

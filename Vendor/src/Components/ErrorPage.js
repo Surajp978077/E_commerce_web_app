@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { BADREQUEST, Homepage, LOGINPAGE } from "../config/config";
-
+import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import CallEndOutlinedIcon from "@mui/icons-material/CallEndOutlined";
 
@@ -88,6 +88,14 @@ export default function ErrorPage(props) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
+            <Divider
+              color="black"
+              width={"350px"}
+              sx={{
+                marginLeft: "-20px",
+                marginBottom: "20px",
+              }}
+            />
             <Typography paragraph>Contact:</Typography>
             <Typography paragraph>Mail us on: admin@gmail.com</Typography>
           </CardContent>

@@ -11,7 +11,7 @@ export const Homepage = `http://localhost:3002`;
 export const fonts = {
   main: "Open Sans, 'sans-serif'",
   secondary: "Roboto, 'sans-serif'",
-  tertiary: "Poppins, 'sans-serif'",
+  tertiary: "Poppins, 'serif'",
 };
 
 export const colors = {

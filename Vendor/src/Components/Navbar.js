@@ -193,6 +193,37 @@ export default function Navbar() {
         </Toolbar>
       </AppBar>
       <Outlet />
+
+      {/* <div
+        className="footer"
+        style={{
+          position: "fixed",
+          bottom: "0",
+          width: "100%",
+        }}
+      >
+        <div className="footer-content">
+          <div className="footer-section about">
+            <h1 className="logo-text">
+              <span>Logo</span>
+            </h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+              quibusdam, voluptatum, quod, quae voluptates voluptate
+              exercitationem quia voluptatibus quos doloribus quas. Quisquam
+              <br />
+            </p>
+          </div>
+
+          <a href="#">
+            <span>Terms and Conditions</span>
+          </a>
+
+          <a href="#">
+            <span>Contact Us</span>
+          </a>
+        </div>
+      </div> */}
     </Box>
   );
 }

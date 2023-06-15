@@ -52,7 +52,11 @@ export default function Heading(props) {
           Listing management
         </h3>
 
-        <Search />
+        <Search
+          setRender={props.setRender}
+          setOpenSnackbar={props.setOpenSnackbar}
+          setOpen={props.setOpen}
+        />
       </div>
       <Box
         sx={{
