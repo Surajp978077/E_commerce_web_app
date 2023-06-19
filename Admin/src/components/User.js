@@ -6,7 +6,7 @@ import { userInfoInstance } from '../api/axios';
 const User = () => {
   const [users, setUsers] = useState([]);
   const [pagination, setPagination] = useState(() => {
-    const storedPagination = localStorage.getItem('pagination');
+    const storedPagination = sessionStorage.getItem('userPagination');
     return storedPagination ? JSON.parse(storedPagination) : {
       page: 1,
       pageSize: 3,
@@ -41,7 +41,7 @@ const User = () => {
   }, [pagination.page, pagination.pageSize, pagination.sortBy, pagination.sortDesc]);
 
   useEffect(() => {
-    localStorage.setItem('pagination', JSON.stringify(pagination));
+    sessionStorage.setItem('userPagination', JSON.stringify(pagination));
   }, [pagination]);
 
   const handleChangePage = (event, newPage) => {

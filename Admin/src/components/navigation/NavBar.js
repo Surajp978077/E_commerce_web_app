@@ -62,6 +62,7 @@ export default function Navbar() {
 
   function logout() {
     localStorage.removeItem('token');
+    sessionStorage.removeItem('userPagination')
     window.location.href = LOGINPAGE;
   }
   const handleCloseUserMenu = () => {

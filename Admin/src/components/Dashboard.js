@@ -3,6 +3,10 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
+    const disableVendorLink = true;
+    const disableOrderLink = true;
+    const disableOfferLink = true;
+
     return (
         <Container fluid className='mt-5 w-75'>
             <Row>
@@ -17,14 +21,23 @@ const Dashboard = () => {
                     </Link>
                 </Col>
                 <Col md={4} className='mb-4'>
-                    <Link to={'/vendor'} style={{ textDecoration: 'none' }}>
-                        <Card>
+                    {disableVendorLink ? (
+                        <Card style={{ opacity: '0.6', pointerEvents: 'none', cursor: 'not-allowed' }}>
                             <Card.Header>Vendor</Card.Header>
                             <Card.Body>
                                 This is the content for Vendor.
                             </Card.Body>
                         </Card>
-                    </Link>
+                    ) : (
+                        <Link to={'/vendor'} style={{ textDecoration: 'none' }}>
+                            <Card>
+                                <Card.Header>Vendor</Card.Header>
+                                <Card.Body>
+                                    This is the content for Vendor.
+                                </Card.Body>
+                            </Card>
+                        </Link>
+                    )}
                 </Col>
                 <Col md={4} className='mb-4'>
                     <Link to={'/category'} style={{ textDecoration: 'none' }}>
@@ -49,24 +62,42 @@ const Dashboard = () => {
                     </Link>
                 </Col>
                 <Col md={4} className='mb-4'>
-                    <Link to={'/order'} style={{ textDecoration: 'none' }}>
-                        <Card>
+                    {disableOrderLink ? (
+                        <Card style={{ opacity: '0.6', pointerEvents: 'none', cursor: 'not-allowed' }}>
                             <Card.Header>Order</Card.Header>
                             <Card.Body>
                                 This is the content for Order.
                             </Card.Body>
                         </Card>
-                    </Link>
+                    ) : (
+                        <Link to={'/order'} style={{ textDecoration: 'none' }}>
+                            <Card>
+                                <Card.Header>Order</Card.Header>
+                                <Card.Body>
+                                    This is the content for Order.
+                                </Card.Body>
+                            </Card>
+                        </Link>
+                    )}
                 </Col>
                 <Col md={4} className='mb-4'>
-                    <Link to={'/offer'} style={{ textDecoration: 'none' }}>
-                        <Card>
+                    {disableOfferLink ? (
+                        <Card style={{ opacity: '0.6', pointerEvents: 'none', cursor: 'not-allowed' }}>
                             <Card.Header>Offer</Card.Header>
                             <Card.Body>
                                 This is the content for Offer.
                             </Card.Body>
                         </Card>
-                    </Link>
+                    ) : (
+                        <Link to={'/offer'} style={{ textDecoration: 'none' }}>
+                            <Card>
+                                <Card.Header>Offer</Card.Header>
+                                <Card.Body>
+                                    This is the content for Offer.
+                                </Card.Body>
+                            </Card>
+                        </Link>
+                    )}
                 </Col>
             </Row>
         </Container>
