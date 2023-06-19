@@ -49,7 +49,7 @@ const CategorySearch = ({ selectedResult, setSelectedResult, setCategoriesNested
 
             const results = categories.reduce((searchResults, category) => {
                 const searchLeafNodes = (node, path = []) => {
-                    const currentPath = [...path, { CategoryId: node.CategoryId, Name: node.Name, Description: node.Description }];
+                    const currentPath = [...path, node];
 
                     if (node.ChildCategories && node.ChildCategories.$values.length > 0) {
                         node.ChildCategories.$values.forEach((childNode) => {

@@ -115,7 +115,7 @@ export const CategoryBrowse = ({ selectedResult, categoriesNestedSearch }) => {
                         border: '2px solid #f5f5f5',
                         borderRadius: '5px',
                         maxHeight: 400,
-                        minWidth: 200,
+                        flexGrow: 1
                     }}>
                         <Typography variant='subtitle2' sx={{ color: 'rgba(0, 0, 0, 0.54)', borderBottom: '1px solid darkGrey', padding: '1rem' }}>
                             Category selected: <span style={{ fontWeight: 'bold' }}>{categorySelectedLeaf.Name}</span>
@@ -123,7 +123,7 @@ export const CategoryBrowse = ({ selectedResult, categoriesNestedSearch }) => {
                         <Typography variant='subtitle2' sx={{ padding: '1rem' }}>
                             {categorySelectedLeaf.Description}
                         </Typography>
-                        <Button variant='outlined' sx={{ marginX: '1rem' }}>
+                        <Button variant='contained' sx={{ marginX: '1rem' }}>
                             Next
                         </Button>
                     </Box>
