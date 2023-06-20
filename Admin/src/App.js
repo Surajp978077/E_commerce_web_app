@@ -5,15 +5,15 @@ import Info from './components/userInfo/Info';
 // import Home from './components/Home';
 import { UserInfoProvider } from './components/userInfo/UserInfoProvider';
 import Dashboard from './components/Dashboard';
-import Customer from './components/Customer';
+import User from './components/User';
 import Vendor from './components/Vendor';
-import Category from './components/category/CategoryTest';
+import Category from './components/category/Category';
 import { Product } from './components/product/Product';
 import { ProductListing } from './components/product/ProductListing';
 import Order from './components/Order';
 import Offer from './components/Offer';
 import { NotFound } from './components/NotFound';
-import Navbar from './components/navigation/NavBar2';
+import Navbar from './components/navigation/NavBar';
 
 const router = createBrowserRouter([
   {
@@ -29,8 +29,8 @@ const router = createBrowserRouter([
         element: <Info />
       },
       {
-        path: 'customer',
-        element: <Customer />
+        path: 'user',
+        element: <User />
       },
       {
         path: 'vendor',

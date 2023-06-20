@@ -5,8 +5,8 @@ import logo from '../../assets/images/profile.png';
 export default function Cards(props) {
   return (
     <Container className='d-flex justify-content-center align-items-center'>
-      <Card className='w-25 my-2' style={{ backgroundColor: '#f5f5f5' }}>
-        <Card.Img style={{ width: '200px', height: 'auto', margin: '2% auto' }} src={logo} />
+      <Card className='my-4' style={{ backgroundColor: '#f5f5f5' }}>
+        <Card.Img style={{ width: '222px', height: 'auto', margin: '2% auto' }} src={logo} />
         <Card.Body className='text-center' style={{ backgroundColor: '#333', color: '#fff' }}>
           <Card.Title>{props.Name}</Card.Title>
           <Card.Text>Email: {props.Email}</Card.Text>

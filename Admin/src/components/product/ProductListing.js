@@ -4,7 +4,13 @@ import CategorySearch from './CategorySearch';
 import { useState } from 'react';
 
 export const ProductListing = () => {
-    const [selectedResult, setSelectedResult] = useState(null);
+    // const [selectedResult, setSelectedResult] = useState(
+    //     [
+    //         { CategoryId: 3, Name: 'Fashion & beauty' },
+    //         { CategoryId: 11, Name: 'Women"s Fashion' },
+    //         { CategoryId: 20, Name: 'beauty' }
+    //     ]);
+    const [selectedResult, setSelectedResult] = useState([]);
     const [categoriesNestedSearch, setCategoriesNestedSearch] = useState([]);
 
     return (
@@ -16,7 +22,6 @@ export const ProductListing = () => {
             <CategorySearch
                 selectedResult={selectedResult}
                 setSelectedResult={setSelectedResult}
-                categoriesNestedSearch={categoriesNestedSearch}
                 setCategoriesNestedSearch={setCategoriesNestedSearch}
             />
             <Divider sx={{ width: '100%', marginBottom: '16px', borderColor: 'darkGrey' }} />

@@ -8,7 +8,7 @@ import { Grid, Typography } from '@mui/material';
 export const UserInfoProvider = (props) => {
   const [userInfo, setUserInfo] = useState(null);
   const [error, setError] = useState(null);
-  const [redirectTimer, setRedirectTimer] = useState(1);
+  const [redirectTimer, setRedirectTimer] = useState(3);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -97,7 +97,7 @@ export const UserInfoProvider = (props) => {
       setError('An error occurred');
     }
 
-    setRedirectTimer(2);
+    setRedirectTimer(3);
   };
 
   // if (userInfo && userInfo.Role !== 'Admin') {

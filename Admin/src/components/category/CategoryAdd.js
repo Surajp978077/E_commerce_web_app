@@ -1,15 +1,21 @@
 import { useState } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
 import { productInstance } from '../../api/axios';
-import { Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControlLabel,
+    Switch,
+    TextField,
+    Typography,
+    useMediaQuery,
+    useTheme,
+    Snackbar,
+    Alert,
+} from '@mui/material';
 
 export const CategoryAdd = ({ category, onCategoryUpdate }) => {
     const [open, setOpen] = useState(false);
@@ -18,17 +24,36 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
 
     const [categoryName, setCategoryName] = useState('');
     const [categoryDescription, setCategoryDescription] = useState('');
+    const [hasProducts, setHasProducts] = useState(false);
+    const [basicDetails, setBasicDetails] = useState(['']);
+    const [keySpecErrors, setKeySpecErrors] = useState([]);
+
     const [nameError, setNameError] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-        setNameError('');
-        setDescriptionError('');
+    const handleClose = (event, reason) => {
+        if (reason !== 'backdropClick') {
+            setOpen(false);
+            setNameError('');
+            setDescriptionError('');
+            setHasProducts(false);
+            setBasicDetails(['']);
+            setKeySpecErrors([]);
+        }
+    };
+
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnackbarOpen(false);
     };
 
     const handleSubmit = async (event) => {
@@ -46,11 +71,28 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
             return;
         }
 
+        // Validate key product specifications if hasProducts is selected
+        if (hasProducts) {
+            const updatedKeySpecErrors = basicDetails.map((detail) => {
+                if (detail.trim() === '') {
+                    return 'Key specification cannot be blank (remove/fill)';
+                }
+                return '';
+            });
+            if (updatedKeySpecErrors.some((error) => error !== '')) {
+                setKeySpecErrors(updatedKeySpecErrors);
+                return;
+            }
+        }
+
         try {
             const formData = {
                 Name: categoryName,
                 Description: categoryDescription,
                 ParentCategoryId: category ? category.CategoryId : undefined,
+                HasProducts: hasProducts,
+                BasicDetails: hasProducts ? basicDetails.join(',') : null,
+                OptionalDetails: null,
             };
 
             const response = await productInstance.post('/categories', formData);
@@ -58,11 +100,45 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
             setCategoryName('');
             setCategoryDescription('');
             onCategoryUpdate();
+            setSnackbarMessage('Category added successfully');
+            setSnackbarSeverity('success');
         } catch (error) {
-            console.log(`Error: ${error.message}`);
+            console.log(error);
+            if (error.response && error.response.data && error.response.data.Message) {
+                setSnackbarMessage(error.response.data.Message);
+            } else {
+                setSnackbarMessage('Error adding category');
+            }
+            setSnackbarSeverity('error');
         }
 
+        setSnackbarOpen(true);
         handleClose();
+    };
+
+    const handleAddKeySpecification = () => {
+        setBasicDetails([...basicDetails, '']);
+        setKeySpecErrors([...keySpecErrors, '']);
+    };
+
+    const handleRemoveKeySpecification = (index) => {
+        const updatedBasicDetails = [...basicDetails];
+        updatedBasicDetails.splice(index, 1);
+        setBasicDetails(updatedBasicDetails);
+
+        const updatedKeySpecErrors = [...keySpecErrors];
+        updatedKeySpecErrors.splice(index, 1);
+        setKeySpecErrors(updatedKeySpecErrors);
+    };
+
+    const handleKeySpecificationChange = (index, value) => {
+        const updatedBasicDetails = [...basicDetails];
+        updatedBasicDetails[index] = value;
+        setBasicDetails(updatedBasicDetails);
+
+        const updatedKeySpecErrors = [...keySpecErrors];
+        updatedKeySpecErrors[index] = '';
+        setKeySpecErrors(updatedKeySpecErrors);
     };
 
     return (
@@ -75,6 +151,7 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                 open={open}
                 onClose={handleClose}
                 aria-labelledby='responsive-dialog-title'
+                disableEscapeKeyDown
             >
                 <DialogTitle id='responsive-dialog-title'>
                     {category ? (
@@ -121,6 +198,51 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                         error={!!descriptionError}
                         helperText={descriptionError}
                     />
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={hasProducts}
+                                onChange={(e) => setHasProducts(e.target.checked)}
+                                color='primary'
+                            />
+                        }
+                        label='Has Products'
+                    />
+                    {hasProducts && (
+                        <div>
+                            <Typography variant='body1' component='div'>
+                                Key Product Specifications:
+                            </Typography>
+                            {basicDetails.map((keySpec, index) => (
+                                <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                                    <TextField
+                                        id={`keySpecification-${index}`}
+                                        label={`Specification ${index + 1}`}
+                                        placeholder='Enter specification'
+                                        required
+                                        value={keySpec}
+                                        onChange={(e) => handleKeySpecificationChange(index, e.target.value)}
+                                        fullWidth
+                                        margin='normal'
+                                        variant='outlined'
+                                        style={{ marginRight: '8px' }}
+                                        error={!!keySpecErrors[index]}
+                                        helperText={keySpecErrors[index]}
+                                    />
+                                    <Button
+                                        variant='outlined'
+                                        color='error'
+                                        onClick={() => handleRemoveKeySpecification(index)}
+                                    >
+                                        Remove
+                                    </Button>
+                                </div>
+                            ))}
+                            <Button variant='outlined' onClick={handleAddKeySpecification}>
+                                Add Specification
+                            </Button>
+                        </div>
+                    )}
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleClose}>
@@ -131,83 +253,11 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                     </Button>
                 </DialogActions>
             </Dialog>
+            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };
-
-
-// import { useState } from 'react';
-// import { productInstance } from '../../api/axios';
-// import { Button } from '@mui/material';
-// import AddIcon from '@mui/icons-material/Add';
-
-// export const CategoryAdd = ({ category, onCategoryUpdate }) => {
-//     const [categoryName, setcategoryName] = useState('');
-//     const [categoryDescription, setcategoryDescription] = useState('');
-//     const [showForm, setShowForm] = useState(false);
-
-//     const handleSubmit = async (event) => {
-//         event.preventDefault();
-
-//         try {
-//             const formData = {
-//                 Name: categoryName,
-//                 Description: categoryDescription,
-//                 ParentCategoryId: category ? category.CategoryId : undefined
-//             };
-
-//             const response = await productInstance.post('/categories', formData);
-//             console.log(response);
-//             setcategoryName('');
-//             setcategoryDescription('');
-//             onCategoryUpdate();
-//         } catch (error) {
-//             console.log(`Error: ${error.message}`);
-//         }
-
-//         setShowForm(false);
-//     }
-
-//     return (
-//         <>
-//             <Button onClick={() => setShowForm(true)} sx={{ marginLeft: '0', width: 'fit-content', height: 'inherit' }} variant='text' startIcon={<AddIcon />}>Category</Button>
-//             {showForm && (
-//                 <div className='popup'>
-//                     <div className='popup-inner'>
-//                         {category ? (
-//                             <h2>{`Add a new category to ${category.Name}`}</h2>
-//                         ) : (
-//                             <h2>Add a new category</h2>
-//                         )}
-
-//                         <form onSubmit={handleSubmit}>
-//                             <label htmlFor='categoryName'>Category Name</label>
-//                             <input
-//                                 autoFocus
-//                                 id='categoryName'
-//                                 type='text'
-//                                 placeholder='Category Name'
-//                                 required
-//                                 value={categoryName}
-//                                 onChange={(e) => setcategoryName(e.target.value)}
-//                             />
-//                             <label htmlFor='categoryDescription'>Category Description</label>
-//                             <input
-//                                 autoFocus
-//                                 id='categoryDescription'
-//                                 type='text'
-//                                 placeholder='Category Description'
-//                                 required
-//                                 value={categoryDescription}
-//                                 onChange={(e) => setcategoryDescription(e.target.value)}
-//                             />
-//                             <button type='submit'>Submit</button>
-//                             <button type='button' onClick={() => setShowForm(false)}>Cancel</button>
-//                         </form>
-//                     </div>
-//                 </div>
-//             )}
-//         </>
-//     );
-// }
-

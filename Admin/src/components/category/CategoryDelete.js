@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { productInstance } from '../../api/axios';
-import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
-import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
 import MuiAlert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 export const CategoryDelete = ({ category, onCategoryUpdate }) => {
     const [open, setOpen] = useState(false);
