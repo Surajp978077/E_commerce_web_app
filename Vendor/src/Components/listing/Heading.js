@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { fonts } from "../../config/config";
 import Search from "./Search";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -128,10 +128,11 @@ export default function Heading(props) {
         startIcon={<AddIcon />}
       >
         <Link
-          to="/listings/new-product"
+          // onClick={Navigat)}
+          to="/new_listing"
           style={{ textDecoration: "none", color: "white" }}
         >
-          New Product
+          Add a new listing
         </Link>
       </Button>
       <Divider sx={{ marginBlockStart: "20px" }}>

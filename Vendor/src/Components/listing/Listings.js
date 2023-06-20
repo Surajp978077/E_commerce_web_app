@@ -86,7 +86,6 @@ const Listings = () => {
     const visibility = event.target.checked ? 1 : 0;
 
     try {
-      console.log(prodId + " " + " " + id + " " + visibility);
       const response = await productVendorInstance.put(
         `/visibility/${id}`,
         visibility,
@@ -209,6 +208,7 @@ const Listings = () => {
                   <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
                     <TableRow>
                       <TableCell id="table-heading"></TableCell>
+
                       <TableCell
                         align="left"
                         id="table-heading"
@@ -267,49 +267,116 @@ const Listings = () => {
                           Category
                         </span>
                       </TableCell>
-                      <TableCell id="table-heading">
+
+                      <TableCell
+                        id="table-heading"
+                        sx={{
+                          // justifyContent: "center",
+                          padding: "16px 10px",
+                          width: "150px",
+                        }}
+                      >
                         <span
+                          onClick={() => handleSort("price")}
                           style={{
                             marginRight: "5px",
                             fontWeight: "bold",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Price (₹)
+                        </span>
+                        {sortBy.current === "price" &&
+                          (sortOrder.current === "asc" ? (
+                            <span
+                              onClick={() => handleSort("price")}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {" "}
+                              ▲{" "}
+                            </span>
+                          ) : (
+                            <span
+                              onClick={() => handleSort("price")}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {" "}
+                              ▼{" "}
+                            </span>
+                          ))}
+                        {sortBy.current === "price" && (
+                          <ClearIcon
+                            onClick={clearSort}
+                            sx={{ cursor: "pointer", width: "20px" }}
+                          />
+                        )}
+                      </TableCell>
+
+                      <TableCell
+                        id="table-heading"
+                        align="center"
+                        sx={{
+                          justifyContent: "center",
+                          padding: "16px",
+                          width: "150px",
+                        }}
+                      >
+                        <span
+                          onClick={() => handleSort("quantity")}
+                          style={{
+                            marginRight: "5px",
+                            fontWeight: "bold",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Stock
+                        </span>
+                        {sortBy.current === "quantity" &&
+                          (sortOrder.current === "asc" ? (
+                            <span
+                              onClick={() => handleSort("quantity")}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {" "}
+                              ▲{" "}
+                            </span>
+                          ) : (
+                            <span
+                              onClick={() => handleSort("quantity")}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {" "}
+                              ▼{" "}
+                            </span>
+                          ))}
+                        {sortBy.current === "quantity" && (
+                          <ClearIcon
+                            onClick={clearSort}
+                            sx={{ cursor: "pointer", width: "20px" }}
+                          />
+                        )}
+                      </TableCell>
+
+                      <TableCell id="table-heading" align="center">
+                        <span
+                          style={{
+                            // marginRight: "5px",
+                            fontWeight: "bold",
+                            width: "fit-content",
                             // fontFamily: fonts.tertiary,
                             fontSize: "15px",
                           }}
                         >
-                          Price
+                          Base Price (₹)
                         </span>
                       </TableCell>
-                      <TableCell id="table-heading">
-                        <span
-                          style={{
-                            marginRight: "5px",
-                            fontWeight: "bold",
-                            // fontFamily: fonts.tertiary,
-                            fontSize: "15px",
-                          }}
-                        >
-                          Quantity
-                        </span>
-                      </TableCell>
-                      <TableCell id="table-heading">
-                        <span
-                          style={{
-                            marginRight: "5px",
-                            fontWeight: "bold",
-                            // fontFamily: fonts.tertiary,
-                            fontSize: "15px",
-                          }}
-                        >
-                          Base Price
-                        </span>
-                      </TableCell>
+
                       <TableCell
                         id="table-heading"
                         display="flex"
                         width={"200px"}
                         sx={{
                           alignItems: "center",
-                          cursor: "pointer",
                         }}
                       >
                         <span
@@ -317,7 +384,7 @@ const Listings = () => {
                           style={{
                             marginRight: "5px",
                             fontWeight: "bold",
-                            // fontFamily: fonts.tertiary,
+                            cursor: "pointer",
                           }}
                         >
                           Listing status
@@ -377,17 +444,30 @@ const Listings = () => {
                             alt="product"
                           />
                         </TableCell>
+
                         <TableCell width={"200px"}>
                           {product.Product.ProdName}
                         </TableCell>
+
                         <TableCell width={"200px"}>
                           {product.Product.Category}
                         </TableCell>
-                        <TableCell align="right">{product.Price}</TableCell>
-                        <TableCell align="right">{product.Quantity}</TableCell>
+
                         <TableCell align="right">
-                          {product.Product.Price}
+                          {/* {product.Price} */}
+                          {product.Price.toLocaleString("en-in", {
+                            // style: "currency",
+                            // currency: "INR",
+                          })}
                         </TableCell>
+
+                        <TableCell align="right">{product.Quantity}</TableCell>
+
+                        <TableCell align="right">
+                          {/* {product.Product.Price} */}
+                          {product.Product.Price.toLocaleString("en-in")}
+                        </TableCell>
+
                         <TableCell>
                           <Switch
                             checked={product.Visibility === 1}
@@ -400,6 +480,7 @@ const Listings = () => {
                             inputProps={{ "aria-label": "controlled" }}
                           />
                         </TableCell>
+
                         <TableCell>
                           <EditOutlinedIcon
                             onClick={() => handleEditClick(product)}

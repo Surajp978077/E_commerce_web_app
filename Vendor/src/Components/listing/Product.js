@@ -147,7 +147,6 @@ export default function Product(props) {
           display: "flex",
           flexWrap: "wrap",
           margin: "20px",
-
           gap: "2%",
         }}
       >
@@ -249,8 +248,12 @@ export default function Product(props) {
                 position: "absolute",
                 bottom: "10px",
                 right: "10px",
+                gap: "10px",
               }}
             >
+              <Button variant="contained" color="error">
+                Delete
+              </Button>
               <Button variant="contained" type="submit">
                 Submit
               </Button>

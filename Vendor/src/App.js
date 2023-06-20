@@ -6,9 +6,9 @@ import { UserInfoProvider } from "./components/context_api/userInfo/UserInfoProv
 import Listings from "./components/listing/Listings";
 import Test from "./Test";
 import Navbar from "./components/Navbar";
-import Product from "./components/listing/Product";
 import Lost from "./components/Lost";
 import VendorInfoProvider from "./components/context_api/vendorInfo/VendorInfoProvider";
+import NewListing from "./components/listing/new_listing/NewListing";
 
 const router = createBrowserRouter([
   {
@@ -27,16 +27,13 @@ const router = createBrowserRouter([
       {
         path: "/listings/",
         element: <Listings />,
-        children: [
-          {
-            path: "products/:id",
-            element: <Product />,
-          },
-          {
-            path: "new-product",
-          },
-        ],
+        children: [],
       },
+      {
+        path: "new_listing",
+        element: <NewListing />,
+      },
+
       {
         path: "/test",
         element: <Test />,
