@@ -173,13 +173,17 @@ export const CategoryBrowse = ({
             <Typography variant="subtitle2" sx={{ padding: "1rem" }}>
               {categorySelectedLeaf.Description}
             </Typography>
-            <Button
+            {/* <Button
               variant="contained"
-              sx={{ marginX: "1rem" }}
+              sx={{
+                position: "absolute", // Position the button absolutely
+                bottom: "-5em", // Distance from the bottom
+                right: "3em", // Distance from the right
+              }}
               onClick={nextStep}
             >
               Next
-            </Button>
+            </Button> */}
           </Box>
         )}
       </div>

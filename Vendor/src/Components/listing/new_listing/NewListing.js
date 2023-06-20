@@ -31,18 +31,51 @@ export default function NewListing() {
       </Box>
       <Divider color="black" width={"100% "} />
 
-      <Stepper
-        activeStep={activeStep}
-        alternativeLabel
-        sx={{ padding: "10px 0" }}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "10px 10px",
+          backgroundColor: "#ebeae8",
+        }}
       >
-        <Step>
-          <StepLabel>Select a category</StepLabel>
-        </Step>
-        <Step>
-          <StepLabel>Enter product details</StepLabel>
-        </Step>
-      </Stepper>
+        <Stepper
+          activeStep={activeStep}
+          alternativeLabel
+          sx={{
+            width: "100%",
+            position: "relative",
+            right: "15%",
+            padding: "10px 10px",
+          }}
+        >
+          <Step>
+            <StepLabel>Select a category</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Enter product details</StepLabel>
+          </Step>
+        </Stepper>
+        <Button
+          variant="outlined"
+          color="success"
+          onClick={handleBack}
+          sx={{ marginBottom: "-2%", width: "190px", marginRight: "5px" }}
+          disabled={activeStep === 0}
+        >
+          Save & Go back
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleNext}
+          sx={{ marginBottom: "-2%" }}
+          disabled={categorySelectedLeaf === null}
+        >
+          {activeStep === 1 ? "Finish" : "Next"}
+        </Button>
+      </Box>
+
       <Divider color="black" width={"100% "} />
 
       {activeStep === 0 && (
@@ -56,15 +89,20 @@ export default function NewListing() {
           setCategoriesSelected={setCategoriesSelected}
         />
       )}
-      {/* {activeStep === 1 && <Step2Component />} */}
-      {/* {activeStep === 2 && <Step3Component />} */}
 
-      <Button disabled={activeStep === 0} onClick={handleBack}>
-        Back
-      </Button>
-      <Button onClick={handleNext}>
-        {activeStep === 1 ? "Finish" : "Next"}
-      </Button>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Button disabled={activeStep === 0} onClick={handleBack}>
+          Back
+        </Button>
+        <Button onClick={handleNext}>
+          {activeStep === 1 ? "Finish" : "Next"}
+        </Button>
+      </Box>
     </>
   );
 }

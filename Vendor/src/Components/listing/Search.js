@@ -4,7 +4,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { styled } from "@mui/material/styles";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Typography from "@mui/material/Typography";
-import { productInstance, productVendorInstance } from "../../api/axios";
+import { productVendorInstance, vendorInstance } from "../../api/axios";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ManageSearchOutlinedIcon from "@mui/icons-material/ManageSearchOutlined";
 import { colors, fonts } from "../../config/config";
@@ -43,9 +43,7 @@ const Search = (props) => {
     const fetchSearchResults = async () => {
       if (searchText.length < 2) return setSearchResults([]);
       try {
-        const response = await productInstance.get(
-          `/search?name=${searchText}`
-        );
+        const response = await vendorInstance.get(`/search?name=${searchText}`);
         setSearchResults(response.data);
       } catch (error) {
         console.error("Error occurred while fetching search results:", error);
