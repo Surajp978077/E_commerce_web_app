@@ -63,7 +63,6 @@ export default function Product(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isAProduct) {
-      console.log("is a product");
       try {
         const response = await productVendorInstance.post(
           `/${vendorId}`,

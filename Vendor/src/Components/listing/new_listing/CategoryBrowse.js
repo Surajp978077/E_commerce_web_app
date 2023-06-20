@@ -62,11 +62,13 @@ export const CategoryBrowse = ({
   selectedResult,
   categoriesNestedSearch,
   nextStep,
+  categorySelectedLeaf,
+  setCategorySelectedLeaf,
+  categoriesNested,
+  setCategoriesNested,
+  categoriesSelected,
+  setCategoriesSelected,
 }) => {
-  const [categoriesNested, setCategoriesNested] = useState([]);
-  const [categoriesSelected, setCategoriesSelected] = useState([]);
-  const [categorySelectedLeaf, setCategorySelectedLeaf] = useState(null);
-
   useEffect(() => {
     if (selectedResult && selectedResult.length > 0 && categoriesNestedSearch) {
       setCategoriesNested(categoriesNestedSearch);
@@ -85,7 +87,9 @@ export const CategoryBrowse = ({
       }
     };
 
-    fetchCategories();
+    if (categoriesNested.length === 0) {
+      fetchCategories();
+    }
   }, []);
 
   const handleCategorySelect = (category, level) => {

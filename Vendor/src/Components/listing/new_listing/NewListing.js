@@ -6,6 +6,9 @@ import Button from "@mui/material/Button";
 
 export default function NewListing() {
   const [activeStep, setActiveStep] = useState(0);
+  const [categorySelectedLeaf, setCategorySelectedLeaf] = useState(null);
+  const [categoriesNested, setCategoriesNested] = useState([]);
+  const [categoriesSelected, setCategoriesSelected] = useState([]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -42,7 +45,17 @@ export default function NewListing() {
       </Stepper>
       <Divider color="black" width={"100% "} />
 
-      {activeStep === 0 && <ProductListing nextStep={handleNext} />}
+      {activeStep === 0 && (
+        <ProductListing
+          nextStep={handleNext}
+          categorySelectedLeaf={categorySelectedLeaf}
+          setCategorySelectedLeaf={setCategorySelectedLeaf}
+          categoriesNested={categoriesNested}
+          setCategoriesNested={setCategoriesNested}
+          categoriesSelected={categoriesSelected}
+          setCategoriesSelected={setCategoriesSelected}
+        />
+      )}
       {/* {activeStep === 1 && <Step2Component />} */}
       {/* {activeStep === 2 && <Step3Component />} */}
 

@@ -11,6 +11,7 @@ export const ProductListing = (props) => {
   //         { CategoryId: 11, Name: 'Women"s Fashion' },
   //         { CategoryId: 20, Name: 'beauty' }
   //     ]);
+
   const [selectedResult, setSelectedResult] = useState([]);
   const [categoriesNestedSearch, setCategoriesNestedSearch] = useState([]);
 
@@ -36,6 +37,12 @@ export const ProductListing = (props) => {
         selectedResult={selectedResult}
         categoriesNestedSearch={categoriesNestedSearch}
         nextStep={props.nextStep}
+        categorySelectedLeaf={props.categorySelectedLeaf}
+        setCategorySelectedLeaf={props.setCategorySelectedLeaf}
+        categoriesNested={props.categoriesNested}
+        setCategoriesNested={props.setCategoriesNested}
+        categoriesSelected={props.categoriesSelected}
+        setCategoriesSelected={props.setCategoriesSelected}
       />
     </div>
   );

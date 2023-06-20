@@ -64,14 +64,13 @@ const Listings = () => {
         },
       });
       if (response && response.data) {
-        console.log(id);
         setProducts(response.data.Products);
         setCurrentPage(
           sessionStorage.getItem("listingPage") <= response.data.TotalPages
             ? parseInt(sessionStorage.getItem("listingPage"))
             : 1
         );
-        console.log(response.data.Products);
+
         setTotalPages(response.data.TotalPages);
         setProductsCount(response.data.TotalProducts);
         setActiveListings(response.data.ActiveListings);
@@ -97,7 +96,7 @@ const Listings = () => {
       );
       if (response.status === 200) {
         // Update the visibility of the product in the state
-        console.log("Visibility updated");
+
         setProducts((prevProducts) => {
           const updatedProducts = prevProducts.map((product) => {
             if (product.Product.ProdId === prodId) {
