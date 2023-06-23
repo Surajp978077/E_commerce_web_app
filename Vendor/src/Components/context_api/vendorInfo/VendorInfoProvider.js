@@ -17,17 +17,14 @@ function VendorInfoProvider(props) {
         if (response && response.data) {
           setVendor(response.data);
           setIsVendorSet(false);
+          setErrorMessage(null);
         }
       } catch (error) {
         setVendor(null);
-        const errorMessage = error.response?.data?.message
-          ? `Error: ${error.response.data.message}`
-          : error.message;
-        setErrorMessage(errorMessage);
-
         if (error.request.status === 404) {
           if (!isVendorCreated) {
             // to avoid creating new vendor more then once
+            console.log("Creating new vendor");
             newVendor();
             setIsVendorCreated(true);
           }
@@ -37,14 +34,21 @@ function VendorInfoProvider(props) {
               "Error occurred while fetching vendor info, make sure API is working"
           );
         }
+        const errorMessage = error.response?.data?.message
+          ? `Error: ${error.response.data.message}`
+          : error.message;
+        setErrorMessage(errorMessage);
       }
     };
     const newVendor = async () => {
       try {
         // Posting the new vendor data in database by using the user id column
-        const response = await vendorInstance.post(`/${userInfo.UserId}`, {});
+        const response = await vendorInstance.post(`/${userInfo.UserId}`, {
+          name: userInfo.UserName,
+        });
         setVendor(response.data);
         setIsVendorCreated(true);
+        setErrorMessage(null);
       } catch (error) {
         setVendor(null);
         setErrorMessage("Error occurred while creating new vendor");
@@ -60,6 +64,7 @@ function VendorInfoProvider(props) {
         ...prevUserInfo,
         vendor: {
           vendorId: vendor.Id,
+          vendorName: vendor.Name,
           GSTIN: vendor.GSTIN,
           DeliveryPinCode: vendor.DeliveryPinCode,
         },

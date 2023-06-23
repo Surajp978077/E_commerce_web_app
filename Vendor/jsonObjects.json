@@ -15,6 +15,7 @@
       "Pincode": "234567"
     },
     "vendor": {
+      "Name": "vendor",
       "vendorId": 3,
       "GSTIN": null,
       "DeliveryPinCode": 0
