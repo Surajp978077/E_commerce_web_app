@@ -50,6 +50,10 @@ const Listings = () => {
 
   useEffect(() => {
     fetchProducts();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
     sessionStorage.setItem("listingPage", currentPage);
   }, [currentPage, render]);
 
@@ -78,6 +82,7 @@ const Listings = () => {
       }
     } catch (error) {
       setError(error.message);
+      setOpenErrorSnackbar(true);
     }
   };
 
@@ -113,6 +118,7 @@ const Listings = () => {
       }
     } catch (error) {
       setError(error.message);
+      setOpenErrorSnackbar(true);
     }
   }
 
@@ -120,7 +126,6 @@ const Listings = () => {
     const newSortOrder = sortOrder.current === "asc" ? "desc" : "asc";
     sortOrder.current = newSortOrder;
     sortBy.current = column;
-
     fetchProducts();
   }
 
@@ -148,13 +153,6 @@ const Listings = () => {
     setOpenErrorSnackbar(false);
   };
 
-  if (error) {
-    <Alert severity="error">
-      <AlertTitle>Error</AlertTitle>
-      {error}
-      Kindly refresh the page
-    </Alert>;
-  }
   return (
     <>
       <Snackbar
@@ -173,7 +171,7 @@ const Listings = () => {
         onClose={handleClose}
       >
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          An error occurred while saving the details
+          Error: {error}
         </Alert>
       </Snackbar>
       <Heading
@@ -206,15 +204,17 @@ const Listings = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
                     <TableRow>
-                      <TableCell id="table-heading"></TableCell>
+                      <TableCell
+                        id="table-heading"
+                        sx={{
+                          width: "10%",
+                        }}
+                      ></TableCell>
 
                       <TableCell
-                        align="left"
                         id="table-heading"
-                        display="flex"
-                        width={"200px"}
                         sx={{
-                          alignItems: "center",
+                          width: "20%",
                         }}
                       >
                         <span
@@ -254,7 +254,12 @@ const Listings = () => {
                         )}
                       </TableCell>
 
-                      <TableCell id="table-heading">
+                      <TableCell
+                        id="table-heading"
+                        sx={{
+                          width: "20%",
+                        }}
+                      >
                         <span
                           style={{
                             marginRight: "5px",
@@ -269,16 +274,16 @@ const Listings = () => {
 
                       <TableCell
                         id="table-heading"
+                        align="center"
                         sx={{
                           // justifyContent: "center",
                           padding: "16px 10px",
-                          width: "150px",
+                          width: "10%",
                         }}
                       >
                         <span
                           onClick={() => handleSort("price")}
                           style={{
-                            marginRight: "5px",
                             fontWeight: "bold",
                             cursor: "pointer",
                           }}
@@ -315,9 +320,9 @@ const Listings = () => {
                         id="table-heading"
                         align="center"
                         sx={{
-                          justifyContent: "center",
+                          // justifyContent: "center",
                           padding: "16px",
-                          width: "150px",
+                          width: "10%",
                         }}
                       >
                         <span
@@ -356,7 +361,14 @@ const Listings = () => {
                         )}
                       </TableCell>
 
-                      <TableCell id="table-heading" align="center">
+                      <TableCell
+                        id="table-heading"
+                        align="center"
+                        sx={{
+                          padding: "16px",
+                          width: "10%",
+                        }}
+                      >
                         <span
                           style={{
                             // marginRight: "5px",
@@ -373,6 +385,7 @@ const Listings = () => {
                       <TableCell
                         id="table-heading"
                         display="flex"
+                        align="center"
                         width={"200px"}
                         sx={{
                           alignItems: "center",
@@ -414,7 +427,7 @@ const Listings = () => {
                         )}
                       </TableCell>
 
-                      <TableCell id="table-heading">
+                      <TableCell id="table-heading" align="center">
                         <span
                           style={{
                             marginRight: "5px",
@@ -437,7 +450,7 @@ const Listings = () => {
                               height: "100px",
                               width: "100px",
                               borderRadius: "10px",
-                              objectFit: "cover",
+                              objectFit: "contain",
                               backgroundColor: "transparent",
                             }}
                             alt="product"
@@ -463,11 +476,10 @@ const Listings = () => {
                         <TableCell align="right">{product.Quantity}</TableCell>
 
                         <TableCell align="right">
-                          {/* {product.Product.Price} */}
                           {product.Product.Price.toLocaleString("en-in")}
                         </TableCell>
 
-                        <TableCell>
+                        <TableCell align="center">
                           <Switch
                             checked={product.Visibility === 1}
                             onChange={(event) =>

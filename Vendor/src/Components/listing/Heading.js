@@ -121,20 +121,20 @@ export default function Heading(props) {
           </Card>
         </Link>
       </Box>
-      <Button
-        size="large"
-        sx={{ margin: "8px 20px 0px" }}
-        variant="contained"
-        startIcon={<AddIcon />}
+      <Link
+        // onClick={Navigat)}
+        to="/new_listing"
+        style={{ textDecoration: "none", color: "white" }}
       >
-        <Link
-          // onClick={Navigat)}
-          to="/new_listing"
-          style={{ textDecoration: "none", color: "white" }}
+        <Button
+          size="large"
+          sx={{ margin: "8px 20px 0px" }}
+          variant="contained"
+          startIcon={<AddIcon />}
         >
           Add a new listing
-        </Link>
-      </Button>
+        </Button>
+      </Link>
       <Divider sx={{ marginBlockStart: "20px" }}>
         <Chip label="PRODUCTS" />
       </Divider>
