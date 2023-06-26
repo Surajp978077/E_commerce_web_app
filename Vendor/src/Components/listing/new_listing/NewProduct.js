@@ -1,27 +1,16 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Collapse,
-  IconButton,
-  InputLabel,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Card, TextField, Typography } from "@mui/material";
 import { ExpandMore as ExpandMoreIcon, Label } from "@mui/icons-material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Tooltip from "@mui/material/Tooltip";
-
+import ImagePlaceHolder from "../../../assets/images/ImagePlaceholder.png";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function NewProduct(props) {
   const { categorySelected } = props;
   const [category, setCategory] = useState(categorySelected);
-  const [imageURL, setImageURL] = useState(null);
   const [basicDetails, setBasicDetails] = useState(
     category.BasicDetails.reduce((result, key) => {
       result[key] = null;
@@ -43,6 +32,11 @@ export default function NewProduct(props) {
     BasicDetails: {},
     OptionalDetails: {},
     CategoryId: category.CategoryId,
+    productVendor: {
+      Price: 0,
+      Quantity: 0,
+      Visible: null, // true or false
+    },
   });
 
   const handleChange = (index, value) => {
@@ -97,9 +91,20 @@ export default function NewProduct(props) {
           <TextField
             required
             id="outlined-required"
-            label="Required"
-            defaultValue="Hello World"
+            label="Image URL"
             fullWidth
+            value={productDetails.ImageURL}
+            name="ImageURL"
+            size="small"
+            variant="outlined"
+            onChange={(event) => {
+              setProductDetails((prev) => {
+                return {
+                  ...prev,
+                  ImageURL: event.target.value,
+                };
+              });
+            }}
           />
           <div
             style={{
@@ -110,11 +115,28 @@ export default function NewProduct(props) {
             }}
           >
             <img
-              src="https://images.squarespace-cdn.com/content/v1/5fd16ea5bd769522bedc068d/6a755ae6-fc01-4240-b3e0-6e5926a452ef/RSU+Tax+Calculator+Sample.jpg"
+              src={
+                productDetails.ImageURL
+                  ? productDetails.ImageURL
+                  : ImagePlaceHolder
+              }
               style={{
                 width: "100%",
+                height: "100%",
+                objectFit: "contain",
               }}
               alt="Product"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = ImagePlaceHolder;
+                setProductDetails((prev) => {
+                  return {
+                    ...prev,
+                    ImageURL: null,
+                  };
+                });
+              }}
+              loading="lazy"
             />
           </div>
         </Card>
@@ -155,7 +177,7 @@ export default function NewProduct(props) {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography>Name & Description</Typography>
+                  <Typography>Name, Description & Price</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <label>Name : </label>
@@ -191,8 +213,24 @@ export default function NewProduct(props) {
                       name="Description"
                       value={productDetails.Description}
                       onChange={nameanddescrptionChangeHandler}
+                      sx={{ margin: "0 0 10px 10px" }}
                     />
                   </Tooltip>
+
+                  <br />
+
+                  <label>Base Price : </label>
+                  <TextField
+                    required
+                    id="outlined-required"
+                    label="Base Price"
+                    value={productDetails.Price}
+                    name="Price"
+                    size="small"
+                    variant="outlined"
+                    onChange={nameanddescrptionChangeHandler}
+                    sx={{ margin: "0 0 10px 10px" }}
+                  ></TextField>
                 </AccordionDetails>
               </Accordion>
             </div>
