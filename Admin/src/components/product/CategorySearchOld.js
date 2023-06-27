@@ -4,7 +4,25 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 
-const CategorySearch = ({ selectedResult, setSelectedResult, categorySelectedLeaf, setCategorySelectedLeaf }) => {
+const createNestedArray = (result, categories) => {
+    let tempArray = [categories];
+
+    result.forEach((item, index) => {
+        const matchingCategory = tempArray[index]?.find(
+            (category) => category.CategoryId === item.CategoryId
+        );
+
+        if (matchingCategory) {
+            if (matchingCategory.ChildCategories && matchingCategory.ChildCategories.$values.length > 0) {
+                tempArray = [...tempArray, matchingCategory.ChildCategories.$values];
+            }
+        }
+    });
+
+    return tempArray;
+};
+
+const CategorySearch = ({ selectedResult, setSelectedResult, setCategoriesNestedSearch }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -59,14 +77,16 @@ const CategorySearch = ({ selectedResult, setSelectedResult, categorySelectedLea
             if (result) {
                 setSelectedResult(result);
                 setSearchQuery(result.map((item) => item.Name).join(' / '));
-                setCategorySelectedLeaf(result[result.length - 1]);
+
+                const nestedArray = createNestedArray(result, categories);
+                setCategoriesNestedSearch(nestedArray);
             }
         },
-        [setSelectedResult, setCategorySelectedLeaf]
+        [categories, setSelectedResult, setCategoriesNestedSearch]
     );
 
     useEffect(() => {
-        if (selectedResult && selectedResult.length > 0 && categories && categories.length > 0) {
+        if (selectedResult && categories) {
             handleSelectResult(selectedResult);
         }
     }, [selectedResult, categories, handleSelectResult]);
@@ -81,7 +101,7 @@ const CategorySearch = ({ selectedResult, setSelectedResult, categorySelectedLea
                     renderInput={(params) => (
                         <TextField
                             {...params}
-                            label='Filter by Category'
+                            label='Search Categories'
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />

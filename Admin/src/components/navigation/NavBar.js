@@ -62,9 +62,12 @@ export default function Navbar() {
 
   function logout() {
     localStorage.removeItem('token');
-    sessionStorage.removeItem('userPagination')
+    sessionStorage.clear();
+    // sessionStorage.removeItem('userPagination')
+    // sessionStorage.removeItem('productPagination')
     window.location.href = LOGINPAGE;
   }
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
