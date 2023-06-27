@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Divider, Chip } from '@mui/material';
-import { Pagination } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Divider, Chip, Pagination } from '@mui/material';
 import { userInfoInstance } from '../api/axios';
 
 const User = () => {
@@ -44,8 +43,8 @@ const User = () => {
     sessionStorage.setItem('userPagination', JSON.stringify(pagination));
   }, [pagination]);
 
-  const handleChangePage = (event, newPage) => {
-    setPagination(prevPagination => ({ ...prevPagination, page: newPage }));
+  const handleChangePage = (event, page) => {
+    setPagination(prevPagination => ({ ...prevPagination, page: page }));
   };
 
   const handleSort = (column) => {
