@@ -91,7 +91,7 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                 Description: categoryDescription,
                 ParentCategoryId: category ? category.CategoryId : undefined,
                 HasProducts: hasProducts,
-                BasicDetails: hasProducts ? basicDetails.join(',') : null,
+                BasicDetails: hasProducts ? basicDetails : null,
                 OptionalDetails: null,
             };
 
