@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, Card, TextField, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Button, Card, TextField, Typography } from "@mui/material";
 import { ExpandMore as ExpandMoreIcon, Label } from "@mui/icons-material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -59,9 +59,40 @@ export default function NewProduct(props) {
       };
     });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // console.log(inputValues);
+  };
+
+  const handleReset = () => {
+    setProductDetails({
+      ProdName: null,
+      Description: null,
+      Price: null,
+      ImageURL: null,
+      BasicDetails: {},
+      OptionalDetails: {},
+      CategoryId: category.CategoryId,
+      productVendor: {
+        Price: 0,
+        Quantity: 0,
+        Visible: null, // true or false
+      },
+    });
+
+    setBasicDetails(
+      category.BasicDetails.reduce((result, key) => {
+        result[key] = null;
+        return result;
+      }, {})
+    );
+    setOptionalDetails(
+      category.OptionalDetails.reduce((result, key) => {
+        result[key] = null;
+        return result;
+      }, {})
+    );
   };
 
   return (
@@ -93,7 +124,7 @@ export default function NewProduct(props) {
             id="outlined-required"
             label="Image URL"
             fullWidth
-            value={productDetails.ImageURL}
+            value={productDetails.ImageURL ? productDetails.ImageURL : ""}
             name="ImageURL"
             size="small"
             variant="outlined"
@@ -180,57 +211,85 @@ export default function NewProduct(props) {
                   <Typography>Name, Description & Price</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <label>Name : </label>
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Name"
-                    value={productDetails.ProdName}
-                    name="ProdName"
-                    size="small"
-                    variant="outlined"
-                    onChange={nameanddescrptionChangeHandler}
-                    sx={{ margin: "0 0 10px 10px" }}
-                  ></TextField>
-                  <br />
-                  <label
-                    style={{
-                      marginBottom: "10px",
-                    }}
-                  >
-                    Description :
-                  </label>
-                  <Tooltip
-                    title="Keep the description concise and informative"
-                    placement="top-start"
-                  >
+                  <form>
+                    <Button
+                      type="reset"
+                      variant="outlined"
+                      color="error"
+                      onClick={() => {
+                        setProductDetails({
+                          ProdName: null,
+                          Description: null,
+                          Price: null,
+                        });
+                      }}
+                      sx={{
+                        position: "absolute",
+                        top: "10px",
+                        right: "40px",
+                      }}
+                    >
+                      Reset
+                    </Button>
+                    <label>Name : </label>
                     <TextField
-                      id="outlined-multiline-static"
-                      label="Multiline"
-                      multiline
-                      rows={4}
-                      fullWidth
-                      name="Description"
-                      value={productDetails.Description}
+                      required
+                      id="outlined-required"
+                      label="Name"
+                      value={
+                        productDetails.ProdName ? productDetails.ProdName : ""
+                      }
+                      name="ProdName"
+                      size="small"
+                      variant="outlined"
                       onChange={nameanddescrptionChangeHandler}
                       sx={{ margin: "0 0 10px 10px" }}
-                    />
-                  </Tooltip>
+                    ></TextField>
+                    <br />
+                    <label
+                      style={{
+                        marginBottom: "10px",
+                      }}
+                    >
+                      Description :
+                    </label>
+                    <Tooltip
+                      title="Keep the description concise and informative"
+                      placement="top-start"
+                    >
+                      <TextField
+                        id="outlined-multiline-static"
+                        label="Multiline"
+                        multiline
+                        rows={4}
+                        fullWidth
+                        name="Description"
+                        value={
+                          productDetails.Description
+                            ? productDetails.Description
+                            : ""
+                        }
+                        onChange={nameanddescrptionChangeHandler}
+                        sx={{ margin: "0 0 10px 10px" }}
+                      />
+                    </Tooltip>
 
-                  <br />
+                    <br />
 
-                  <label>Base Price : </label>
-                  <TextField
-                    required
-                    id="outlined-required"
-                    label="Base Price"
-                    value={productDetails.Price}
-                    name="Price"
-                    size="small"
-                    variant="outlined"
-                    onChange={nameanddescrptionChangeHandler}
-                    sx={{ margin: "0 0 10px 10px" }}
-                  ></TextField>
+                    <label>Base Price : </label>
+                    <TextField
+                      required
+                      id="outlined-required"
+                      label="Base Price"
+                      value={productDetails.Price ? productDetails.Price : ""}
+                      name="Price"
+                      size="small"
+                      variant="outlined"
+                      type="number"
+                      onChange={nameanddescrptionChangeHandler}
+                      sx={{ margin: "0 0 10px 10px" }}
+                    ></TextField>
+                  </form>
                 </AccordionDetails>
               </Accordion>
             </div>
@@ -252,26 +311,48 @@ export default function NewProduct(props) {
                 </AccordionSummary>
                 <AccordionDetails>
                   <div style={{ width: "fullWidth" }}>
-                    <form
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "10px",
-
-                        //   padding: "10px",
-                      }}
-                    >
+                    <form>
+                      <Button
+                        type="reset"
+                        variant="outlined"
+                        color="error"
+                        onClick={() => {
+                          setProductDetails({
+                            ProdName: null,
+                            Description: null,
+                            Price: null,
+                            ImageURL: null,
+                          });
+                        }}
+                        sx={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "40px",
+                        }}
+                      >
+                        Reset
+                      </Button>
                       {category.BasicDetails.map((value, index) => (
-                        <TextField
-                          key={index}
-                          label={`Input ${index + 1}`}
-                          value={value}
-                          onChange={(event) =>
-                            handleChange(index, event.target.value)
-                          }
-                          fullWidth
-                          margin="normal"
-                        />
+                        <React.Fragment key={index}>
+                          <label htmlFor={value}>{value}:</label>
+                          <TextField
+                            id={value}
+                            label={`Input ${index + 1}`}
+                            value={
+                              basicDetails[index] ? basicDetails[index] : ""
+                            }
+                            onChange={(event) =>
+                              handleChange(index, event.target.value)
+                            }
+                            margin="normal"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            variant="outlined"
+                            sx={{ margin: "0 0 10px 10px" }}
+                          />
+                          <br />
+                        </React.Fragment>
                       ))}
                     </form>
                   </div>
@@ -296,27 +377,54 @@ export default function NewProduct(props) {
                   <Typography>Optional Details</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <form
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                      //   padding: "10px",
-                    }}
-                  >
-                    {category.OptionalDetails.map((value, index) => (
-                      <TextField
-                        key={index}
-                        label={`Input ${index + 1}`}
-                        value={value}
-                        onChange={(event) =>
-                          handleChange(index, event.target.value)
-                        }
-                        fullWidth
-                        margin="normal"
-                      />
-                    ))}
-                  </form>
+                  <div style={{ width: "fullWidth" }}>
+                    <form>
+                      <Button
+                        type="reset"
+                        variant="outlined"
+                        color="error"
+                        onClick={() => {
+                          setProductDetails({
+                            ProdName: null,
+                            Description: null,
+                            Price: null,
+                            ImageURL: null,
+                          });
+                        }}
+                        sx={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "40px",
+                        }}
+                      >
+                        Reset
+                      </Button>
+                      {category.OptionalDetails.map((value, index) => (
+                        <React.Fragment key={index}>
+                          <label htmlFor={value}>{value}:</label>
+                          <TextField
+                            id={value}
+                            label={`Input ${index + 1}`}
+                            value={
+                              optionalDetails[index]
+                                ? optionalDetails[index]
+                                : ""
+                            }
+                            onChange={(event) =>
+                              handleChange(index, event.target.value)
+                            }
+                            margin="normal"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            variant="outlined"
+                            sx={{ margin: "0 0 10px 10px" }}
+                          />
+                          <br />
+                        </React.Fragment>
+                      ))}
+                    </form>
+                  </div>
                 </AccordionDetails>
               </Accordion>
             </div>

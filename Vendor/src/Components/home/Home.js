@@ -71,16 +71,18 @@ function Home() {
             <Alert severity="info" sx={{ width: "100vw" }}>
               Please complete your profile by filling up these details.
             </Alert>
-            {nullFields.map((field) => (
-              <VendorForm
-                field={field}
-                key={field}
-                label={field}
-                vendor={vendor}
-                setIsVendorSet={setIsVendorSet}
-                setVendor={setVendor}
-              />
-            ))}
+            <div style={{ width: "100%", display: "flex" }}>
+              {nullFields.map((field) => (
+                <VendorForm
+                  field={field}
+                  key={field}
+                  label={field}
+                  vendor={vendor}
+                  setIsVendorSet={setIsVendorSet}
+                  setVendor={setVendor}
+                />
+              ))}
+            </div>
           </>
         )}
         {lowQuantityItems.length > 0 && (
