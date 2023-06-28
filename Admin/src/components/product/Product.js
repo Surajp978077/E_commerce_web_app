@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
 import { productInstance } from '../../api/axios';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Divider, Chip, Pagination, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Divider, Chip, Pagination, Typography, Button } from '@mui/material';
 import CategorySearch from './CategorySearch';
 import { ArrowDownward, ArrowUpward, Clear } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 export const Product = () => {
     const [products, setProducts] = useState([]);
     const [selectedResult, setSelectedResult] = useState([]);
-    const [categorySelectedLeaf, setCategorySelectedLeaf] = useState(null);
+    const [categorySelectedLeaf, setCategorySelectedLeaf] = useState(() => {
+        const storedCategorySelectedLeaf = sessionStorage.getItem('categorySelectedLeaf');
+        return storedCategorySelectedLeaf
+            ? JSON.parse(storedCategorySelectedLeaf)
+            : null
+    });
     const [pagination, setPagination] = useState(() => {
         const storedPagination = sessionStorage.getItem('productPagination');
         return storedPagination
@@ -21,8 +27,7 @@ export const Product = () => {
                 totalPages: 0,
             };
     });
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [openDialog, setOpenDialog] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -60,7 +65,8 @@ export const Product = () => {
 
     useEffect(() => {
         sessionStorage.setItem('productPagination', JSON.stringify(pagination));
-    }, [pagination]);
+        sessionStorage.setItem('categorySelectedLeaf', JSON.stringify(categorySelectedLeaf));
+    }, [pagination, categorySelectedLeaf]);
 
     const handlePageChange = (event, page) => {
         setPagination(prevPagination => ({ ...prevPagination, page: page }));
@@ -97,12 +103,7 @@ export const Product = () => {
     };
 
     const handleViewDetails = (product) => {
-        setSelectedProduct(product);
-        setOpenDialog(true);
-    };
-
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
+        navigate('/product/details', { state: product });
     };
 
     return (
@@ -121,7 +122,7 @@ export const Product = () => {
             {categorySelectedLeaf && (
                 <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '1rem' }}>
                     <Typography variant="body1">Category Selected: {categorySelectedLeaf.Name}</Typography>
-                    <Clear size="small" onClick={() => handleCategoryDeselect(categorySelectedLeaf)} />
+                    <Clear sx={{ cursor: 'pointer' }} size="small" onClick={() => handleCategoryDeselect(categorySelectedLeaf)} />
                 </Box>
             )}
 
@@ -146,7 +147,6 @@ export const Product = () => {
                                             label={pagination.sortDesc ? <ArrowDownward /> : <ArrowUpward />}
                                             color="primary"
                                         />
-
                                     )}
                                 </TableCell>
                                 <TableCell
@@ -198,7 +198,7 @@ export const Product = () => {
                                     sx={{ fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer', textAlign: 'right' }}
                                     onClick={() => handleSort('ProductVendorVisible')}
                                 >
-                                    Visible &nbsp;
+                                    Listing status &nbsp;
                                     {pagination.sortBy === 'ProductVendorVisible' && (
                                         <span>{pagination.sortDesc ? '▼' : '▲'}</span>
                                     )}
@@ -230,41 +230,6 @@ export const Product = () => {
                                     </TableRow>
                                 );
                             })}
-
-                            <Dialog open={openDialog} onClose={handleCloseDialog}>
-                                <DialogTitle>Product Details</DialogTitle>
-                                {selectedProduct && (
-                                    <DialogContent>
-                                        <Typography variant="h6" gutterBottom>
-                                            {selectedProduct.ProductName}
-                                        </Typography>
-                                        <Typography variant="body1" gutterBottom>
-                                            Base Price: ₹{selectedProduct.ProductBasePrice}
-                                        </Typography>
-                                        <Typography variant="body1" gutterBottom>
-                                            Vendor's Name: {selectedProduct.VendorName}
-                                        </Typography>
-                                        <Typography variant="body1" gutterBottom>
-                                            Listed On: {formatDate(selectedProduct.ProductVendorListedOn)}
-                                        </Typography>
-                                        <Typography variant="body1" gutterBottom>
-                                            Price: ₹{selectedProduct.ProductVendorPrice}
-                                        </Typography>
-                                        <Typography variant="body1" gutterBottom>
-                                            Quantity: {selectedProduct.ProductVendorQuantity}
-                                        </Typography>
-                                        <Typography variant="body1" gutterBottom>
-                                            Visible: {selectedProduct.ProductVendorVisible}
-                                        </Typography>
-                                    </DialogContent>
-                                )}
-                                <DialogActions>
-                                    <Button onClick={handleCloseDialog} color="primary">
-                                        Close
-                                    </Button>
-                                </DialogActions>
-                            </Dialog>
-
                         </TableBody>
                     </Table>
                 </TableContainer>

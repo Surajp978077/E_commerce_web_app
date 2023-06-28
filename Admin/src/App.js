@@ -9,7 +9,7 @@ import User from './components/User';
 import Vendor from './components/Vendor';
 import Category from './components/category/Category';
 import { Product } from './components/product/Product';
-import { ProductListing } from './components/product/ProductListing';
+import { ProductDetails } from './components/product/ProductDetails';
 import Order from './components/Order';
 import Offer from './components/Offer';
 import { NotFound } from './components/NotFound';
@@ -45,8 +45,8 @@ const router = createBrowserRouter([
         element: <Product />
       },
       {
-        path: 'product-listing',
-        element: <ProductListing />
+        path: 'product/details',
+        element: <ProductDetails />
       },
       {
         path: 'order',
