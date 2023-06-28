@@ -106,6 +106,28 @@ body {
   width: 100%;
 }
 
+/* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 5px; /* Set the width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Set the background color of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0080ff;
+}
+
+/* For Firefox */
+/* Note: Firefox does not support styling the scrollbar directly, but you can use scrollbar-width and scrollbar-color properties in Firefox 64+ */
+/* Example: */
+/* scrollbar-width: thin; */
+/* scrollbar-color: #888 #f1f1f1; */
+
+/* For Internet Explorer and Edge */
+/* Note: Internet Explorer and Edge currently do not support customizing the scrollbar */
+
 @media only screen and (max-width: 480px) {
   .css-4t3x6l-MuiPaper-root-MuiDrawer-paper {
     /*the drawer width*/

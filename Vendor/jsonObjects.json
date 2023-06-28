@@ -16,7 +16,7 @@
     },
     "vendor": {
       "Name": "vendor",
-      "vendorId": 3,
+      "VendorId": 3,
       "GSTIN": null,
       "DeliveryPinCode": 0
     }

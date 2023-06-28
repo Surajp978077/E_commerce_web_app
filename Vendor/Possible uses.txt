@@ -91,3 +91,40 @@ function AuthProvider(props) {
 }
 
 export default AuthProvider;
+
+
+
+
+// Post new product
+
+[HttpPost]
+public async Task<IActionResult> CreateProduct(ProductDto productDto)
+{
+    var product = new Product
+    {
+        ProdName = productDto.ProdName,
+        Description = productDto.Description,
+        Price = productDto.Price,
+        ImageURL = productDto.ImageURL,
+        BasicDetails = JsonConvert.SerializeObject(productDto.BasicDetails),
+        OptionalDetails = JsonConvert.SerializeObject(productDto.OptionalDetails),
+        CategoryId = productDto.CategoryId
+    };
+
+    var productVendor = new ProductVendor
+    {
+        Product = product,
+        VendorId = productDto.ProductVendor.VendorId,
+        Price = productDto.ProductVendor.Price,
+        Quantity = productDto.ProductVendor.Quantity,
+        Visible = productDto.ProductVendor.Visible
+    };
+
+    // Save the product and productVendor to the database
+    _context.Products.Add(product);
+    _context.ProductVendors.Add(productVendor);
+    await _context.SaveChangesAsync();
+
+    // Return the created product or appropriate response
+    return Ok(product);
+}

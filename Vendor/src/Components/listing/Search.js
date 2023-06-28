@@ -66,7 +66,7 @@ const Search = (props) => {
         setSelectedProduct(response.data.productVendor);
         setMessage(response.data.message);
         setOpen(true);
-        // product , vendorId, setrender, message
+        // product ,VendorId, setrender, message
       }
     } catch (error) {
       setOpen(false);
@@ -169,7 +169,7 @@ const Search = (props) => {
         {selectedProduct && (
           <Product
             product={selectedProduct}
-            vendorId={vendor.Id}
+            VendorId={vendor.Id}
             setOpen={setOpen}
             setRender={setRender}
             message={message ? message : null}
