@@ -22,7 +22,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function Product(props) {
   const {
     product,
-    vendorId,
+    VendorId,
     setRender,
     message,
     isAProduct,
@@ -42,7 +42,7 @@ export default function Product(props) {
   const putProduct = async () => {
     try {
       const response = await productVendorInstance.put(
-        `/${vendorId}`,
+        `/${VendorId}`,
         newProduct,
         {
           params: {
@@ -65,7 +65,7 @@ export default function Product(props) {
     if (isAProduct) {
       try {
         const response = await productVendorInstance.post(
-          `/${vendorId}`,
+          `/${VendorId}`,
           productVendor
         );
         if (response.status === 200) {

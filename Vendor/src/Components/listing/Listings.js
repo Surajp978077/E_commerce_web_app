@@ -29,7 +29,7 @@ const Listings = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [products, setProducts] = useState([]);
   const { userInfo } = useContext(UserInfoContext);
-  const id = userInfo.vendor.vendorId;
+  const id = userInfo.vendor.VendorId;
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false); // For the dialog
   const [openSnackbar, setOpenSnackbar] = useState(false); // For the snackbar
@@ -551,7 +551,7 @@ const Listings = () => {
         {selectedProduct && (
           <Product
             product={selectedProduct}
-            vendorId={id}
+            VendorId={id}
             setOpen={setOpen}
             setRender={setRender}
             setOpenSnackbar={setOpenSnackbar}

@@ -12,8 +12,7 @@ export default function NewListing() {
   const [categorySelectedLeaf, setCategorySelectedLeaf] = useState(null);
   const [categoriesNested, setCategoriesNested] = useState([]);
   const [categoriesSelected, setCategoriesSelected] = useState([]);
-  const [categorySelected, setCategorySelected] = useState(null);
-
+  const [categorySelected, setCategorySelected] = useState(null); // to get the basic and optional details of the category
   const [errorMessage, setErrorMessage] = useState(null);
 
   const fetchCategories = async () => {
