@@ -23,7 +23,7 @@ export default function AddNewFields(props) {
       style={{
         display: "flex",
         alignContent: "center",
-        justifyContent: "center",
+        justifyContent: "right",
       }}
     >
       <TextField
