@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Box, Button, Card, TextField, Typography } from "@mui/material";
 import { ExpandMore as ExpandMoreIcon, Label } from "@mui/icons-material";
 import Accordion from "@mui/material/Accordion";
@@ -6,10 +6,14 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Tooltip from "@mui/material/Tooltip";
 import ImagePlaceHolder from "../../../assets/images/ImagePlaceholder.png";
+import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
+import AddNewFields from "./AddNewFields";
+import CloseIcon from "@mui/icons-material/Close";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function NewProduct(props) {
   const { categorySelected } = props;
+  const { userInfo } = useContext(VendorInfoContext);
   const [category, setCategory] = useState(categorySelected);
   const [basicDetails, setBasicDetails] = useState(
     category.BasicDetails.reduce((result, key) => {
@@ -32,14 +36,26 @@ export default function NewProduct(props) {
     BasicDetails: {},
     OptionalDetails: {},
     CategoryId: category.CategoryId,
-    productVendor: {
-      Price: 0,
-      Quantity: 0,
-      Visible: null, // true or false
+    productVendor: {},
+    Vendor: {
+      VendorId: userInfo.vendor.VendorId,
+      VendorName: userInfo.vendor.Name,
     },
   });
 
-  const handleChange = (index, value) => {
+  const [productVendor, setProductVendor] = useState({
+    Price: 0,
+    Quantity: 0,
+    Visible: null, // true or false
+  });
+
+  const [showAdditionalFields, setShowAdditionalFields] = useState(false);
+
+  const handleCancelAdditionalFields = () => {
+    setShowAdditionalFields(false);
+  };
+
+  const handleChangeBasic = (index, value) => {
     setProductDetails((prev) => {
       return {
         ...prev,
@@ -50,6 +66,14 @@ export default function NewProduct(props) {
       };
     });
   };
+  // Add this function to handle changes in optional details
+  const handleChangeOptional = (key, value) => {
+    setOptionalDetails((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
   const nameanddescrptionChangeHandler = (event) => {
     const { name, value } = event.target;
     setProductDetails((prev) => {
@@ -57,6 +81,14 @@ export default function NewProduct(props) {
         ...prev,
         [name]: value,
       };
+    });
+  };
+
+  const handleRemoveField = (fieldKey) => {
+    setOptionalDetails((prev) => {
+      const newOptionalDetails = { ...prev };
+      delete newOptionalDetails[fieldKey];
+      return newOptionalDetails;
     });
   };
 
@@ -135,6 +167,7 @@ export default function NewProduct(props) {
                   ImageURL: event.target.value,
                 };
               });
+              console.log(productDetails.ImageURL);
             }}
           />
           <div
@@ -152,13 +185,13 @@ export default function NewProduct(props) {
                   : ImagePlaceHolder
               }
               style={{
-                width: "100%",
-                height: "100%",
+                width: productDetails.ImageURL ? "100%" : "70%",
+                height: productDetails.ImageURL ? "100%" : "70%",
                 objectFit: "contain",
+                opacity: productDetails.ImageURL ? "1" : "0.50",
               }}
               alt="Product"
               onError={(e) => {
-                e.target.onerror = null;
                 e.target.src = ImagePlaceHolder;
                 setProductDetails((prev) => {
                   return {
@@ -216,11 +249,34 @@ export default function NewProduct(props) {
                       type="reset"
                       variant="outlined"
                       color="error"
+                      size="small"
                       onClick={() => {
-                        setProductDetails({
-                          ProdName: null,
-                          Description: null,
-                          Price: null,
+                        setBasicDetails((prev) => {
+                          const resetBasicDetails = {};
+                          for (let key in prev) {
+                            resetBasicDetails[key] = "";
+                          }
+                          return resetBasicDetails;
+                        });
+                      }}
+                      sx={{
+                        position: "absolute",
+                        top: "10px",
+                        right: "110px",
+                      }}
+                    >
+                      Reset
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      size="small"
+                      onClick={() => {
+                        setProductDetails((prev) => {
+                          return {
+                            ...prev,
+                            BasicDetails: basicDetails,
+                          };
                         });
                       }}
                       sx={{
@@ -229,8 +285,8 @@ export default function NewProduct(props) {
                         right: "40px",
                       }}
                     >
-                      Reset
-                    </Button>
+                      Save
+                    </Button>{" "}
                     <label>Name : </label>
                     <TextField
                       required
@@ -273,9 +329,7 @@ export default function NewProduct(props) {
                         sx={{ margin: "0 0 10px 10px" }}
                       />
                     </Tooltip>
-
                     <br />
-
                     <label>Base Price : </label>
                     <TextField
                       required
@@ -301,7 +355,20 @@ export default function NewProduct(props) {
                 boxShadow: " 1px 3px 2px rgba(0,0,0,0.15)",
               }}
             >
-              <Accordion>
+              <Accordion
+                sx={{
+                  border: () => {
+                    for (let key in basicDetails) {
+                      if (
+                        productDetails.BasicDetails[key] === "" ||
+                        productDetails.BasicDetails[key] === null
+                      ) {
+                        return "1px solid red";
+                      }
+                    }
+                  },
+                }}
+              >
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
@@ -316,12 +383,34 @@ export default function NewProduct(props) {
                         type="reset"
                         variant="outlined"
                         color="error"
+                        size="small"
                         onClick={() => {
-                          setProductDetails({
-                            ProdName: null,
-                            Description: null,
-                            Price: null,
-                            ImageURL: null,
+                          setBasicDetails((prev) => {
+                            const resetBasicDetails = {};
+                            for (let key in prev) {
+                              resetBasicDetails[key] = "";
+                            }
+                            return resetBasicDetails;
+                          });
+                        }}
+                        sx={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "110px",
+                        }}
+                      >
+                        Reset
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        color="success"
+                        size="small"
+                        onClick={() => {
+                          setProductDetails((prev) => {
+                            return {
+                              ...prev,
+                              BasicDetails: basicDetails,
+                            };
                           });
                         }}
                         sx={{
@@ -330,27 +419,54 @@ export default function NewProduct(props) {
                           right: "40px",
                         }}
                       >
-                        Reset
+                        Save
                       </Button>
-                      {category.BasicDetails.map((value, index) => (
+
+                      {Object.keys(basicDetails).map((key, index) => (
                         <React.Fragment key={index}>
-                          <label htmlFor={value}>{value}:</label>
-                          <TextField
-                            id={value}
-                            label={`Input ${index + 1}`}
-                            value={
-                              basicDetails[index] ? basicDetails[index] : ""
-                            }
-                            onChange={(event) =>
-                              handleChange(index, event.target.value)
-                            }
-                            margin="normal"
-                            InputLabelProps={{
-                              shrink: true,
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              margin: "-10px",
                             }}
-                            variant="outlined"
-                            sx={{ margin: "0 0 10px 10px" }}
-                          />
+                          >
+                            <label
+                              htmlFor={key}
+                              style={{
+                                width: "50%",
+                                textAlign: "right",
+                                paddingRight: "10px",
+                              }}
+                            >
+                              {key}{" "}
+                              <span style={{ fontWeight: "bolder" }}>:</span>
+                            </label>
+                            <div style={{ width: "50%" }}>
+                              <TextField
+                                id={key}
+                                label={key}
+                                variant="outlined"
+                                margin="normal"
+                                size="small"
+                                value={
+                                  basicDetails[key] ? basicDetails[key] : ""
+                                }
+                                error={
+                                  basicDetails[key] === "" ||
+                                  basicDetails[key] === null
+                                    ? true
+                                    : false
+                                }
+                                onChange={(event) =>
+                                  handleChangeBasic(index, event.target.value)
+                                }
+                                InputLabelProps={{
+                                  shrink: true,
+                                }}
+                              />
+                            </div>
+                          </div>
                           <br />
                         </React.Fragment>
                       ))}
@@ -383,43 +499,233 @@ export default function NewProduct(props) {
                         type="reset"
                         variant="outlined"
                         color="error"
+                        size="small"
+                        sx={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "110px",
+                        }}
                         onClick={() => {
-                          setProductDetails({
-                            ProdName: null,
-                            Description: null,
-                            Price: null,
-                            ImageURL: null,
+                          setOptionalDetails((prev) => {
+                            const resetOptionalDetails = {};
+                            for (let key in prev) {
+                              resetOptionalDetails[key] = "";
+                            }
+                            return resetOptionalDetails;
                           });
                         }}
+                      >
+                        Reset
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        color="success"
+                        size="small"
                         sx={{
                           position: "absolute",
                           top: "10px",
                           right: "40px",
                         }}
+                        onClick={() => {
+                          setProductDetails((prev) => {
+                            return {
+                              ...prev,
+                              OptionalDetails: optionalDetails,
+                            };
+                          });
+                        }}
+                      >
+                        Save
+                      </Button>
+                      {Object.keys(optionalDetails).map((key, index) => (
+                        <React.Fragment key={index}>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              margin: "-10px",
+                            }}
+                          >
+                            <label
+                              htmlFor={key}
+                              style={{
+                                width: "50%",
+                                textAlign: "right",
+                                paddingRight: "10px",
+                              }}
+                            >
+                              {key}{" "}
+                              <span style={{ fontWeight: "bolder" }}>:</span>
+                            </label>
+                            <div style={{ width: "50%" }}>
+                              <TextField
+                                id={key}
+                                label={key}
+                                size="small"
+                                value={optionalDetails[key] || ""}
+                                onChange={(event) =>
+                                  handleChangeOptional(key, event.target.value)
+                                }
+                                margin="normal"
+                                InputLabelProps={{
+                                  shrink: true,
+                                }}
+                                variant="outlined"
+                              />
+                              <CloseIcon
+                                color="error"
+                                onClick={() => {
+                                  handleRemoveField(key);
+                                }}
+                                sx={{
+                                  position: "relative",
+                                  top: "20px",
+                                  cursor: "pointer",
+                                  marginLeft: "40px",
+                                }}
+                              />
+                            </div>
+                          </div>
+                          <br />
+                        </React.Fragment>
+                      ))}
+                      {!showAdditionalFields ? (
+                        <Button
+                          variant="contained"
+                          color="info"
+                          onClick={() => {
+                            setShowAdditionalFields(true);
+                          }}
+                          sx={{
+                            margin: "0 0 10px 10px",
+                            display: "flex",
+                            marginLeft: "auto",
+                          }}
+                        >
+                          Add More Details
+                        </Button>
+                      ) : (
+                        <AddNewFields
+                          optionalDetails={optionalDetails}
+                          setOptionalDetails={setOptionalDetails}
+                          handleCancel={handleCancelAdditionalFields}
+                        />
+                      )}
+                    </form>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+            </div>
+            <div
+              style={{
+                width: "95%",
+                borderRadius: "10px",
+                border: "1px solid #e0e0e0",
+                boxShadow: " 1px 3px 2px  rgba(0,0,0,0.15)",
+              }}
+            >
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography>Price & Stock</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div style={{ width: "fullWidth" }}>
+                    <form>
+                      <Button
+                        type="reset"
+                        variant="outlined"
+                        color="error"
+                        size="small"
+                        sx={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "110px",
+                        }}
+                        onClick={() => {
+                          setOptionalDetails((prev) => {
+                            const resetOptionalDetails = {};
+                            for (let key in prev) {
+                              resetOptionalDetails[key] = "";
+                            }
+                            return resetOptionalDetails;
+                          });
+                        }}
                       >
                         Reset
                       </Button>
-                      {category.OptionalDetails.map((value, index) => (
+                      <Button
+                        variant="outlined"
+                        color="success"
+                        size="small"
+                        sx={{
+                          position: "absolute",
+                          top: "10px",
+                          right: "40px",
+                        }}
+                        onClick={() => {
+                          setProductDetails((prev) => {
+                            return {
+                              ...prev,
+                              OptionalDetails: optionalDetails,
+                            };
+                          });
+                        }}
+                      >
+                        Save
+                      </Button>
+                      {Object.keys(optionalDetails).map((key, index) => (
                         <React.Fragment key={index}>
-                          <label htmlFor={value}>{value}:</label>
-                          <TextField
-                            id={value}
-                            label={`Input ${index + 1}`}
-                            value={
-                              optionalDetails[index]
-                                ? optionalDetails[index]
-                                : ""
-                            }
-                            onChange={(event) =>
-                              handleChange(index, event.target.value)
-                            }
-                            margin="normal"
-                            InputLabelProps={{
-                              shrink: true,
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              margin: "-10px",
                             }}
-                            variant="outlined"
-                            sx={{ margin: "0 0 10px 10px" }}
-                          />
+                          >
+                            <label
+                              htmlFor={key}
+                              style={{
+                                width: "50%",
+                                textAlign: "right",
+                                paddingRight: "10px",
+                              }}
+                            >
+                              {key}{" "}
+                              <span style={{ fontWeight: "bolder" }}>:</span>
+                            </label>
+                            <div style={{ width: "50%" }}>
+                              <TextField
+                                id={key}
+                                label={key}
+                                size="small"
+                                value={optionalDetails[key] || ""}
+                                onChange={(event) =>
+                                  handleChangeOptional(key, event.target.value)
+                                }
+                                margin="normal"
+                                InputLabelProps={{
+                                  shrink: true,
+                                }}
+                                variant="outlined"
+                              />
+                              <CloseIcon
+                                color="error"
+                                onClick={() => {
+                                  handleRemoveField(key);
+                                }}
+                                sx={{
+                                  position: "relative",
+                                  top: "20px",
+                                  cursor: "pointer",
+                                  marginLeft: "40px",
+                                }}
+                              />
+                            </div>
+                          </div>
                           <br />
                         </React.Fragment>
                       ))}

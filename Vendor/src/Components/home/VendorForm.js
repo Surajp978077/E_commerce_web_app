@@ -28,7 +28,7 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
 
     try {
       const response = await vendorInstance.put(
-        `/${userInfo.vendor.vendorId}`,
+        `/${userInfo.vendor.VendorId}`,
         vendorNew
       );
 

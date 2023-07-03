@@ -63,7 +63,7 @@ function VendorInfoProvider(props) {
       setUserInfo((prevUserInfo) => ({
         ...prevUserInfo,
         vendor: {
-          vendorId: vendor.Id,
+          VendorId: vendor.Id,
           vendorName: vendor.Name,
           GSTIN: vendor.GSTIN,
           DeliveryPinCode: vendor.DeliveryPinCode,

@@ -27,7 +27,7 @@ function Home() {
     const fetchLowQuantityItems = async () => {
       try {
         const response = await productVendorInstance.get(
-          `/low-stock/${userInfo.vendor.vendorId}`
+          `/low-stock/${userInfo.vendor.VendorId}`
         );
         if (response && response.data) {
           setLowQuantityItems(response.data);
