@@ -23,13 +23,15 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
     const [categoryName, setCategoryName] = useState('');
+    const [nameError, setNameError] = useState('');
     const [categoryDescription, setCategoryDescription] = useState('');
-    const [hasProducts, setHasProducts] = useState(false);
+    const [descriptionError, setDescriptionError] = useState('');
+    const [hasSpecifications, setHasSpecifications] = useState(false);
     const [basicDetails, setBasicDetails] = useState(['']);
     const [keySpecErrors, setKeySpecErrors] = useState([]);
+    const [optionalDetails, setOptionalDetails] = useState(['']);
+    const [optionalSpecErrors, setOptionalSpecErrors] = useState([]);
 
-    const [nameError, setNameError] = useState('');
-    const [descriptionError, setDescriptionError] = useState('');
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [snackbarSeverity, setSnackbarSeverity] = useState('success');
@@ -43,10 +45,20 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
             setOpen(false);
             setNameError('');
             setDescriptionError('');
-            setHasProducts(false);
-            setBasicDetails(['']);
             setKeySpecErrors([]);
         }
+    };
+
+    const handleResetForm = () => {
+        setCategoryName('')
+        setNameError('');
+        setCategoryDescription('');
+        setDescriptionError('');
+        setHasSpecifications(false);
+        setBasicDetails(['']);
+        setKeySpecErrors([]);
+        setOptionalDetails(['']);
+        setOptionalSpecErrors([]);
     };
 
     const handleSnackbarClose = (event, reason) => {
@@ -71,16 +83,28 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
             return;
         }
 
-        // Validate key product specifications if hasProducts is selected
-        if (hasProducts) {
+        // Validate specifications if hasSpecifications is selected
+        if (hasSpecifications) {
+            // Validate key product specifications
             const updatedKeySpecErrors = basicDetails.map((detail) => {
                 if (detail.trim() === '') {
                     return 'Key specification cannot be blank (remove/fill)';
                 }
                 return '';
             });
-            if (updatedKeySpecErrors.some((error) => error !== '')) {
+
+            // Validate optional specifications
+            const updatedOptionalSpecErrors = optionalDetails.map((detail) => {
+                if (detail.trim() === '') {
+                    return 'Optional specification cannot be blank (remove/fill)';
+                }
+                return '';
+            });
+
+            // Check if any errors exist in key or optional specifications
+            if (updatedKeySpecErrors.some((error) => error !== '') || updatedOptionalSpecErrors.some((error) => error !== '')) {
                 setKeySpecErrors(updatedKeySpecErrors);
+                setOptionalSpecErrors(updatedOptionalSpecErrors);
                 return;
             }
         }
@@ -90,15 +114,15 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                 Name: categoryName,
                 Description: categoryDescription,
                 ParentCategoryId: category ? category.CategoryId : undefined,
-                HasProducts: hasProducts,
-                BasicDetails: hasProducts ? basicDetails : null,
-                OptionalDetails: null,
+                HasSpecifications: hasSpecifications,
+                BasicDetails: hasSpecifications ? basicDetails : null,
+                OptionalDetails: hasSpecifications ? optionalDetails : null,
             };
 
             const response = await productInstance.post('/categories', formData);
             console.log(response);
-            setCategoryName('');
-            setCategoryDescription('');
+            
+            handleResetForm();
             onCategoryUpdate();
             setSnackbarMessage('Category added successfully');
             setSnackbarSeverity('success');
@@ -139,6 +163,31 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
         const updatedKeySpecErrors = [...keySpecErrors];
         updatedKeySpecErrors[index] = '';
         setKeySpecErrors(updatedKeySpecErrors);
+    };
+
+    const handleAddOptionalSpecification = () => {
+        setOptionalDetails([...optionalDetails, '']);
+        setOptionalSpecErrors([...optionalSpecErrors, '']);
+    };
+
+    const handleRemoveOptionalSpecification = (index) => {
+        const updatedOptionalDetails = [...optionalDetails];
+        updatedOptionalDetails.splice(index, 1);
+        setOptionalDetails(updatedOptionalDetails);
+
+        const updatedOptionalSpecErrors = [...optionalSpecErrors];
+        updatedOptionalSpecErrors.splice(index, 1);
+        setOptionalSpecErrors(updatedOptionalSpecErrors);
+    };
+
+    const handleOptionalSpecificationChange = (index, value) => {
+        const updatedOptionalDetails = [...optionalDetails];
+        updatedOptionalDetails[index] = value;
+        setOptionalDetails(updatedOptionalDetails);
+
+        const updatedOptionalSpecErrors = [...optionalSpecErrors];
+        updatedOptionalSpecErrors[index] = '';
+        setOptionalSpecErrors(updatedOptionalSpecErrors);
     };
 
     return (
@@ -201,17 +250,17 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                     <FormControlLabel
                         control={
                             <Switch
-                                checked={hasProducts}
-                                onChange={(e) => setHasProducts(e.target.checked)}
+                                checked={hasSpecifications}
+                                onChange={(e) => setHasSpecifications(e.target.checked)}
                                 color='primary'
                             />
                         }
-                        label='Has Products'
+                        label='Has Specifications'
                     />
-                    {hasProducts && (
+                    {hasSpecifications && (
                         <div>
                             <Typography variant='body1' component='div'>
-                                Key Product Specifications:
+                                Key Specifications:
                             </Typography>
                             {basicDetails.map((keySpec, index) => (
                                 <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
@@ -241,15 +290,50 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                             <Button variant='outlined' onClick={handleAddKeySpecification}>
                                 Add Specification
                             </Button>
+
+                            <Typography variant='body1' component='div' style={{ marginTop: '16px' }}>
+                                Optional Specifications:
+                            </Typography>
+                            {optionalDetails.map((optionalSpec, index) => (
+                                <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                                    <TextField
+                                        id={`optionalSpecification-${index}`}
+                                        label={`Specification ${index + 1}`}
+                                        placeholder='Enter specification'
+                                        required
+                                        value={optionalSpec}
+                                        onChange={(e) => handleOptionalSpecificationChange(index, e.target.value)}
+                                        fullWidth
+                                        margin='normal'
+                                        variant='outlined'
+                                        style={{ marginRight: '8px' }}
+                                        error={!!optionalSpecErrors[index]}
+                                        helperText={optionalSpecErrors[index]}
+                                    />
+                                    <Button
+                                        variant='outlined'
+                                        color='error'
+                                        onClick={() => handleRemoveOptionalSpecification(index)}
+                                    >
+                                        Remove
+                                    </Button>
+                                </div>
+                            ))}
+                            <Button variant='outlined' onClick={handleAddOptionalSpecification}>
+                                Add Specification
+                            </Button>
                         </div>
                     )}
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button type='submit' onClick={handleSubmit} autoFocus>
+                    <Button type='submit' variant="contained" onClick={handleSubmit} autoFocus>
                         Add
+                    </Button>
+                    <Button variant="outlined" onClick={handleResetForm}>
+                        Reset Form
+                    </Button>
+                    <Button variant="outlined" autoFocus onClick={handleClose}>
+                        Cancel
                     </Button>
                 </DialogActions>
             </Dialog>

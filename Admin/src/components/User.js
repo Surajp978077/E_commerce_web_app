@@ -27,10 +27,11 @@ const User = () => {
             sortDesc: pagination.sortDesc,
           },
         });
-        console.log('Response:', response);
-        console.log('Data:', response.data);
-        setUsers(response.data.Data);
-        setPagination(prevPagination => ({ ...prevPagination, totalPages: response.data.TotalPages }));
+        if (response && response.data) {
+          console.log('Response Data:', response.data);
+          setUsers(response.data.Data);
+          setPagination(prevPagination => ({ ...prevPagination, totalPages: response.data.TotalPages }));
+        }
       } catch (error) {
         console.error('Error fetching users:', error);
       }
