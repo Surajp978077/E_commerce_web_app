@@ -26,7 +26,7 @@ export default function NewListing() {
     CategoryName: null,
     productVendor: {},
     VendorId: userInfo.vendor.VendorId,
-    VendorName: userInfo.vendor.Name,
+    VendorName: userInfo.vendor.VendorName,
   });
 
   const fetchCategories = async () => {
@@ -51,6 +51,7 @@ export default function NewListing() {
     if (categorySelectedLeaf) {
       fetchCategories();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categorySelectedLeaf]);
 
   const handleNext = () => {

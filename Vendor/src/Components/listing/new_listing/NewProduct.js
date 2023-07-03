@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, Card, TextField, Typography } from "@mui/material";
-import { ExpandMore as ExpandMoreIcon, Label } from "@mui/icons-material";
+import { ExpandMore as ExpandMoreIcon } from "@mui/icons-material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -30,6 +30,7 @@ export default function NewProduct(props) {
   const basicDetailsSubmit = useRef(null);
   const optionalDetailsSubmit = useRef(null);
   const priceStockSubmit = useRef(null);
+  // eslint-disable-next-line no-unused-vars
   const [render, setRender] = useState(false); // to re-render the component when the accordion submit button is clicked
 
   const [basicDetails, setBasicDetails] = useState(
@@ -85,13 +86,15 @@ export default function NewProduct(props) {
     return () => {
       setIsInputFilled(true);
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     qcData,
-    imageURLSubmit,
-    nameDescriptionSubmit,
-    basicDetailsSubmit,
-    optionalDetailsSubmit,
-    priceStockSubmit,
+    imageURLSubmit.current,
+    nameDescriptionSubmit.current,
+    basicDetailsSubmit.current,
+    optionalDetailsSubmit.current,
+    priceStockSubmit.current,
   ]);
 
   const handleCancelAdditionalFields = () => {
@@ -153,42 +156,12 @@ export default function NewProduct(props) {
     });
   };
 
-  const handleReset = () => {
-    setProductDetails({
-      ProdName: null,
-      Description: null,
-      Price: null,
-      ImageURL: null,
-      BasicDetails: {},
-      OptionalDetails: {},
-      CategoryId: category.CategoryId,
-      productVendor: {
-        Price: 0,
-        Quantity: 0,
-        Visible: null, // true or false
-      },
-    });
-
-    setBasicDetails(
-      category.BasicDetails.reduce((result, key) => {
-        result[key] = null;
-        return result;
-      }, {})
-    );
-    setOptionalDetails(
-      category.OptionalDetails.reduce((result, key) => {
-        result[key] = null;
-        return result;
-      }, {})
-    );
-  };
-
-  const handleVisible = (event, newAlignment) => {
+  const handleVisible = (event, visibleValue) => {
     priceStockSubmit.current =
       priceStockSubmit.current === false ? priceStockSubmit.current : null;
     setProductVendor((prev) => ({
       ...prev,
-      Visible: newAlignment,
+      Visible: visibleValue,
     }));
   };
 

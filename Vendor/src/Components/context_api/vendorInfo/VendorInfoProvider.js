@@ -64,7 +64,7 @@ function VendorInfoProvider(props) {
         ...prevUserInfo,
         vendor: {
           VendorId: vendor.Id,
-          vendorName: vendor.Name,
+          VendorName: vendor.Name,
           GSTIN: vendor.GSTIN,
           DeliveryPinCode: vendor.DeliveryPinCode,
         },
