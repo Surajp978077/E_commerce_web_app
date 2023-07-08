@@ -6,8 +6,6 @@ export default function AddNewFields(props) {
   const [inputValue, setInputValue] = useState("");
 
   const handleAddField = () => {
-    console.log(inputValue);
-    console.log(optionalDetails);
     setOptionalDetails((prev) => {
       return {
         ...prev,
@@ -15,7 +13,6 @@ export default function AddNewFields(props) {
       };
     });
     handleCancel();
-    console.log(optionalDetails);
   };
 
   return (

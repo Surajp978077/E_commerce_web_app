@@ -1,44 +1,228 @@
 import React from "react";
 import ImagePlaceholder from "../../../assets/images/ImagePlaceholder.png";
+import Stack from "@mui/material/Stack";
+import { Paper } from "@mui/material";
+import { fonts } from "../../../config/config";
 
 export default function FinalProductDetails(props) {
   const { qcData } = props;
+
+  // styles for paper component
+  const paperStyles = {
+    width: "90%",
+    borderRadius: "10px",
+    boxShadow: "0px 0px 10px 0px grey",
+    backgroundColor: "#adf7d5",
+  };
+
   console.log(qcData);
+
+  const productKeys = ["Product Name", "Product Description", "M.R.P (Rs)"];
+  const productValues = [
+    qcData.product.ProdName,
+    qcData.product.Description,
+    qcData.product.Price,
+  ];
+
+  const basicDetailsKeys = Object.keys(qcData.BasicDetails);
+  const basicDetailsValues = Object.values(qcData.BasicDetails);
+
+  const optionalDetailsKeys = Object.keys(qcData.OptionalDetails);
+  const optionalDetailsValues = Object.values(qcData.OptionalDetails);
+
+  const productVendorKeys = [
+    "Selling Price (Rs)",
+    "Quantity",
+    "Listing Status",
+  ];
+  const productVendorValues = Object.values(qcData.productVendor);
+
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "70%",
-        height: "100%",
-        backgroundColor: "white",
-        borderRadius: "10px",
-        boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
-        padding: "20px",
+        padding: "10px 25%",
       }}
     >
-      <div>
-        <h3>Submit product to QC?</h3>
-      </div>
-      <div>
-        <img
-          src={
-            qcData.products.ImageURL
-              ? qcData.products.ImageURL
-              : ImagePlaceholder
-          }
-          alt="product"
-          style={{
-            width: "100%",
-            height: "10%",
-            objectFit: "contain",
-            borderRadius: "10px",
-            boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
-          }}
-        />
-      </div>
+      <Stack
+        direction="column"
+        justifyContent="flex-start"
+        alignItems="center"
+        spacing={2}
+        width={"100%"}
+        sx={{
+          border: "50px",
+          borderRadius: "10px",
+          backgroundColor: "#bcf5ec",
+          padding: "10px 0 20px 0",
+        }}
+      >
+        <div>
+          <h6>Submit product to QC?</h6>
+        </div>
+        <Paper sx={paperStyles}>
+          <img
+            src={
+              qcData.product.ImageURL
+                ? qcData.product.ImageURL
+                : ImagePlaceholder
+            }
+            alt="product"
+            style={{
+              width: "100%",
+              borderRadius: "10px",
+              objectFit: "contain",
+            }}
+          />
+        </Paper>
+
+        <Paper sx={paperStyles}>
+          <h5
+            style={{
+              padding: "10px 0 0 10px",
+              fontFamily: fonts.main,
+              textDecoration: "underline",
+            }}
+          >
+            Product Details :
+          </h5>
+          <div
+            style={{
+              padding: "10px 10px",
+            }}
+          >
+            {productKeys.map((key, index) => (
+              <div
+                key={index}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <h6>{key} :</h6>
+                {key === "Product Description" ? (
+                  <pre>
+                    {" "}
+                    <h6>{productValues[index]}</h6>
+                  </pre>
+                ) : (
+                  <h6>{productValues[index]}</h6>
+                )}
+              </div>
+            ))}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <h6>Category :</h6>
+              <h6>{qcData.CategoryName}</h6>
+            </div>
+          </div>
+        </Paper>
+        <Paper sx={paperStyles}>
+          <h5
+            style={{
+              padding: "10px 0 0 10px",
+              fontFamily: fonts.main,
+              textDecoration: "underline",
+            }}
+          >
+            Basic Details :
+          </h5>
+          <div
+            style={{
+              padding: "10px 10px",
+            }}
+          >
+            {basicDetailsKeys.map((key, index) => (
+              <div
+                key={index}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <h6>{key} :</h6>
+
+                <h6>{basicDetailsValues[index]}</h6>
+              </div>
+            ))}
+          </div>
+        </Paper>
+        <Paper sx={paperStyles}>
+          <h5
+            style={{
+              padding: "10px 0 0 10px",
+              fontFamily: fonts.main,
+              textDecoration: "underline",
+            }}
+          >
+            Optional Details :
+          </h5>
+          <div
+            style={{
+              padding: "10px 10px",
+            }}
+          >
+            {optionalDetailsKeys.map((key, index) => (
+              <div
+                key={index}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <h6>{key} :</h6>
+
+                <h6>{optionalDetailsValues[index]}</h6>
+              </div>
+            ))}
+          </div>
+        </Paper>
+        <Paper sx={paperStyles}>
+          <h5
+            style={{
+              padding: "10px 0 0 10px",
+              fontFamily: fonts.main,
+              textDecoration: "underline",
+            }}
+          >
+            Product Vendor Details :
+          </h5>
+          <div
+            style={{
+              padding: "10px 10px",
+            }}
+          >
+            {productVendorKeys.map((key, index) => (
+              <div
+                key={index}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <h6>{key} :</h6>
+                {key === "Listing Status" ? (
+                  key === "Listing Status" ? (
+                    <h6>Active</h6>
+                  ) : (
+                    <h6>Inactive</h6>
+                  )
+                ) : (
+                  <h6>{productVendorValues[index]}</h6>
+                )}
+              </div>
+            ))}
+          </div>
+        </Paper>
+      </Stack>
     </div>
   );
 }

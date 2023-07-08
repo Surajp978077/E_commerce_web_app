@@ -108,5 +108,5 @@ export default function ErrorPage(props) {
 ErrorPage.defaultProps = {
   title: "Error !!",
   desc: "Looks like we ran into an error",
-  showHome: false,
+  showHome: true,
 };

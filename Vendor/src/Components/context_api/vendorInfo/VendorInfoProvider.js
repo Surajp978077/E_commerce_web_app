@@ -24,7 +24,6 @@ function VendorInfoProvider(props) {
         if (error.request.status === 404) {
           if (!isVendorCreated) {
             // to avoid creating new vendor more then once
-            console.log("Creating new vendor");
             newVendor();
             setIsVendorCreated(true);
           }

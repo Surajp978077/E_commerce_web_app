@@ -9,12 +9,14 @@ import Navbar from "./components/Navbar";
 import Lost from "./components/Lost";
 import VendorInfoProvider from "./components/context_api/vendorInfo/VendorInfoProvider";
 import NewListing from "./components/listing/new_listing/NewListing";
+import ErrorPage from "./components/ErrorPage";
+import Test3 from "./Test3";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Navbar />,
-    errorElement: <Lost />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: "/test",
         element: <Test />,
+      },
+      {
+        path: "/test3",
+        element: <Test3 />,
+      },
+      {
+        path: "*",
+        element: <Lost />,
       },
     ],
   },

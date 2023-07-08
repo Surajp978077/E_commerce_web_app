@@ -14,17 +14,8 @@ import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 export default function NewProduct(props) {
-  const {
-    categorySelected,
-    qcData,
-    setQcData,
-    categoryBasicDetails,
-    categoryOptionalDetails,
-    setIsInputFilled,
-  } = props;
-  const [category, setCategory] = useState(categorySelected);
+  const { qcData, setQcData, setIsInputFilled } = props;
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
-
   const imageURLSubmit = useRef(null);
   const nameDescriptionSubmit = useRef(null);
   const basicDetailsSubmit = useRef(null);
@@ -33,22 +24,10 @@ export default function NewProduct(props) {
   // eslint-disable-next-line no-unused-vars
   const [render, setRender] = useState(false); // to re-render the component when the accordion submit button is clicked
 
-  const [basicDetails, setBasicDetails] = useState(
-    categoryBasicDetails
-      ? categoryBasicDetails
-      : category.BasicDetails.reduce((result, key) => {
-          result[key] = null;
-          return result;
-        }, {})
-  );
+  const [basicDetails, setBasicDetails] = useState(qcData.BasicDetails);
 
   const [optionalDetails, setOptionalDetails] = useState(
-    categoryOptionalDetails
-      ? categoryOptionalDetails
-      : category.OptionalDetails.reduce((result, key) => {
-          result[key] = null;
-          return result;
-        }, {})
+    qcData.OptionalDetails
   );
 
   const [productDetails, setProductDetails] = useState(
@@ -165,6 +144,109 @@ export default function NewProduct(props) {
     }));
   };
 
+  const handleSave = (options) => {
+    const handleOptionalDetails = () => {
+      setQcData((prev) => ({
+        ...prev,
+        OptionalDetails: optionalDetails,
+      }));
+      optionalDetailsSubmit.current = true;
+    };
+
+    const handleNameDescription = () => {
+      if (
+        Boolean(productDetails.ProdName) &&
+        Boolean(productDetails.Description)
+      ) {
+        setQcData((prev) => ({
+          ...prev,
+          product: {
+            ...prev.product,
+            ProdName: productDetails.ProdName,
+            Description: productDetails.Description,
+          },
+        }));
+        nameDescriptionSubmit.current = true;
+      } else {
+        nameDescriptionSubmit.current = false;
+      }
+    };
+
+    const handleBasicDetails = () => {
+      if (!Object.values(basicDetails).some((value) => !Boolean(value))) {
+        setQcData((prev) => ({
+          ...prev,
+          BasicDetails: basicDetails,
+        }));
+        basicDetailsSubmit.current = true;
+      } else {
+        basicDetailsSubmit.current = false;
+      }
+    };
+
+    const handlePriceStock = () => {
+      if (
+        Boolean(productDetails.Price) &&
+        !Object.values(productVendor).some((value) => !Boolean(value))
+      ) {
+        setQcData((prev) => ({
+          ...prev,
+          product: {
+            ...prev.product,
+            Price: productDetails.Price,
+          },
+          productVendor: productVendor,
+        }));
+        priceStockSubmit.current = true;
+      } else {
+        priceStockSubmit.current = false;
+      }
+    };
+
+    const handleImageURL = () => {
+      if (!productDetails.ImageURL) {
+        imageURLSubmit.current = false;
+        return;
+      }
+      setQcData((prev) => {
+        return {
+          ...prev,
+          product: productDetails,
+        };
+      });
+      imageURLSubmit.current = true;
+    };
+
+    switch (options) {
+      case "OptionalDetails":
+        handleOptionalDetails();
+        break;
+      case "NameDescription":
+        handleNameDescription();
+        break;
+      case "BasicDetails":
+        handleBasicDetails();
+        break;
+      case "PriceStock":
+        handlePriceStock();
+        break;
+      case "ImageURL":
+        handleImageURL();
+        break;
+      case "All":
+        handleOptionalDetails();
+        handleNameDescription();
+        handleBasicDetails();
+        handlePriceStock();
+        handleImageURL();
+        break;
+      default:
+        break;
+    }
+
+    setRender((prev) => !prev); // Re-render the component
+  };
+
   return (
     <>
       <Box
@@ -228,18 +310,7 @@ export default function NewProduct(props) {
                 },
               }}
               onClick={() => {
-                if (!productDetails.ImageURL) {
-                  imageURLSubmit.current = false;
-                  return;
-                }
-                setQcData((prev) => {
-                  return {
-                    ...prev,
-                    product: productDetails,
-                  };
-                });
-                imageURLSubmit.current = true;
-                setRender((prev) => !prev);
+                handleSave("ImageURL");
               }}
             >
               {imageURLSubmit.current === false ? (
@@ -352,15 +423,16 @@ export default function NewProduct(props) {
                       variant="outlined"
                       color="error"
                       size="small"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
                         nameDescriptionSubmit.current =
                           nameDescriptionSubmit.current === false
                             ? nameDescriptionSubmit.current
                             : null;
-                        setBasicDetails((prev) => {
+                        setProductDetails((prev) => {
                           return {
                             ...prev,
-                            Name: null,
+                            ProdName: null,
                             Description: null,
                           };
                         });
@@ -377,26 +449,9 @@ export default function NewProduct(props) {
                       variant="outlined"
                       color="success"
                       size="small"
-                      onClick={() => {
-                        if (
-                          Boolean(productDetails.ProdName) &&
-                          Boolean(productDetails.Description)
-                        ) {
-                          setQcData((prev) => ({
-                            ...prev,
-                            product: {
-                              ...prev.product,
-                              ProdName: productDetails.ProdName,
-                              Description: productDetails.Description,
-                            },
-                          }));
-
-                          nameDescriptionSubmit.current = true;
-                          setRender((prev) => !prev); // to re-render the component
-                        } else {
-                          nameDescriptionSubmit.current = false;
-                          setRender((prev) => !prev); // to re-render the component
-                        }
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleSave("NameDescription");
                       }}
                       sx={{
                         position: "absolute",
@@ -519,7 +574,8 @@ export default function NewProduct(props) {
                         variant="outlined"
                         color="error"
                         size="small"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault();
                           basicDetailsSubmit.current =
                             basicDetailsSubmit.current === false
                               ? basicDetailsSubmit.current
@@ -544,24 +600,9 @@ export default function NewProduct(props) {
                         variant="outlined"
                         color="success"
                         size="small"
-                        onClick={() => {
-                          if (
-                            !Object.values(basicDetails).some(
-                              (value) => !Boolean(value)
-                            )
-                          ) {
-                            setQcData((prev) => ({
-                              ...prev,
-                              BasicDetails: basicDetails,
-                            }));
-                            basicDetailsSubmit.current = true;
-
-                            setRender((prev) => !prev); // to re-render the component
-                          } else {
-                            basicDetailsSubmit.current = false;
-
-                            setRender((prev) => !prev); // to re-render the component
-                          }
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleSave("BasicDetails");
                         }}
                         sx={{
                           position: "absolute",
@@ -611,7 +652,7 @@ export default function NewProduct(props) {
                                     basicDetailsSubmit.current === false
                                       ? basicDetailsSubmit.current
                                       : null;
-                                  handleChangeBasic(index, event.target.value);
+                                  handleChangeBasic(key, event.target.value);
                                 }}
                                 InputLabelProps={{
                                   shrink: true,
@@ -669,7 +710,8 @@ export default function NewProduct(props) {
                           top: "10px",
                           right: "110px",
                         }}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault();
                           optionalDetailsSubmit.current = null;
                           setOptionalDetails((prev) => {
                             const resetOptionalDetails = {};
@@ -691,15 +733,9 @@ export default function NewProduct(props) {
                           top: "10px",
                           right: "40px",
                         }}
-                        onClick={() => {
-                          setQcData((prev) => {
-                            return {
-                              ...prev,
-                              OptionalDetails: optionalDetails,
-                            };
-                          });
-                          optionalDetailsSubmit.current = true;
-                          setRender((prev) => !prev); // to re-render the component after saving
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleSave("OptionalDetails");
                         }}
                       >
                         Save
@@ -831,7 +867,8 @@ export default function NewProduct(props) {
                           top: "10px",
                           right: "110px",
                         }}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault();
                           priceStockSubmit.current =
                             priceStockSubmit.current === false
                               ? priceStockSubmit.current
@@ -860,26 +897,9 @@ export default function NewProduct(props) {
                           top: "10px",
                           right: "40px",
                         }}
-                        onClick={() => {
-                          if (
-                            Boolean(productDetails.Price) &&
-                            !Object.values(productVendor).some(
-                              (value) => !Boolean(value)
-                            )
-                          ) {
-                            setQcData((prev) => ({
-                              ...prev,
-                              product: {
-                                ...prev.product,
-                                Price: productDetails.Price,
-                              },
-                            }));
-                            priceStockSubmit.current = true;
-                            setRender((prev) => !prev); // to re-render the component
-                          } else {
-                            priceStockSubmit.current = false;
-                            setRender((prev) => !prev); // to re-render the component
-                          }
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleSave("PriceStock");
                         }}
                       >
                         Save
@@ -1074,7 +1094,7 @@ export default function NewProduct(props) {
           <div
             style={{
               display: "flex",
-              justifyContent: "flex-start",
+              justifyContent: "space-between",
               width: "100%",
             }}
           >
@@ -1083,6 +1103,17 @@ export default function NewProduct(props) {
               <span style={{ fontSize: "20px", color: "red" }}> * </span> are
               required.
             </Typography>
+            <Button
+              variant="contained"
+              color="info"
+              size="small"
+              onClick={(e) => {
+                e.preventDefault();
+                handleSave("All");
+              }}
+            >
+              Save all
+            </Button>
           </div>
         </Card>
       </Box>

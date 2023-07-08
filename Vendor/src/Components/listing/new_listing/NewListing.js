@@ -1,13 +1,28 @@
 import React, { useEffect, useState, useContext } from "react";
 import { ProductListing } from "./ProductListing";
-import { Box, Divider, Stepper, Step, StepLabel } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Stepper,
+  Step,
+  StepLabel,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import { fonts } from "../../../config/config";
 import Button from "@mui/material/Button";
 import NewProduct from "./NewProduct";
-import { categoriesInstance } from "../../../api/axios";
+import { QCInstance, categoriesInstance } from "../../../api/axios";
 import ErrroPage from "../../../components/ErrorPage";
 import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
 import FinalProductDetails from "./FinalProductDetails";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function NewListing() {
   const [activeStep, setActiveStep] = useState(0);
@@ -28,6 +43,56 @@ export default function NewListing() {
     VendorId: userInfo.vendor.VendorId,
     VendorName: userInfo.vendor.VendorName,
   });
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [openError, setOpenError] = useState(false);
+  const navigate = useNavigate();
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleSubmit = () => {
+    setDialogOpen(false);
+
+    // call the api to submit the product to QC
+    const submitProduct = async () => {
+      try {
+        const response = await QCInstance.post(`/`, {
+          Product: {
+            ProdName: qcData.product.ProdName,
+            Description: qcData.product.Description,
+            Price: qcData.product.Price,
+            ImageURL: qcData.product.ImageURL,
+            BasicDetails: qcData.BasicDetails,
+            OptionalDetails: qcData.OptionalDetails,
+          },
+          ProductVendor: {
+            Price: qcData.productVendor.Price,
+            Quantity: qcData.productVendor.Quantity,
+            Visible: qcData.productVendor.Visible,
+          },
+          CategoryId: qcData.CategoryId,
+          CategoryName: qcData.CategoryName,
+          VendorId: qcData.VendorId,
+          VendorName: qcData.VendorName,
+          Status: 0,
+        });
+        if (
+          response.status === 201 ||
+          (response.status === 200 && response.data)
+        ) {
+          navigate("/listings");
+        }
+      } catch (error) {
+        setOpenError(true);
+      }
+    };
+    submitProduct();
+  };
 
   const fetchCategories = async () => {
     try {
@@ -36,11 +101,6 @@ export default function NewListing() {
       );
       if (response.status === 200 && response.data) {
         setCategorySelected(response.data);
-        setQcData({
-          ...qcData,
-          CategoryId: response.data.CategoryId,
-          CategoryName: response.data.Name,
-        });
       }
     } catch (error) {
       setErrorMessage(error.message);
@@ -54,12 +114,38 @@ export default function NewListing() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categorySelectedLeaf]);
 
+  useEffect(() => {
+    if (categorySelected) {
+      setQcData((prevData) => ({
+        ...prevData,
+        CategoryId: categorySelected.CategoryId,
+        CategoryName: categorySelected.Name,
+        BasicDetails: categorySelected.BasicDetails.reduce((result, key) => {
+          result[key] = null;
+          return result;
+        }, {}),
+        OptionalDetails: categorySelected.OptionalDetails.reduce(
+          (result, key) => {
+            result[key] = null;
+            return result;
+          },
+          {}
+        ),
+      }));
+    }
+  }, [categorySelected]);
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+  const handleErrorClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenError(false);
   };
 
   if (errorMessage) {
@@ -68,6 +154,19 @@ export default function NewListing() {
 
   return (
     <>
+      <Snackbar
+        open={openError}
+        autoHideDuration={2000}
+        onClose={handleErrorClose}
+      >
+        <Alert
+          onClose={handleErrorClose}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          An error occurred while submitting the details
+        </Alert>
+      </Snackbar>
       <Box component="div" padding={"10px"}>
         <h3
           style={{
@@ -95,7 +194,7 @@ export default function NewListing() {
           sx={{
             width: "100%",
             position: "relative",
-            right: "15%",
+            right: "10%",
             padding: "10px 10px",
           }}
         >
@@ -122,6 +221,9 @@ export default function NewListing() {
           <Step>
             <StepLabel>Enter product details</StepLabel>
           </Step>
+          <Step>
+            <StepLabel>Review</StepLabel>
+          </Step>
         </Stepper>
         <Button
           variant="outlined"
@@ -134,11 +236,22 @@ export default function NewListing() {
         </Button>
         <Button
           variant="contained"
-          onClick={handleNext}
+          onClick={() => {
+            activeStep === 2 ? handleClickOpen() : handleNext();
+          }}
           sx={{ marginBottom: "-2%" }}
-          disabled={categorySelectedLeaf === null || !isInputFilled}
+          disabled={
+            categorySelectedLeaf === null ||
+            categorySelected === null ||
+            !isInputFilled
+          }
+          startIcon={
+            categorySelectedLeaf && categorySelected === null ? (
+              <CircularProgress size={20} />
+            ) : null
+          }
         >
-          {activeStep === 1 ? "Finish" : "Next"}
+          {activeStep === 2 ? "Submit" : "Next"}
         </Button>
       </Box>
 
@@ -157,7 +270,6 @@ export default function NewListing() {
       )}
       {activeStep === 1 && (
         <NewProduct
-          categorySelected={categorySelected}
           qcData={qcData}
           setQcData={setQcData}
           setIsInputFilled={setIsInputFilled}
@@ -165,19 +277,32 @@ export default function NewListing() {
       )}
       {activeStep === 2 && <FinalProductDetails qcData={qcData} />}
 
-      <Box
+      <Dialog
+        open={dialogOpen}
+        onClose={handleClose}
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
+          "& .MuiDialog-paper": {
+            height: "200px",
+            borderRadius: "10px",
+            padding: "10px",
+            color: "black",
+            fontFamily: fonts.main,
+          },
         }}
       >
-        <Button disabled={activeStep === 0} onClick={handleBack}>
-          Back
-        </Button>
-        <Button onClick={handleNext}>
-          {activeStep === 1 ? "Finish" : "Next"}
-        </Button>
-      </Box>
+        <DialogTitle>Submit</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to submit the product for the QC verification?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose}>
+            Wait
+          </Button>
+          <Button onClick={handleSubmit}>Submit</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
