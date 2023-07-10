@@ -326,13 +326,13 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                     )}
                 </DialogContent>
                 <DialogActions>
-                    <Button type='submit' variant="contained" onClick={handleSubmit} autoFocus>
+                    <Button type='submit' variant='contained' onClick={handleSubmit} autoFocus>
                         Add
                     </Button>
-                    <Button variant="outlined" onClick={handleResetForm}>
+                    <Button variant='outlined' onClick={handleResetForm}>
                         Reset Form
                     </Button>
-                    <Button variant="outlined" autoFocus onClick={handleClose}>
+                    <Button variant='outlined' autoFocus onClick={handleClose}>
                         Cancel
                     </Button>
                 </DialogActions>

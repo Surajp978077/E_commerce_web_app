@@ -130,9 +130,9 @@ export const Product = () => {
                                 Product Name &nbsp;
                                 {pagination.sortBy === 'ProductName' &&  (
                                 <Chip
-                                    size="small"
+                                    size='small'
                                     label={pagination.sortDesc ? '▼' : '▲'}
-                                    color="primary"
+                                    color='primary'
                                 />
                             )}
                             </TableCell>
@@ -155,7 +155,7 @@ export const Product = () => {
                             return (
                                 <TableRow key={product.UniqueId}>
                                     <TableCell>
-                                        <img src={product.ProductImageUrl} alt="Product" style={{ width: '50px', height: '50px' }} />
+                                        <img src={product.ProductImageUrl} alt='Product' style={{ width: '50px', height: '50px' }} />
                                     </TableCell>
                                     <TableCell>{product.ProductName}</TableCell>
                                     <TableCell>{product.ProductBasePrice}</TableCell>

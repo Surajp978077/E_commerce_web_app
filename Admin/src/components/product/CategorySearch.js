@@ -72,7 +72,7 @@ const CategorySearch = ({ selectedResult, setSelectedResult, categorySelectedLea
     }, [selectedResult, categories, handleSelectResult]);
 
     return (
-        <div className='m-4' style={{ width: '100%' }}>
+        <div className='m-4'>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Autocomplete
                     options={searchResults}

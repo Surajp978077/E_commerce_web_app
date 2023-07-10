@@ -141,7 +141,7 @@ export const ProductDetails = () => {
         return (
             <NotFoundContainer theme={theme}>
                 <NotFoundCard>
-                    <Typography variant="body1" fontWeight="bold">
+                    <Typography variant='body1' fontWeight='bold'>
                         Product details not found.
                     </Typography>
                 </NotFoundCard>
@@ -159,52 +159,52 @@ export const ProductDetails = () => {
                 <Grid container spacing={2}>
                     {/* Image Section */}
                     <ImageContainer item xs={12} md={4}>
-                        <ProductImage src={product.ProductImageUrl} alt="Product" />
+                        <ProductImage src={product.ProductImageUrl} alt='Product' />
                     </ImageContainer>
 
                     {/* Details Section */}
                     <Grid item xs={12} md={8}>
                         {/* Product details Section */}
                         <SectionDivider sx={{ marginTop: 0 }}>
-                            <Chip label="Product details" color="primary" />
+                            <Chip label='Product details' color='primary' />
                         </SectionDivider>
-                        <Typography variant="body1">Name: {product.ProductName}</Typography>
-                        <Typography variant="body1">Description: {product.ProductDescription}</Typography>
-                        <Typography variant="body1">MRP: ₹{product.ProductBasePrice.toLocaleString('en-IN')}</Typography>
+                        <Typography variant='body1'>Name: {product.ProductName}</Typography>
+                        <Typography variant='body1'>Description: {product.ProductDescription}</Typography>
+                        <Typography variant='body1'>MRP: ₹{product.ProductBasePrice.toLocaleString('en-IN')}</Typography>
                         {/* Vendor's Listing Section */}
                         <SectionDivider>
-                            <Chip label="Vendor's Listing" color="primary" />
+                            <Chip label='Vendors Listing' color='primary' />
                         </SectionDivider>
-                        <Typography variant="body1">Price: ₹{product.ProductVendorPrice.toLocaleString('en-IN')}</Typography>
-                        <Typography variant="body1">Quantity: {product.ProductVendorQuantity.toLocaleString('en-IN')}</Typography>
-                        <Typography variant="body1">
+                        <Typography variant='body1'>Price: ₹{product.ProductVendorPrice.toLocaleString('en-IN')}</Typography>
+                        <Typography variant='body1'>Quantity: {product.ProductVendorQuantity.toLocaleString('en-IN')}</Typography>
+                        <Typography variant='body1'>
                             Listed On: {formatDate(product.ProductVendorListedOn)}
                         </Typography>
-                        <Typography variant="body1">
+                        <Typography variant='body1'>
                             Listing status: {product.ProductVendorVisible === 0 ? 'Not Listed' : 'Listed'}
                         </Typography>
                         {/* Vendor's Details Section */}
                         <SectionDivider>
-                            <Chip label="Vendor Details" color="primary" />
+                            <Chip label='Vendor Details' color='primary' />
                         </SectionDivider>
                         <VendorDetailsGrid container>
                             <Grid item xs={12} md={6}>
-                                <VendorDetailsCard variant="outlined">
-                                    <Typography variant="h6">Basic Details</Typography>
-                                    <Typography variant="body1">Name: {userInfo.UserName}</Typography>
-                                    <Typography variant="body1">GSTIN: {product.VendorGSTIN ? product.VendorGSTIN : '-'}</Typography>
-                                    <Typography variant="body1">Delivery Pin Code: {product.VendorDeliveryPinCode === 0 ? '-' : product.VendorDeliveryPinCode}</Typography>
-                                    <Typography variant="body1">Email: {userInfo.Email}</Typography>
-                                    <Typography variant="body1">Phone: {userInfo.Phone}</Typography>
+                                <VendorDetailsCard variant='outlined'>
+                                    <Typography variant='h6'>Basic Details</Typography>
+                                    <Typography variant='body1'>Name: {userInfo.UserName}</Typography>
+                                    <Typography variant='body1'>GSTIN: {product.VendorGSTIN ? product.VendorGSTIN : '-'}</Typography>
+                                    <Typography variant='body1'>Delivery Pin Code: {product.VendorDeliveryPinCode === 0 ? '-' : product.VendorDeliveryPinCode}</Typography>
+                                    <Typography variant='body1'>Email: {userInfo.Email}</Typography>
+                                    <Typography variant='body1'>Phone: {userInfo.Phone}</Typography>
                                 </VendorDetailsCard>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <VendorDetailsCard variant="outlined">
-                                    <Typography variant="h6">Address</Typography>
-                                    <Typography variant="body1">City: {userInfo.Address.City}</Typography>
-                                    <Typography variant="body1">Pincode: {userInfo.Address.Pincode}</Typography>
-                                    <Typography variant="body1">State: {userInfo.Address.State}</Typography>
-                                    <Typography variant="body1">Street: {userInfo.Address.Street}</Typography>
+                                <VendorDetailsCard variant='outlined'>
+                                    <Typography variant='h6'>Address</Typography>
+                                    <Typography variant='body1'>City: {userInfo.Address.City}</Typography>
+                                    <Typography variant='body1'>Pincode: {userInfo.Address.Pincode}</Typography>
+                                    <Typography variant='body1'>State: {userInfo.Address.State}</Typography>
+                                    <Typography variant='body1'>Street: {userInfo.Address.Street}</Typography>
                                 </VendorDetailsCard>
                             </Grid>
                         </VendorDetailsGrid>

@@ -7,12 +7,12 @@ const User = () => {
   const [pagination, setPagination] = useState(() => {
     const storedPagination = sessionStorage.getItem('userPagination');
     return storedPagination ? JSON.parse(storedPagination) : {
+      totalItems: 0,
+      totalPages: 0,
       page: 1,
-      pageSize: 3,
+      pageSize: 10,
       sortBy: 'UserName',
       sortDesc: false,
-      totalItems: 0,
-      totalPages: 0
     };
   });
 
@@ -44,7 +44,7 @@ const User = () => {
     sessionStorage.setItem('userPagination', JSON.stringify(pagination));
   }, [pagination]);
 
-  const handleChangePage = (event, page) => {
+  const handlePageChange = (event, page) => {
     setPagination(prevPagination => ({ ...prevPagination, page: page }));
   };
 
@@ -134,7 +134,7 @@ const User = () => {
         <Pagination
           count={pagination.totalPages}
           page={pagination.page}
-          onChange={handleChangePage}
+          onChange={handlePageChange}
         />
       </Box>
     </Box>
