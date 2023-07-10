@@ -30,12 +30,9 @@
     - Pagination for the listings
     - Switch for the status of the listing (active/inactive)
     - Button for editing the listing
-      - Edit the product name
-      - Edit the product description
-      - Edit the product price by that vendor
-      - Edit the product quantity by that vendor
+      - Edit the product name, description, price, quantity
       - Submit button for editing the listing
-    - Store the page number in the session
+    - Store the page number in the session storage
   - Search bar to add a new listing from the existing products
     - Search by product name
     - Display the listings grouped by the category of the product

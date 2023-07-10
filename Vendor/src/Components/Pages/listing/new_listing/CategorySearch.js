@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
-import { categoriesInstance } from "../../../api/axios";
+import { categoriesInstance } from "../../../../api/axios";
 
 const createNestedArray = (result, categories) => {
   let tempArray = [categories];

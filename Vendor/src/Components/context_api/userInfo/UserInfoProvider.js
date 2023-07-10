@@ -3,8 +3,8 @@ import jwtDecode from "jwt-decode";
 import { userInfoInstance } from "../../../api/axios";
 import { UserInfoContext } from "./UserInfoContext";
 import { LOGINPAGE } from "../../../config/config";
-import ErrorPage from "../../ErrorPage";
-import LoadingScreen from "../../LoadingScreen";
+import ErrorPage from "../../Pages/ErrorPage";
+import LoadingScreen from "../../Pages/LoadingScreen";
 
 export const UserInfoProvider = (props) => {
   const [userInfo, setUserInfo] = useState(null);

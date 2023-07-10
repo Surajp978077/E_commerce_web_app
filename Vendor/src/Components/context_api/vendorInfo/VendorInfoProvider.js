@@ -2,8 +2,8 @@ import { React, useContext, useEffect, useState } from "react";
 import { VendorInfoContext } from "./VendorInfoContext";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
 import { vendorInstance } from "../../../api/axios";
-import LoadingScreen from "../../LoadingScreen";
-import ErrorPage from "../../ErrorPage";
+import LoadingScreen from "../../Pages/LoadingScreen";
+import ErrorPage from "../../Pages/ErrorPage";
 function VendorInfoProvider(props) {
   const { userInfo, setUserInfo } = useContext(UserInfoContext);
   const [isVendorCreated, setIsVendorCreated] = useState(false); // to avoid creating new vendor more then once
@@ -24,7 +24,6 @@ function VendorInfoProvider(props) {
         if (error.request.status === 404) {
           if (!isVendorCreated) {
             // to avoid creating new vendor more then once
-            console.log("Creating new vendor");
             newVendor();
             setIsVendorCreated(true);
           }
@@ -55,6 +54,7 @@ function VendorInfoProvider(props) {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo.UserId, isVendorCreated]);
 
   // Had to seperate these two useeffect because of async behaviour of post and get methods of JS
@@ -64,7 +64,7 @@ function VendorInfoProvider(props) {
         ...prevUserInfo,
         vendor: {
           VendorId: vendor.Id,
-          vendorName: vendor.Name,
+          VendorName: vendor.Name,
           GSTIN: vendor.GSTIN,
           DeliveryPinCode: vendor.DeliveryPinCode,
         },
@@ -79,6 +79,7 @@ function VendorInfoProvider(props) {
     ) {
       updateUserInfo();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vendor, setUserInfo, isVendorSet, isVendorCreated]);
 
   if (errorMessage) {

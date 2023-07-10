@@ -4,11 +4,11 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { styled } from "@mui/material/styles";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Typography from "@mui/material/Typography";
-import { productVendorInstance, vendorInstance } from "../../api/axios";
+import { productVendorInstance, vendorInstance } from "../../../api/axios";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ManageSearchOutlinedIcon from "@mui/icons-material/ManageSearchOutlined";
-import { colors, fonts } from "../../config/config";
-import { VendorInfoContext } from "../context_api/vendorInfo/VendorInfoContext";
+import { colors, fonts } from "../../../config/config";
+import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
 import Product from "./Product";
 
 const OptionWrapper = styled("li")({

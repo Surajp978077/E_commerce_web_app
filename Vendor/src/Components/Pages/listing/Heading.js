@@ -1,6 +1,4 @@
 import React from "react";
-import Divider from "@mui/material/Divider";
-import Chip from "@mui/material/Chip";
 import {
   Box,
   Button,
@@ -11,7 +9,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
-import { fonts } from "../../config/config";
+import { fonts } from "../../../config/config";
 import Search from "./Search";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -74,11 +72,7 @@ export default function Heading(props) {
                 <Typography gutterBottom variant="h5" component="div">
                   {props.productsCount}
                 </Typography>
-                <Typography
-                  variant="h6"
-                  // color="text.secondary"
-                  sx={{ fontFamily: fonts.tertiary }}
-                >
+                <Typography variant="h6" sx={{ fontFamily: fonts.tertiary }}>
                   Total listings
                 </Typography>
               </CardContent>
@@ -122,7 +116,6 @@ export default function Heading(props) {
         </Link>
       </Box>
       <Link
-        // onClick={Navigat)}
         to="/new_listing"
         style={{ textDecoration: "none", color: "white" }}
       >
@@ -135,9 +128,9 @@ export default function Heading(props) {
           Add a new listing
         </Button>
       </Link>
-      <Divider sx={{ marginBlockStart: "20px" }}>
+      {/* <Divider sx={{ marginBlockStart: "20px" }}>
         <Chip label="PRODUCTS" />
-      </Divider>
+      </Divider> */}
     </div>
   );
 }
