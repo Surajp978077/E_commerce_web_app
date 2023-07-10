@@ -1,9 +1,8 @@
 import React from "react";
-import ImagePlaceholder from "../../../assets/images/ImagePlaceholder.png";
+import ImagePlaceholder from "../../../../assets/images/ImagePlaceholder.png";
 import Stack from "@mui/material/Stack";
 import { Paper } from "@mui/material";
-import { fonts } from "../../../config/config";
-
+import { fonts } from "../../../../config/config";
 export default function FinalProductDetails(props) {
   const { qcData } = props;
 

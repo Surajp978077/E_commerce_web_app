@@ -1,7 +1,4 @@
-import Photo from "../../assets/images/pic1.jpg";
-
-// import PropTypes from 'prop-types';
-
+import Photo from "../../../assets/images/pic1.jpg";
 export default function Info(props) {
   return (
     <>

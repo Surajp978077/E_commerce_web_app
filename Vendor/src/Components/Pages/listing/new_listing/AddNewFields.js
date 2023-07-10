@@ -2,7 +2,7 @@ import { Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 
 export default function AddNewFields(props) {
-  const { optionalDetails, setOptionalDetails, handleCancel } = props;
+  const { setOptionalDetails, handleCancel } = props;
   const [inputValue, setInputValue] = useState("");
 
   const handleAddField = () => {

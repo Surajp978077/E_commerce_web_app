@@ -1,5 +1,5 @@
 import React from "react";
-import { LOADING } from "../config/config";
+import { LOADING } from "../../config/config";
 import { Typography } from "@mui/material";
 
 export default function LoadingScreen() {

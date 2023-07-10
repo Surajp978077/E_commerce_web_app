@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   Typography,
   List,
   ListItem,
   ListItemText,
   ListItemButton,
-  Button,
   Box,
 } from "@mui/material";
-import { categoriesInstance } from "../../../api/axios";
+import { categoriesInstance } from "../../../../api/axios";
 
 const CategoryList = ({
   categories,
@@ -75,6 +74,7 @@ export const CategoryBrowse = ({
       setCategoriesSelected(selectedResult);
       setCategorySelectedLeaf(selectedResult[selectedResult.length - 1]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedResult, categoriesNestedSearch]);
 
   useEffect(() => {
@@ -90,6 +90,7 @@ export const CategoryBrowse = ({
     if (categoriesNested.length === 0) {
       fetchCategories();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCategorySelect = (category, level) => {

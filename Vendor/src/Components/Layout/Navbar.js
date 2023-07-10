@@ -10,11 +10,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Outlet } from "react-router-dom";
-import { LOGO, colors } from "../config/config";
+import { LOGO, colors } from "../../config/config";
 import { useLocation, Link as RouterLink } from "react-router-dom";
 import ClearIcon from "@mui/icons-material/Clear";
 import ListItemButton from "@mui/material/ListItemButton";
-import { LOGINPAGE } from "../config/config";
+import { LOGINPAGE } from "../../config/config";
 import {
   Avatar,
   IconButton,

@@ -1,15 +1,15 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/home/Home";
-import Card from "./components/About/Card";
+import Home from "./components/Pages/home/Home";
+import Card from "./components/Pages/About/Card";
 import { UserInfoProvider } from "./components/context_api/userInfo/UserInfoProvider";
-import Listings from "./components/listing/Listings";
+import Listings from "./components/Pages/listing/Listings";
 import Test from "./Test";
-import Navbar from "./components/Navbar";
-import Lost from "./components/Lost";
+import Navbar from "./components/Layout/Navbar";
+import Lost from "./components/Pages/Lost";
 import VendorInfoProvider from "./components/context_api/vendorInfo/VendorInfoProvider";
-import NewListing from "./components/listing/new_listing/NewListing";
-import ErrorPage from "./components/ErrorPage";
+import ErrorPage from "./components/Pages/ErrorPage";
+import NewListing from "./components/Pages/listing/new_listing/NewListing";
 import Test3 from "./Test3";
 
 const router = createBrowserRouter([

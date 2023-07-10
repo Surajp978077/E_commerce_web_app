@@ -9,7 +9,7 @@ import {
   styled,
 } from "@mui/material";
 import React from "react";
-import { BADREQUEST, Homepage, LOGINPAGE } from "../config/config";
+import { BADREQUEST, Homepage, LOGINPAGE } from "../../config/config";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import CallEndOutlinedIcon from "@mui/icons-material/CallEndOutlined";

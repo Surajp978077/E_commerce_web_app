@@ -14,15 +14,15 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import { fonts } from "../../../config/config";
+import { fonts } from "../../../../config/config";
 import Button from "@mui/material/Button";
 import NewProduct from "./NewProduct";
-import { QCInstance, categoriesInstance } from "../../../api/axios";
-import ErrroPage from "../../../components/ErrorPage";
-import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
+import { QCInstance, categoriesInstance } from "../../../../api/axios";
+import ErrorPage from "../../ErrorPage";
+import { VendorInfoContext } from "../../../context_api/vendorInfo/VendorInfoContext";
 import FinalProductDetails from "./FinalProductDetails";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function NewListing() {
   const [activeStep, setActiveStep] = useState(0);
@@ -149,7 +149,7 @@ export default function NewListing() {
   };
 
   if (errorMessage) {
-    return <ErrroPage desc={errorMessage} />;
+    return <ErrorPage desc={errorMessage} />;
   }
 
   return (
