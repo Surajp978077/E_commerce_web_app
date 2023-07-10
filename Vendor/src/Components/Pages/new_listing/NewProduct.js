@@ -5,7 +5,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Tooltip from "@mui/material/Tooltip";
-import ImagePlaceHolder from "../../../../assets/images/ImagePlaceholder.png";
+import ImagePlaceHolder from "../../../assets/images/ImagePlaceholder.png";
 import AddNewFields from "./AddNewFields";
 import CloseIcon from "@mui/icons-material/Close";
 import ToggleButton from "@mui/material/ToggleButton";

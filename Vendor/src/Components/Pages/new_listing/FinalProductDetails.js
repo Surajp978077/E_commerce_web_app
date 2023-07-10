@@ -1,8 +1,8 @@
 import React from "react";
-import ImagePlaceholder from "../../../../assets/images/ImagePlaceholder.png";
+import ImagePlaceholder from "../../../assets/images/ImagePlaceholder.png";
 import Stack from "@mui/material/Stack";
 import { Paper } from "@mui/material";
-import { fonts } from "../../../../config/config";
+import { fonts } from "../../../config/config";
 export default function FinalProductDetails(props) {
   const { qcData } = props;
 
@@ -13,8 +13,6 @@ export default function FinalProductDetails(props) {
     boxShadow: "0px 0px 10px 0px grey",
     backgroundColor: "#adf7d5",
   };
-
-  console.log(qcData);
 
   const productKeys = ["Product Name", "Product Description", "M.R.P (Rs)"];
   const productValues = [

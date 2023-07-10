@@ -30,7 +30,7 @@ export const productVendorInstance = axios.create({
 });
 
 export const QCInstance = axios.create({
-  baseURL: "https://localhost:7044/api/QCRequest",
+  baseURL: "https://localhost:7044/api/QCRequests",
   timeout: 5000,
 });
 

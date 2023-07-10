@@ -14,12 +14,12 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import { fonts } from "../../../../config/config";
+import { fonts } from "../../../config/config";
 import Button from "@mui/material/Button";
 import NewProduct from "./NewProduct";
-import { QCInstance, categoriesInstance } from "../../../../api/axios";
-import ErrorPage from "../../ErrorPage";
-import { VendorInfoContext } from "../../../context_api/vendorInfo/VendorInfoContext";
+import { QCInstance, categoriesInstance } from "../../../api/axios";
+import ErrorPage from "../../Pages/ErrorPage";
+import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
 import FinalProductDetails from "./FinalProductDetails";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";

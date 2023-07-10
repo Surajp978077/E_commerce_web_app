@@ -9,7 +9,7 @@ import Navbar from "./components/Layout/Navbar";
 import Lost from "./components/Pages/Lost";
 import VendorInfoProvider from "./components/context_api/vendorInfo/VendorInfoProvider";
 import ErrorPage from "./components/Pages/ErrorPage";
-import NewListing from "./components/Pages/listing/new_listing/NewListing";
+import NewListing from "./components/Pages/new_listing/NewListing";
 import Test3 from "./Test3";
 
 const router = createBrowserRouter([
