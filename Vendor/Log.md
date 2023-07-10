@@ -23,6 +23,9 @@
 - Listings page
 
   - Button for adding a new listing
+    - Stepper to show the steps for adding a new listing
+    - Search the category under which the product is to be added and click next
+    - Enter the product details
   - Show all the listings of the vendor
     - Pagination for the listings
     - Switch for the status of the listing (active/inactive)
@@ -36,3 +39,8 @@
   - Search bar to add a new listing from the existing products
     - Search by product name
     - Display the listings grouped by the category of the product
+    - Click on the product to add the listing to the vendor
+      - Open the prouct page
+      - Show the product details
+      - Enter the product price, visibility, quantity
+      - Submit button for adding the listing

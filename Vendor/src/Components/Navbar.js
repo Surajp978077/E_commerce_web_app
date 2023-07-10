@@ -24,6 +24,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import jwtDecode from "jwt-decode";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function ListItemLink(props) {
   const { icon, primary, to } = props;
@@ -83,9 +84,17 @@ export default function Navbar() {
     }));
   };
 
+  const isMobile = useMediaQuery("(max-width:600px)");
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 350 }}
+      sx={{
+        width:
+          anchor === "top" || anchor === "bottom"
+            ? "auto"
+            : isMobile
+            ? "100vw"
+            : "20vw",
+      }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}

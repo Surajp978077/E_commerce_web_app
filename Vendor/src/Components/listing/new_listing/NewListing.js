@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { ProductListing } from "./ProductListing";
 import { Box, Divider, Stepper, Step, StepLabel } from "@mui/material";
 import { fonts } from "../../../config/config";
@@ -6,6 +6,8 @@ import Button from "@mui/material/Button";
 import NewProduct from "./NewProduct";
 import { categoriesInstance } from "../../../api/axios";
 import ErrroPage from "../../../components/ErrorPage";
+import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
+import FinalProductDetails from "./FinalProductDetails";
 
 export default function NewListing() {
   const [activeStep, setActiveStep] = useState(0);
@@ -14,6 +16,18 @@ export default function NewListing() {
   const [categoriesSelected, setCategoriesSelected] = useState([]);
   const [categorySelected, setCategorySelected] = useState(null); // to get the basic and optional details of the category
   const [errorMessage, setErrorMessage] = useState(null);
+  const { userInfo } = useContext(VendorInfoContext);
+  const [isInputFilled, setIsInputFilled] = useState(true); // to check if the input fields are filled or not
+  const [qcData, setQcData] = useState({
+    product: {},
+    BasicDetails: {},
+    OptionalDetails: {},
+    CategoryId: null,
+    CategoryName: null,
+    productVendor: {},
+    VendorId: userInfo.vendor.VendorId,
+    VendorName: userInfo.vendor.Name,
+  });
 
   const fetchCategories = async () => {
     try {
@@ -22,6 +36,11 @@ export default function NewListing() {
       );
       if (response.status === 200 && response.data) {
         setCategorySelected(response.data);
+        setQcData({
+          ...qcData,
+          CategoryId: response.data.CategoryId,
+          CategoryName: response.data.Name,
+        });
       }
     } catch (error) {
       setErrorMessage(error.message);
@@ -66,6 +85,7 @@ export default function NewListing() {
           alignItems: "center",
           padding: "10px 10px",
           backgroundColor: "#ebeae8",
+          height: "100px",
         }}
       >
         <Stepper
@@ -115,7 +135,7 @@ export default function NewListing() {
           variant="contained"
           onClick={handleNext}
           sx={{ marginBottom: "-2%" }}
-          disabled={categorySelectedLeaf === null}
+          disabled={categorySelectedLeaf === null || !isInputFilled}
         >
           {activeStep === 1 ? "Finish" : "Next"}
         </Button>
@@ -134,7 +154,15 @@ export default function NewListing() {
           setCategoriesSelected={setCategoriesSelected}
         />
       )}
-      {activeStep === 1 && <NewProduct categorySelected={categorySelected} />}
+      {activeStep === 1 && (
+        <NewProduct
+          categorySelected={categorySelected}
+          qcData={qcData}
+          setQcData={setQcData}
+          setIsInputFilled={setIsInputFilled}
+        />
+      )}
+      {activeStep === 2 && <FinalProductDetails qcData={qcData} />}
 
       <Box
         sx={{

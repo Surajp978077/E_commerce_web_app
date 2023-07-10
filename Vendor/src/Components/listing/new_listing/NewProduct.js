@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, Card, TextField, Typography } from "@mui/material";
 import { ExpandMore as ExpandMoreIcon, Label } from "@mui/icons-material";
 import Accordion from "@mui/material/Accordion";
@@ -6,66 +6,107 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Tooltip from "@mui/material/Tooltip";
 import ImagePlaceHolder from "../../../assets/images/ImagePlaceholder.png";
-import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
 import AddNewFields from "./AddNewFields";
 import CloseIcon from "@mui/icons-material/Close";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ErrorIcon from "@mui/icons-material/Error";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 export default function NewProduct(props) {
-  const { categorySelected } = props;
-  const { userInfo } = useContext(VendorInfoContext);
+  const {
+    categorySelected,
+    qcData,
+    setQcData,
+    categoryBasicDetails,
+    categoryOptionalDetails,
+    setIsInputFilled,
+  } = props;
   const [category, setCategory] = useState(categorySelected);
-  const [basicDetails, setBasicDetails] = useState(
-    category.BasicDetails.reduce((result, key) => {
-      result[key] = null;
-      return result;
-    }, {})
-  );
-  const [optionalDetails, setOptionalDetails] = useState(
-    category.OptionalDetails.reduce((result, key) => {
-      result[key] = null;
-      return result;
-    }, {})
-  );
-
-  const [productDetails, setProductDetails] = useState({
-    ProdName: null,
-    Description: null,
-    Price: null,
-    ImageURL: null,
-    BasicDetails: {},
-    OptionalDetails: {},
-    CategoryId: category.CategoryId,
-    productVendor: {},
-    Vendor: {
-      VendorId: userInfo.vendor.VendorId,
-      VendorName: userInfo.vendor.Name,
-    },
-  });
-
-  const [productVendor, setProductVendor] = useState({
-    Price: 0,
-    Quantity: 0,
-    Visible: null, // true or false
-  });
-
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
+
+  const imageURLSubmit = useRef(null);
+  const nameDescriptionSubmit = useRef(null);
+  const basicDetailsSubmit = useRef(null);
+  const optionalDetailsSubmit = useRef(null);
+  const priceStockSubmit = useRef(null);
+  const [render, setRender] = useState(false); // to re-render the component when the accordion submit button is clicked
+
+  const [basicDetails, setBasicDetails] = useState(
+    categoryBasicDetails
+      ? categoryBasicDetails
+      : category.BasicDetails.reduce((result, key) => {
+          result[key] = null;
+          return result;
+        }, {})
+  );
+
+  const [optionalDetails, setOptionalDetails] = useState(
+    categoryOptionalDetails
+      ? categoryOptionalDetails
+      : category.OptionalDetails.reduce((result, key) => {
+          result[key] = null;
+          return result;
+        }, {})
+  );
+
+  const [productDetails, setProductDetails] = useState(
+    Object.keys(qcData.product).length !== 0
+      ? qcData.product
+      : {
+          ProdName: null,
+          Description: null,
+          Price: null,
+          ImageURL: null,
+        }
+  );
+
+  const [productVendor, setProductVendor] = useState(
+    Object.keys(qcData.productVendor).length !== 0
+      ? qcData.productVendor
+      : {
+          Price: 0,
+          Quantity: 0,
+          Visible: null, // true or false
+        }
+  );
+
+  useEffect(() => {
+    setIsInputFilled(false);
+    if (
+      imageURLSubmit.current === true &&
+      nameDescriptionSubmit.current === true &&
+      basicDetailsSubmit.current === true &&
+      optionalDetailsSubmit.current === true &&
+      priceStockSubmit.current === true
+    ) {
+      setIsInputFilled(true);
+    }
+    return () => {
+      setIsInputFilled(true);
+    };
+  }, [
+    qcData,
+    imageURLSubmit,
+    nameDescriptionSubmit,
+    basicDetailsSubmit,
+    optionalDetailsSubmit,
+    priceStockSubmit,
+  ]);
 
   const handleCancelAdditionalFields = () => {
     setShowAdditionalFields(false);
   };
 
   const handleChangeBasic = (index, value) => {
-    setProductDetails((prev) => {
+    setBasicDetails((prev) => {
       return {
         ...prev,
-        BasicDetails: {
-          ...prev.BasicDetails,
-          [index]: value,
-        },
+        [index]: value,
       };
     });
   };
+
   // Add this function to handle changes in optional details
   const handleChangeOptional = (key, value) => {
     setOptionalDetails((prev) => ({
@@ -74,12 +115,32 @@ export default function NewProduct(props) {
     }));
   };
 
-  const nameanddescrptionChangeHandler = (event) => {
+  const handleProductInfoChange = (event) => {
     const { name, value } = event.target;
-    setProductDetails((prev) => {
+    let updatedValue = value;
+
+    if (name === "Price") {
+      updatedValue = value.replace(/[^0-9]/g, ""); // Remove non-numeric characters and decimal points
+    }
+
+    setProductDetails((prev) => ({
+      ...prev,
+      [name]: updatedValue,
+    }));
+  };
+
+  const handleProductVendorInfoChange = (event) => {
+    const { name, value } = event.target;
+    let updatedValue = value;
+
+    if (name === "Price" || name === "Quantity") {
+      updatedValue = value.replace(/[^0-9]/g, ""); // Remove non-numeric characters and decimal points
+    }
+
+    setProductVendor((prev) => {
       return {
         ...prev,
-        [name]: value,
+        [name]: updatedValue,
       };
     });
   };
@@ -90,11 +151,6 @@ export default function NewProduct(props) {
       delete newOptionalDetails[fieldKey];
       return newOptionalDetails;
     });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // console.log(inputValues);
   };
 
   const handleReset = () => {
@@ -127,6 +183,15 @@ export default function NewProduct(props) {
     );
   };
 
+  const handleVisible = (event, newAlignment) => {
+    priceStockSubmit.current =
+      priceStockSubmit.current === false ? priceStockSubmit.current : null;
+    setProductVendor((prev) => ({
+      ...prev,
+      Visible: newAlignment,
+    }));
+  };
+
   return (
     <>
       <Box
@@ -148,28 +213,76 @@ export default function NewProduct(props) {
             height: "450px",
             borderRadius: "20px",
             position: "relative",
-            padding: "20px",
+            padding: "20px 5px",
           }}
         >
-          <TextField
-            required
-            id="outlined-required"
-            label="Image URL"
-            fullWidth
-            value={productDetails.ImageURL ? productDetails.ImageURL : ""}
-            name="ImageURL"
-            size="small"
-            variant="outlined"
-            onChange={(event) => {
-              setProductDetails((prev) => {
-                return {
-                  ...prev,
-                  ImageURL: event.target.value,
-                };
-              });
-              console.log(productDetails.ImageURL);
-            }}
-          />
+          <div style={{ display: "flex", width: "100%" }}>
+            <TextField
+              required
+              id="outlined-required"
+              label="Image URL"
+              value={productDetails.ImageURL ? productDetails.ImageURL : ""}
+              name="ImageURL"
+              size="small"
+              variant="outlined"
+              sx={{ width: "75%" }}
+              onChange={(event) => {
+                imageURLSubmit.current = null;
+                setProductDetails((prev) => {
+                  return {
+                    ...prev,
+                    ImageURL: event.target.value,
+                  };
+                });
+              }}
+              error={
+                imageURLSubmit.current === false &&
+                !Boolean(productDetails.ImageURL)
+              }
+            />
+            <Button
+              variant="contained"
+              sx={{
+                height: "40px",
+                borderRadius: "20px",
+                backgroundColor:
+                  imageURLSubmit.current === true ? "#4caf50" : "#F9A826",
+                color: "#fff",
+                width: "25%",
+                "&:hover": {
+                  backgroundColor: "#F9A826",
+                  color: "#fff",
+                },
+              }}
+              onClick={() => {
+                if (!productDetails.ImageURL) {
+                  imageURLSubmit.current = false;
+                  return;
+                }
+                setQcData((prev) => {
+                  return {
+                    ...prev,
+                    product: productDetails,
+                  };
+                });
+                imageURLSubmit.current = true;
+                setRender((prev) => !prev);
+              }}
+            >
+              {imageURLSubmit.current === false ? (
+                <ErrorIcon fontSize="small" sx={{ color: "black" }} />
+              ) : (
+                ""
+              )}
+              {imageURLSubmit.current === true ? (
+                <CheckCircleIcon fontSize="small" sx={{ color: "black" }} />
+              ) : (
+                ""
+              )}{" "}
+              Submit
+            </Button>
+          </div>
+
           <div
             style={{
               display: "flex",
@@ -193,6 +306,7 @@ export default function NewProduct(props) {
               alt="Product"
               onError={(e) => {
                 e.target.src = ImagePlaceHolder;
+                imageURLSubmit.current = false;
                 setProductDetails((prev) => {
                   return {
                     ...prev,
@@ -241,7 +355,22 @@ export default function NewProduct(props) {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography>Name, Description & Price</Typography>
+                  <Typography>
+                    {nameDescriptionSubmit.current === false ? (
+                      <ErrorIcon fontSize="small" sx={{ color: "#f44336" }} />
+                    ) : (
+                      ""
+                    )}
+                    {nameDescriptionSubmit.current === true ? (
+                      <CheckCircleIcon
+                        fontSize="small"
+                        sx={{ color: "#4caf50" }}
+                      />
+                    ) : (
+                      ""
+                    )}{" "}
+                    Name & Description
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <form>
@@ -251,12 +380,16 @@ export default function NewProduct(props) {
                       color="error"
                       size="small"
                       onClick={() => {
+                        nameDescriptionSubmit.current =
+                          nameDescriptionSubmit.current === false
+                            ? nameDescriptionSubmit.current
+                            : null;
                         setBasicDetails((prev) => {
-                          const resetBasicDetails = {};
-                          for (let key in prev) {
-                            resetBasicDetails[key] = "";
-                          }
-                          return resetBasicDetails;
+                          return {
+                            ...prev,
+                            Name: null,
+                            Description: null,
+                          };
                         });
                       }}
                       sx={{
@@ -272,12 +405,25 @@ export default function NewProduct(props) {
                       color="success"
                       size="small"
                       onClick={() => {
-                        setProductDetails((prev) => {
-                          return {
+                        if (
+                          Boolean(productDetails.ProdName) &&
+                          Boolean(productDetails.Description)
+                        ) {
+                          setQcData((prev) => ({
                             ...prev,
-                            BasicDetails: basicDetails,
-                          };
-                        });
+                            product: {
+                              ...prev.product,
+                              ProdName: productDetails.ProdName,
+                              Description: productDetails.Description,
+                            },
+                          }));
+
+                          nameDescriptionSubmit.current = true;
+                          setRender((prev) => !prev); // to re-render the component
+                        } else {
+                          nameDescriptionSubmit.current = false;
+                          setRender((prev) => !prev); // to re-render the component
+                        }
                       }}
                       sx={{
                         position: "absolute",
@@ -298,7 +444,17 @@ export default function NewProduct(props) {
                       name="ProdName"
                       size="small"
                       variant="outlined"
-                      onChange={nameanddescrptionChangeHandler}
+                      error={
+                        nameDescriptionSubmit.current === false &&
+                        !Boolean(productDetails.ProdName)
+                      }
+                      onChange={(e) => {
+                        nameDescriptionSubmit.current =
+                          nameDescriptionSubmit.current === false
+                            ? nameDescriptionSubmit.current
+                            : null;
+                        handleProductInfoChange(e);
+                      }}
                       sx={{ margin: "0 0 10px 10px" }}
                     ></TextField>
                     <br />
@@ -314,6 +470,7 @@ export default function NewProduct(props) {
                       placement="top-start"
                     >
                       <TextField
+                        required
                         id="outlined-multiline-static"
                         label="Multiline"
                         multiline
@@ -325,24 +482,20 @@ export default function NewProduct(props) {
                             ? productDetails.Description
                             : ""
                         }
-                        onChange={nameanddescrptionChangeHandler}
+                        error={
+                          nameDescriptionSubmit.current === false &&
+                          !Boolean(productDetails.Description)
+                        }
+                        onChange={(e) => {
+                          nameDescriptionSubmit.current =
+                            nameDescriptionSubmit.current === false
+                              ? nameDescriptionSubmit.current
+                              : null;
+                          handleProductInfoChange(e);
+                        }}
                         sx={{ margin: "0 0 10px 10px" }}
                       />
                     </Tooltip>
-                    <br />
-                    <label>Base Price : </label>
-                    <TextField
-                      required
-                      id="outlined-required"
-                      label="Base Price"
-                      value={productDetails.Price ? productDetails.Price : ""}
-                      name="Price"
-                      size="small"
-                      variant="outlined"
-                      type="number"
-                      onChange={nameanddescrptionChangeHandler}
-                      sx={{ margin: "0 0 10px 10px" }}
-                    ></TextField>
                   </form>
                 </AccordionDetails>
               </Accordion>
@@ -355,26 +508,35 @@ export default function NewProduct(props) {
                 boxShadow: " 1px 3px 2px rgba(0,0,0,0.15)",
               }}
             >
-              <Accordion
-                sx={{
-                  border: () => {
-                    for (let key in basicDetails) {
-                      if (
-                        productDetails.BasicDetails[key] === "" ||
-                        productDetails.BasicDetails[key] === null
-                      ) {
-                        return "1px solid red";
-                      }
-                    }
-                  },
-                }}
-              >
+              <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography>Basic Details</Typography>
+                  <Typography>
+                    {basicDetailsSubmit.current === false ? (
+                      <ErrorIcon
+                        fontSize="small"
+                        sx={{
+                          color: "#f44336",
+                        }}
+                      />
+                    ) : (
+                      ""
+                    )}
+                    {basicDetailsSubmit.current === true ? (
+                      <CheckCircleIcon
+                        fontSize="small"
+                        sx={{
+                          color: "#4caf50",
+                        }}
+                      />
+                    ) : (
+                      ""
+                    )}{" "}
+                    Basic Details
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <div style={{ width: "fullWidth" }}>
@@ -385,6 +547,10 @@ export default function NewProduct(props) {
                         color="error"
                         size="small"
                         onClick={() => {
+                          basicDetailsSubmit.current =
+                            basicDetailsSubmit.current === false
+                              ? basicDetailsSubmit.current
+                              : null;
                           setBasicDetails((prev) => {
                             const resetBasicDetails = {};
                             for (let key in prev) {
@@ -406,12 +572,23 @@ export default function NewProduct(props) {
                         color="success"
                         size="small"
                         onClick={() => {
-                          setProductDetails((prev) => {
-                            return {
+                          if (
+                            !Object.values(basicDetails).some(
+                              (value) => !Boolean(value)
+                            )
+                          ) {
+                            setQcData((prev) => ({
                               ...prev,
                               BasicDetails: basicDetails,
-                            };
-                          });
+                            }));
+                            basicDetailsSubmit.current = true;
+
+                            setRender((prev) => !prev); // to re-render the component
+                          } else {
+                            basicDetailsSubmit.current = false;
+
+                            setRender((prev) => !prev); // to re-render the component
+                          }
                         }}
                         sx={{
                           position: "absolute",
@@ -453,14 +630,16 @@ export default function NewProduct(props) {
                                   basicDetails[key] ? basicDetails[key] : ""
                                 }
                                 error={
-                                  basicDetails[key] === "" ||
-                                  basicDetails[key] === null
-                                    ? true
-                                    : false
+                                  basicDetailsSubmit.current === false &&
+                                  !Boolean(basicDetails[key])
                                 }
-                                onChange={(event) =>
-                                  handleChangeBasic(index, event.target.value)
-                                }
+                                onChange={(event) => {
+                                  basicDetailsSubmit.current =
+                                    basicDetailsSubmit.current === false
+                                      ? basicDetailsSubmit.current
+                                      : null;
+                                  handleChangeBasic(index, event.target.value);
+                                }}
                                 InputLabelProps={{
                                   shrink: true,
                                 }}
@@ -490,7 +669,19 @@ export default function NewProduct(props) {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography>Optional Details</Typography>
+                  <Typography>
+                    {optionalDetailsSubmit.current ? (
+                      <CheckCircleIcon
+                        fontSize="small"
+                        sx={{
+                          color: "#4caf50",
+                        }}
+                      />
+                    ) : (
+                      ""
+                    )}{" "}
+                    Optional Details
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <div style={{ width: "fullWidth" }}>
@@ -506,6 +697,7 @@ export default function NewProduct(props) {
                           right: "110px",
                         }}
                         onClick={() => {
+                          optionalDetailsSubmit.current = null;
                           setOptionalDetails((prev) => {
                             const resetOptionalDetails = {};
                             for (let key in prev) {
@@ -527,12 +719,14 @@ export default function NewProduct(props) {
                           right: "40px",
                         }}
                         onClick={() => {
-                          setProductDetails((prev) => {
+                          setQcData((prev) => {
                             return {
                               ...prev,
                               OptionalDetails: optionalDetails,
                             };
                           });
+                          optionalDetailsSubmit.current = true;
+                          setRender((prev) => !prev); // to re-render the component after saving
                         }}
                       >
                         Save
@@ -563,9 +757,13 @@ export default function NewProduct(props) {
                                 label={key}
                                 size="small"
                                 value={optionalDetails[key] || ""}
-                                onChange={(event) =>
-                                  handleChangeOptional(key, event.target.value)
-                                }
+                                onChange={(event) => {
+                                  optionalDetailsSubmit.current =
+                                    optionalDetailsSubmit.current === false
+                                      ? optionalDetailsSubmit.current
+                                      : null;
+                                  handleChangeOptional(key, event.target.value);
+                                }}
                                 margin="normal"
                                 InputLabelProps={{
                                   shrink: true,
@@ -630,10 +828,25 @@ export default function NewProduct(props) {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography>Price & Stock</Typography>
+                  <Typography>
+                    {priceStockSubmit.current === false ? (
+                      <ErrorIcon fontSize="small" sx={{ color: "#f44336" }} />
+                    ) : (
+                      ""
+                    )}
+                    {priceStockSubmit.current === true ? (
+                      <CheckCircleIcon
+                        fontSize="small"
+                        sx={{ color: "#4caf50" }}
+                      />
+                    ) : (
+                      ""
+                    )}{" "}
+                    Price & Stock
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <div style={{ width: "fullWidth" }}>
+                  <div style={{ width: "fullWidth", gap: "10px" }}>
                     <form>
                       <Button
                         type="reset"
@@ -646,12 +859,20 @@ export default function NewProduct(props) {
                           right: "110px",
                         }}
                         onClick={() => {
-                          setOptionalDetails((prev) => {
-                            const resetOptionalDetails = {};
+                          priceStockSubmit.current =
+                            priceStockSubmit.current === false
+                              ? priceStockSubmit.current
+                              : null;
+                          setProductVendor((prev) => {
+                            const resetProductVendor = {};
                             for (let key in prev) {
-                              resetOptionalDetails[key] = "";
+                              resetProductVendor[key] = null;
                             }
-                            return resetOptionalDetails;
+
+                            return resetProductVendor;
+                          });
+                          setProductDetails((prev) => {
+                            return { ...prev, Price: null };
                           });
                         }}
                       >
@@ -667,73 +888,228 @@ export default function NewProduct(props) {
                           right: "40px",
                         }}
                         onClick={() => {
-                          setProductDetails((prev) => {
-                            return {
+                          if (
+                            Boolean(productDetails.Price) &&
+                            !Object.values(productVendor).some(
+                              (value) => !Boolean(value)
+                            )
+                          ) {
+                            setQcData((prev) => ({
                               ...prev,
-                              OptionalDetails: optionalDetails,
-                            };
-                          });
+                              product: {
+                                ...prev.product,
+                                Price: productDetails.Price,
+                              },
+                            }));
+                            priceStockSubmit.current = true;
+                            setRender((prev) => !prev); // to re-render the component
+                          } else {
+                            priceStockSubmit.current = false;
+                            setRender((prev) => !prev); // to re-render the component
+                          }
                         }}
                       >
                         Save
                       </Button>
-                      {Object.keys(optionalDetails).map((key, index) => (
-                        <React.Fragment key={index}>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              margin: "-10px",
+
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        <label
+                          style={{
+                            width: "50%",
+                            textAlign: "right",
+                            paddingRight: "10px",
+                          }}
+                        >
+                          M.R.P <span style={{ fontWeight: "bolder" }}>:</span>
+                        </label>
+                        <div style={{ width: "50%" }}>
+                          <TextField
+                            required
+                            id="outlined-required"
+                            label="MRP"
+                            value={
+                              productDetails.Price ? productDetails.Price : ""
+                            }
+                            error={
+                              priceStockSubmit.current === false &&
+                              !Boolean(productDetails.Price)
+                            }
+                            name="Price"
+                            size="small"
+                            variant="outlined"
+                            type="number"
+                            onChange={(event) => {
+                              priceStockSubmit.current =
+                                priceStockSubmit.current === false
+                                  ? priceStockSubmit.current
+                                  : null;
+                              handleProductInfoChange(event);
                             }}
+                          />
+                        </div>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        <label
+                          style={{
+                            width: "50%",
+                            textAlign: "right",
+                            paddingRight: "10px",
+                          }}
+                        >
+                          Your selling price{" "}
+                          <span style={{ fontWeight: "bolder" }}>:</span>
+                        </label>
+                        <div style={{ width: "50%" }}>
+                          <TextField
+                            required
+                            id="outlined-required"
+                            label="Price"
+                            value={
+                              productVendor.Price ? productVendor.Price : ""
+                            }
+                            error={
+                              priceStockSubmit.current === false &&
+                              !Boolean(productVendor.Price)
+                            }
+                            name="Price"
+                            size="small"
+                            variant="outlined"
+                            type="number"
+                            onChange={(event) => {
+                              priceStockSubmit.current =
+                                priceStockSubmit.current === false
+                                  ? priceStockSubmit.current
+                                  : null;
+                              handleProductVendorInfoChange(event);
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        <label
+                          style={{
+                            width: "50%",
+                            textAlign: "right",
+                            paddingRight: "10px",
+                          }}
+                        >
+                          Listing status{" "}
+                          <span style={{ fontWeight: "bolder" }}>:</span>
+                        </label>
+                        <div
+                          style={{
+                            width: "fit-content",
+                            border:
+                              priceStockSubmit.current === false &&
+                              !Boolean(productVendor.Visible)
+                                ? "1px solid red"
+                                : "none",
+                          }}
+                        >
+                          <ToggleButtonGroup
+                            value={productVendor.Visible}
+                            exclusive
+                            onChange={handleVisible}
+                            aria-label="Listing Status"
+                            size="small"
                           >
-                            <label
-                              htmlFor={key}
-                              style={{
-                                width: "50%",
-                                textAlign: "right",
-                                paddingRight: "10px",
-                              }}
+                            <ToggleButton
+                              value="1"
+                              aria-label="Active"
+                              color="info"
                             >
-                              {key}{" "}
-                              <span style={{ fontWeight: "bolder" }}>:</span>
-                            </label>
-                            <div style={{ width: "50%" }}>
-                              <TextField
-                                id={key}
-                                label={key}
-                                size="small"
-                                value={optionalDetails[key] || ""}
-                                onChange={(event) =>
-                                  handleChangeOptional(key, event.target.value)
-                                }
-                                margin="normal"
-                                InputLabelProps={{
-                                  shrink: true,
-                                }}
-                                variant="outlined"
-                              />
-                              <CloseIcon
-                                color="error"
-                                onClick={() => {
-                                  handleRemoveField(key);
-                                }}
-                                sx={{
-                                  position: "relative",
-                                  top: "20px",
-                                  cursor: "pointer",
-                                  marginLeft: "40px",
-                                }}
-                              />
-                            </div>
-                          </div>
-                          <br />
-                        </React.Fragment>
-                      ))}
+                              <Typography>Active</Typography>
+                            </ToggleButton>
+                            <ToggleButton
+                              value="0"
+                              aria-label="Inactive"
+                              color="error"
+                            >
+                              <Typography>Inactive</Typography>
+                            </ToggleButton>
+                          </ToggleButtonGroup>
+                        </div>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        <label
+                          style={{
+                            width: "50%",
+                            textAlign: "right",
+                            paddingRight: "10px",
+                          }}
+                        >
+                          Stock <span style={{ fontWeight: "bolder" }}>:</span>
+                        </label>
+                        <div style={{ width: "50%" }}>
+                          <TextField
+                            required
+                            id="outlined-required"
+                            label="Stock"
+                            value={
+                              productVendor.Quantity
+                                ? productVendor.Quantity
+                                : ""
+                            }
+                            error={
+                              priceStockSubmit.current === false &&
+                              !productVendor.Quantity
+                            }
+                            name="Quantity"
+                            size="small"
+                            variant="outlined"
+                            type="number"
+                            onChange={(event) => {
+                              priceStockSubmit.current =
+                                priceStockSubmit.current === false
+                                  ? priceStockSubmit.current
+                                  : null;
+                              handleProductVendorInfoChange(event);
+                            }}
+                          />
+                        </div>
+                      </div>
                     </form>
                   </div>
                 </AccordionDetails>
               </Accordion>
             </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              width: "100%",
+            }}
+          >
+            <Typography fontSize={"13px"} color={"GrayText"}>
+              Fields marked with{" "}
+              <span style={{ fontSize: "20px", color: "red" }}> * </span> are
+              required.
+            </Typography>
           </div>
         </Card>
       </Box>

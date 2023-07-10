@@ -83,7 +83,6 @@ body {
 #offcanvas-header {
   /* color: #ffffff; */
   background-color: #f7f7f7;
-  min-width: 100vw;
   border-bottom: #dad8d8 solid 0.5px;
   height: 65px;
 }
