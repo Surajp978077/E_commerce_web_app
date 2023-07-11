@@ -203,6 +203,8 @@ export const Product = () => {
                                     {pagination.sortBy === 'ProductVendorVisible' && (
                                         <span>{pagination.sortDesc ? '▼' : '▲'}</span>
                                     )}
+                                    <br />
+                                    (0: Inactive, 1: Active)
                                 </TableCell>
                                 <TableCell />
                             </TableRow>

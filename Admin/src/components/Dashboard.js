@@ -57,9 +57,9 @@ const Dashboard = () => {
     useEffect(() => {
         const GetCountPendingQCRequests = async () => {
             try {
-                var response = await productInstance.get('qcrequest/count-pending');
-                if (response && response.data) {
-                    console.log(response.data);
+                var response = await productInstance.get('qcrequests/count-pending');
+                console.log(response);
+                if (response && response.data !== undefined && response.data !== null) {
                     setQcRequestCount(response.data);
                 }
             } catch (error) {
@@ -75,7 +75,7 @@ const Dashboard = () => {
             <Grid container spacing={4}>
                 <DashboardCard
                     title='QC Requests'
-                    content={<>{qcRequestCount ? 'Pending requests: ' + qcRequestCount : 'Loading...'}</>}
+                    content={<>{qcRequestCount !== undefined && qcRequestCount !== null ? 'Pending requests: ' + qcRequestCount : 'Loading...'}</>}
                     linkTo='/qc-request'
                 />
                 <DashboardCard

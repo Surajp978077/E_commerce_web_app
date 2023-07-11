@@ -181,7 +181,7 @@ export const ProductDetails = () => {
                             Listed On: {formatDate(product.ProductVendorListedOn)}
                         </Typography>
                         <Typography variant='body1'>
-                            Listing status: {product.ProductVendorVisible === 0 ? 'Not Listed' : 'Listed'}
+                            Listing status: {product.ProductVendorVisible === 0 ? 'Inactive' : 'Active'}
                         </Typography>
                         {/* Vendor's Details Section */}
                         <SectionDivider>
