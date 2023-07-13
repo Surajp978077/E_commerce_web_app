@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { vendorInstance, productVendorInstance } from "../../../api/axios";
-import Heading from "./Heading";
+import { vendorInstance, productVendorInstance } from "../../api/axios";
+import Heading from "./ListingsHeading";
 import {
   TableBody,
   Table,
@@ -14,12 +14,14 @@ import {
   Switch,
   Pagination,
   Dialog,
+  Badge,
+  CircularProgress,
 } from "@mui/material/";
 import Snackbar from "@mui/material/Snackbar";
 import { useContext } from "react";
-import { UserInfoContext } from "../../context_api/userInfo/UserInfoContext";
+import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import Product from "./Product";
+import Product from "./ListingsProduct";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRef } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -28,12 +30,13 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+import ListingInProgress from "./ListingsListingInProgress";
 
-const Listings = () => {
+const ListingsPage = () => {
   const pageSize = 5;
   const [totalPages, setTotalPages] = useState(0);
   const [products, setProducts] = useState([]);
-  const { userInfo } = useContext(UserInfoContext);
+  const { userInfo, rejectedStatusCount } = useContext(VendorInfoContext);
   const id = userInfo.vendor.VendorId;
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false); // For the dialog
@@ -45,15 +48,19 @@ const Listings = () => {
   const [inactiveListings, setInactiveListings] = useState(null);
   const [render, setRender] = useState(false); // To re-render the component when the product is edited and closed the dialog
   const sortBy = useRef(null);
+  const [isLoading, setIsLoading] = useState(true); // Loading state variable
   const [currentPage, setCurrentPage] = useState(
     sessionStorage.getItem("listingPage") || 1
   );
 
   const sortOrder = useRef(null);
-  const [value, setValue] = React.useState("1");
+  const [tabValue, setTabValue] = useState(
+    sessionStorage.getItem("listingTab") || "1"
+  );
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setTabValue(newValue);
+    sessionStorage.setItem("listingTab", newValue);
   };
 
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -91,7 +98,9 @@ const Listings = () => {
         setActiveListings(response.data.ActiveListings);
         setInactiveListings(response.data.InactiveListings);
       }
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       setError(error.message);
       setOpenErrorSnackbar(true);
     }
@@ -196,16 +205,56 @@ const Listings = () => {
       <Box
         sx={{ width: "100%", typography: "body1", marginBlockStart: "20px" }}
       >
-        <TabContext value={value}>
+        <TabContext value={tabValue}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab label="Item One" value="1" />
-              <Tab label="Item Two" value="2" />
-              <Tab label="Item Three" value="3" />
+              <Tab label="My listings" value="1" />
+              <Tab
+                label={
+                  <Badge
+                    badgeContent={rejectedStatusCount}
+                    color="primary"
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    sx={{
+                      "& .MuiBadge-badge": {
+                        backgroundColor: "#f44336",
+                        color: "#fff",
+                        display: "flex",
+                        left: "90%",
+                        top: "40%",
+                      },
+                    }}
+                  >
+                    <span
+                      style={{
+                        marginRight: "15px",
+                      }}
+                    >
+                      {" "}
+                      Listing in progress
+                    </span>
+                  </Badge>
+                }
+                value="2"
+              />
             </TabList>
           </Box>
           <TabPanel value="1">
-            {" "}
+            {isLoading && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            )}
             {products.length ? (
               <>
                 <div style={{ marginBlockStart: "20px" }}>
@@ -219,8 +268,8 @@ const Listings = () => {
                     <TableContainer
                       component={Paper}
                       sx={{
-                        minWidth: isMobile ? "auto" : "90%",
-                        maxWidth: isMobile ? "auto" : "90%",
+                        minWidth: isMobile ? "auto" : "auto",
+                        maxWidth: isMobile ? "auto" : "auto",
                         border: " 2px solid #f5f5f5 ",
                         borderRadius: "10px",
                       }}
@@ -344,7 +393,6 @@ const Listings = () => {
                               id="table-heading"
                               align="center"
                               sx={{
-                                // justifyContent: "center",
                                 padding: "16px",
                                 width: "10%",
                               }}
@@ -471,8 +519,8 @@ const Listings = () => {
                                 <img
                                   src={product.Product.ImageURL}
                                   style={{
-                                    height: "100px",
-                                    width: "100px",
+                                    height: "75px",
+                                    width: "75px",
                                     borderRadius: "10px",
                                     objectFit: "contain",
                                     backgroundColor: "transparent",
@@ -518,10 +566,13 @@ const Listings = () => {
                                 />
                               </TableCell>
 
-                              <TableCell>
-                                <EditOutlinedIcon
-                                  onClick={() => handleEditClick(product)}
-                                />
+                              <TableCell
+                                sx={{
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => handleEditClick(product)}
+                              >
+                                <EditOutlinedIcon />
                               </TableCell>
                             </TableRow>
                           ))}
@@ -585,7 +636,9 @@ const Listings = () => {
               )}
             </Dialog>
           </TabPanel>
-          <TabPanel value="2">Item Two</TabPanel>
+          <TabPanel value="2">
+            <ListingInProgress />
+          </TabPanel>
           <TabPanel value="3">Item Three</TabPanel>
         </TabContext>
       </Box>
@@ -594,4 +647,4 @@ const Listings = () => {
   );
 };
 
-export default Listings;
+export default ListingsPage;

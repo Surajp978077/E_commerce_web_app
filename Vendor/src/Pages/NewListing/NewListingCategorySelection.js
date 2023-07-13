@@ -1,8 +1,8 @@
 import { Divider, Typography } from "@mui/material";
-import { CategoryBrowse } from "./CategoryBrowse";
-import CategorySearch from "./CategorySearch";
+import { CategoryBrowse } from "./NewListingCategoryBrowse";
+import CategorySearch from "./NewListingCategorySearch";
 import { useState } from "react";
-import { fonts } from "../../../../config/config";
+import { fonts } from "../../config/config";
 
 export const ProductListing = (props) => {
   const [selectedResult, setSelectedResult] = useState([]);

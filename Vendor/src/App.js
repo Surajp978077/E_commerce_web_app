@@ -1,16 +1,17 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/Pages/home/Home";
-import Card from "./components/Pages/About/Card";
+import HomePage from "./Pages/Home/HomePage";
+import AboutPage from "./Pages/About/AboutPage";
 import { UserInfoProvider } from "./components/context_api/userInfo/UserInfoProvider";
-import Listings from "./components/Pages/listing/Listings";
 import Test from "./Test";
 import Navbar from "./components/Layout/Navbar";
-import Lost from "./components/Pages/Lost";
+import Lost from "./components/Common/Lost";
 import VendorInfoProvider from "./components/context_api/vendorInfo/VendorInfoProvider";
-import ErrorPage from "./components/Pages/ErrorPage";
-import NewListing from "./components/Pages/listing/new_listing/NewListing";
+import ErrorPage from "./components/Common/ErrorPage";
+import NewListing from "./Pages/NewListing/NewListingPage";
 import Test3 from "./Test3";
+import QCRejectedItem from "./Pages/QCRejectedItem";
+import ListingsPage from "./Pages/Listings/ListingsPage";
 
 const router = createBrowserRouter([
   {
@@ -20,22 +21,25 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <HomePage />,
       },
       {
         path: "/profile",
-        element: <Card />,
+        element: <AboutPage />,
       },
       {
         path: "/listings/",
-        element: <Listings />,
+        element: <ListingsPage />,
         children: [],
       },
       {
         path: "new_listing",
         element: <NewListing />,
       },
-
+      {
+        path: "listings/rejectedQC",
+        element: <QCRejectedItem />,
+      },
       {
         path: "/test",
         element: <Test />,

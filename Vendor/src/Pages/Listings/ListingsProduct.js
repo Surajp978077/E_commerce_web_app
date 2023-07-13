@@ -8,11 +8,11 @@ import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useState } from "react";
-import { productVendorInstance } from "../../../api/axios";
+import { productVendorInstance } from "../../api/axios";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
-import { fonts } from "../../../config/config";
+import { fonts } from "../../config/config";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

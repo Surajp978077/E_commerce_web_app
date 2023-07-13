@@ -5,8 +5,8 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Tooltip from "@mui/material/Tooltip";
-import ImagePlaceHolder from "../../../../assets/images/ImagePlaceholder.png";
-import AddNewFields from "./AddNewFields";
+import ImagePlaceHolder from "../../assets/images/ImagePlaceholder.png";
+import AddNewFields from "./NewListingAddNewFields";
 import CloseIcon from "@mui/icons-material/Close";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -14,7 +14,8 @@ import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 export default function NewProduct(props) {
-  const { qcData, setQcData, setIsInputFilled } = props;
+  const { qcData, setQcData, setIsInputFilled, isInputFilled, isRejectedItem } =
+    props;
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
   const imageURLSubmit = useRef(null);
   const nameDescriptionSubmit = useRef(null);
@@ -1103,20 +1104,79 @@ export default function NewProduct(props) {
               <span style={{ fontSize: "20px", color: "red" }}> * </span> are
               required.
             </Typography>
-            <Button
-              variant="contained"
-              color="info"
-              size="small"
-              onClick={(e) => {
-                e.preventDefault();
-                handleSave("All");
-              }}
-            >
-              Save all
-            </Button>
+            <div>
+              <Button
+                variant="contained"
+                color="info"
+                size="small"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSave("All");
+                }}
+              >
+                Save all
+              </Button>
+            </div>
           </div>
         </Card>
       </Box>
+      {isRejectedItem && (
+        <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <TextField
+              id="outlined-multiline-static"
+              label="Admin Message"
+              multiline
+              variant="outlined"
+              rows={4}
+              error
+              value={qcData.AdminMessage}
+              InputProps={{
+                readOnly: true,
+              }}
+              sx={{ width: "45%", margin: "1%" }}
+            />
+            <TextField
+              id="outlined-multiline-static"
+              label="Vendor Message"
+              multiline
+              variant="outlined"
+              rows={4}
+              value={qcData.VendorMessage}
+              onChange={(e) => {
+                setQcData((prev) => ({
+                  ...prev,
+                  VendorMessage: e.target.value,
+                }));
+              }}
+              sx={{
+                width: "45%",
+                margin: "1%",
+              }}
+            />
+          </div>
+          {isRejectedItem && (
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+              disabled={isInputFilled ? false : true}
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+              sx={{ marginLeft: "10px", left: "93vw", position: "absolute" }}
+            >
+              Next
+            </Button>
+          )}
+        </>
+      )}
     </>
   );
 }

@@ -7,7 +7,7 @@ import {
   ListItemButton,
   Box,
 } from "@mui/material";
-import { categoriesInstance } from "../../../../api/axios";
+import { categoriesInstance } from "../../api/axios";
 
 const CategoryList = ({
   categories,
