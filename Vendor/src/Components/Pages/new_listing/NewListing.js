@@ -20,9 +20,10 @@ import NewProduct from "./NewProduct";
 import { QCInstance, categoriesInstance } from "../../../api/axios";
 import ErrorPage from "../../Pages/ErrorPage";
 import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
-import FinalProductDetails from "./FinalProductDetails";
+import FinalProductDetails from "./FinalProductPreview";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function NewListing() {
   const [activeStep, setActiveStep] = useState(0);
@@ -43,10 +44,14 @@ export default function NewListing() {
     VendorId: userInfo.vendor.VendorId,
     VendorName: userInfo.vendor.VendorName,
   });
-  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
   const navigate = useNavigate();
 
+  const location = useLocation();
+  // const setOpenSnackbar = location.state && location.state.setOpenSnackbar;
+  const state = location.state;
+  const setOpenSnackbar = state && state.setOpenSnackbar;
   const handleClickOpen = () => {
     setDialogOpen(true);
   };
@@ -57,6 +62,10 @@ export default function NewListing() {
 
   const handleSubmit = () => {
     setDialogOpen(false);
+    if (setOpenSnackbar) {
+      console.log("setOpenSnackbar");
+      setOpenSnackbar(true);
+    }
 
     // call the api to submit the product to QC
     const submitProduct = async () => {

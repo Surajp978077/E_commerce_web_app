@@ -3,7 +3,8 @@ import ImagePlaceholder from "../../../assets/images/ImagePlaceholder.png";
 import Stack from "@mui/material/Stack";
 import { Paper } from "@mui/material";
 import { fonts } from "../../../config/config";
-export default function FinalProductDetails(props) {
+
+export default function FinalProductPreview(props) {
   const { qcData } = props;
 
   // styles for paper component

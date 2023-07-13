@@ -1,7 +1,7 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Pages/home/Home";
-import Card from "./components/Pages/About/Card";
+import Card from "./components/Pages/About/AboutPage";
 import { UserInfoProvider } from "./components/context_api/userInfo/UserInfoProvider";
 import Listings from "./components/Pages/listing/Listings";
 import Test from "./Test";
@@ -11,6 +11,7 @@ import VendorInfoProvider from "./components/context_api/vendorInfo/VendorInfoPr
 import ErrorPage from "./components/Pages/ErrorPage";
 import NewListing from "./components/Pages/new_listing/NewListing";
 import Test3 from "./Test3";
+import QCRejectedItem from "./components/Pages/QCRejectedItem";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,10 @@ const router = createBrowserRouter([
         path: "new_listing",
         element: <NewListing />,
       },
-
+      {
+        path: "listings/rejectedQC",
+        element: <QCRejectedItem />,
+      },
       {
         path: "/test",
         element: <Test />,

@@ -116,7 +116,10 @@ export default function Heading(props) {
         </Link>
       </Box>
       <Link
-        to="/new_listing"
+        to={{
+          pathname: "/new_listing",
+          state: { setOpenSnackbar: props.setOpenSnackbar },
+        }}
         style={{ textDecoration: "none", color: "white" }}
       >
         <Button
@@ -128,6 +131,7 @@ export default function Heading(props) {
           Add a new listing
         </Button>
       </Link>
+
       {/* <Divider sx={{ marginBlockStart: "20px" }}>
         <Chip label="PRODUCTS" />
       </Divider> */}

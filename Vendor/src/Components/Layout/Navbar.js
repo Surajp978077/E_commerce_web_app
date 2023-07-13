@@ -25,9 +25,11 @@ import {
 } from "@mui/material";
 import jwtDecode from "jwt-decode";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { VendorInfoContext } from "../context_api/vendorInfo/VendorInfoContext";
+import { FiberManualRecord } from "@mui/icons-material";
 
 function ListItemLink(props) {
-  const { icon, primary, to } = props;
+  const { icon, primary, to, rejectedStatusCount } = props;
   const location = useLocation();
 
   const CustomRouterLink = React.forwardRef((props, ref) => (
@@ -46,6 +48,9 @@ function ListItemLink(props) {
     >
       {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
       <ListItemText primary={primary} />
+      {to === "/listings" && rejectedStatusCount > 0 && (
+        <FiberManualRecord sx={{ color: colors.theme, fontSize: 12 }} />
+      )}
     </ListItemButton>
   );
 }
@@ -53,6 +58,7 @@ function ListItemLink(props) {
 export default function Navbar() {
   const anchor = "left";
   const [state, setState] = React.useState({ [anchor]: false });
+  const { rejectedStatusCount } = React.useContext(VendorInfoContext);
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   var token = localStorage.getItem("token");
@@ -120,7 +126,11 @@ export default function Navbar() {
 
         <ListItemLink to="/profile" primary="Profile" />
 
-        <ListItemLink to="/listings" primary="Listings" />
+        <ListItemLink
+          to="/listings"
+          primary="Listings"
+          rejectedStatusCount={rejectedStatusCount}
+        />
 
         <ListItemLink to="/Test" primary="Test" />
       </List>
@@ -202,37 +212,6 @@ export default function Navbar() {
         </Toolbar>
       </AppBar>
       <Outlet />
-
-      {/* <div
-        className="footer"
-        style={{
-          position: "fixed",
-          bottom: "0",
-          width: "100%",
-        }}
-      >
-        <div className="footer-content">
-          <div className="footer-section about">
-            <h1 className="logo-text">
-              <span>Logo</span>
-            </h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-              quibusdam, voluptatum, quod, quae voluptates voluptate
-              exercitationem quia voluptatibus quos doloribus quas. Quisquam
-              <br />
-            </p>
-          </div>
-
-          <a href="#">
-            <span>Terms and Conditions</span>
-          </a>
-
-          <a href="#">
-            <span>Contact Us</span>
-          </a>
-        </div>
-      </div> */}
     </Box>
   );
 }

@@ -1,7 +1,7 @@
 import { React, useContext, useEffect, useState } from "react";
 import { VendorInfoContext } from "./VendorInfoContext";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
-import { vendorInstance } from "../../../api/axios";
+import { QCInstance, vendorInstance } from "../../../api/axios";
 import LoadingScreen from "../../Pages/LoadingScreen";
 import ErrorPage from "../../Pages/ErrorPage";
 function VendorInfoProvider(props) {
@@ -10,6 +10,8 @@ function VendorInfoProvider(props) {
   const [vendor, setVendor] = useState(null);
   const [isVendorSet, setIsVendorSet] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [rejectedStatusCount, setRejectedStatusCount] = useState();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -82,6 +84,24 @@ function VendorInfoProvider(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vendor, setUserInfo, isVendorSet, isVendorCreated]);
 
+  useEffect(() => {
+    const listingPendingStatus = async () => {
+      if (vendor) {
+        try {
+          const response = await QCInstance.get(`/count-rejected/${vendor.Id}`);
+          if (response.status === 200 && response.data) {
+            setRejectedStatusCount(response.data);
+            console.log(response.data);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    listingPendingStatus();
+  }, [vendor]);
+
   if (errorMessage) {
     return <ErrorPage desc={errorMessage} />;
   }
@@ -92,7 +112,13 @@ function VendorInfoProvider(props) {
 
   return (
     <VendorInfoContext.Provider
-      value={{ setIsVendorSet, setVendor, vendor, userInfo }}
+      value={{
+        setIsVendorSet,
+        setVendor,
+        vendor,
+        userInfo,
+        rejectedStatusCount,
+      }}
     >
       {props.children}
     </VendorInfoContext.Provider>
