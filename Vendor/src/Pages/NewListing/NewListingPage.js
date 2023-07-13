@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { ProductListing } from "./ProductListing";
+import { ProductListing } from "./NewListingCategorySelection";
 import {
   Box,
   Divider,
@@ -14,12 +14,12 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import { fonts } from "../../../config/config";
+import { fonts } from "../../config/config";
 import Button from "@mui/material/Button";
-import NewProduct from "./NewProduct";
-import { QCInstance, categoriesInstance } from "../../../api/axios";
-import ErrorPage from "../../Pages/ErrorPage";
-import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
+import NewProduct from "./NewListingNewProduct";
+import { QCInstance, categoriesInstance } from "../../api/axios";
+import ErrorPage from "../../components/Common/ErrorPage";
+import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
 import FinalProductDetails from "./FinalProductPreview";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";

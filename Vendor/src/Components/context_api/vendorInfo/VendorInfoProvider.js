@@ -2,8 +2,8 @@ import { React, useContext, useEffect, useState } from "react";
 import { VendorInfoContext } from "./VendorInfoContext";
 import { UserInfoContext } from "../userInfo/UserInfoContext";
 import { QCInstance, vendorInstance } from "../../../api/axios";
-import LoadingScreen from "../../Pages/LoadingScreen";
-import ErrorPage from "../../Pages/ErrorPage";
+import LoadingScreen from "../../Common/LoadingScreen";
+import ErrorPage from "../../Common/ErrorPage";
 function VendorInfoProvider(props) {
   const { userInfo, setUserInfo } = useContext(UserInfoContext);
   const [isVendorCreated, setIsVendorCreated] = useState(false); // to avoid creating new vendor more then once

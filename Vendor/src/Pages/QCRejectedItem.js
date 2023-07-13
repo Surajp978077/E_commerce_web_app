@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router";
-import NewProduct from "./new_listing/NewProduct";
+import NewProduct from "./NewListing/NewListingNewProduct";
 
 export default function QCRejectedItem() {
   const location = useLocation();

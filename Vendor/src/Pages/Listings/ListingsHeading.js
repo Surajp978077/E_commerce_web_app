@@ -9,8 +9,8 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
-import { fonts } from "../../../config/config";
-import Search from "./Search";
+import { fonts } from "../../config/config";
+import Search from "./ListingsSearch";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const styles = {

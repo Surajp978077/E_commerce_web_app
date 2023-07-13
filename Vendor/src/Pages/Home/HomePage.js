@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import { productVendorInstance } from "../../../api/axios";
+import { productVendorInstance } from "../../api/axios";
 import { Container, Grid, Alert } from "@mui/material";
-import VendorForm from "./VendorForm";
+import VendorForm from "./HomeVendorForm";
 import { Skeleton } from "@mui/material";
-import ErrorPage from "../ErrorPage";
+import ErrorPage from "../../components/Common/ErrorPage";
 import {
   Card,
   CardContent,
@@ -13,7 +13,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
+import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
 
 function Home() {
   const [errorMessage, setErrorMessage] = useState("");

@@ -1,7 +1,7 @@
-import Info from "./Info";
+import Info from "./AboutInfo";
 import React, { useContext } from "react";
 
-import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
+import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
 
 export default function Card() {
   const { userInfo } = useContext(VendorInfoContext);

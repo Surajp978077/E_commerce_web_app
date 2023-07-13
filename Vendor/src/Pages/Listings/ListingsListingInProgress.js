@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { QCInstance } from "../../../api/axios";
+import { QCInstance } from "../../api/axios";
 import {
   Table,
   TableBody,
@@ -9,9 +9,9 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
+import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
 import { useLocation, useNavigate } from "react-router";
-import LoadingScreen from "../LoadingScreen";
+import LoadingScreen from "../../components/Common/LoadingScreen";
 
 const ListingInProgress = () => {
   const [products, setProducts] = useState([]);

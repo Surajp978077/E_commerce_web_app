@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Grid, TextField, Button, Alert } from "@mui/material";
-import { UserInfoContext } from "../../context_api/userInfo/UserInfoContext";
-import { vendorInstance } from "../../../api/axios";
+import { UserInfoContext } from "../../components/context_api/userInfo/UserInfoContext";
+import { vendorInstance } from "../../api/axios";
 import WarningIcon from "@mui/icons-material/Warning";
 import { CloseOutlined } from "@mui/icons-material";
 

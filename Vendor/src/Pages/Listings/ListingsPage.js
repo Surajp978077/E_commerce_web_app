@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { vendorInstance, productVendorInstance } from "../../../api/axios";
-import Heading from "./Heading";
+import { vendorInstance, productVendorInstance } from "../../api/axios";
+import Heading from "./ListingsHeading";
 import {
   TableBody,
   Table,
@@ -19,9 +19,9 @@ import {
 } from "@mui/material/";
 import Snackbar from "@mui/material/Snackbar";
 import { useContext } from "react";
-import { VendorInfoContext } from "../../context_api/vendorInfo/VendorInfoContext";
+import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import Product from "./Product";
+import Product from "./ListingsProduct";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRef } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -30,10 +30,9 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import ListingInProgress from "./ListingInProgress";
-import LoadingScreen from "../LoadingScreen";
+import ListingInProgress from "./ListingsListingInProgress";
 
-const Listings = () => {
+const ListingsPage = () => {
   const pageSize = 5;
   const [totalPages, setTotalPages] = useState(0);
   const [products, setProducts] = useState([]);
@@ -648,4 +647,4 @@ const Listings = () => {
   );
 };
 
-export default Listings;
+export default ListingsPage;
