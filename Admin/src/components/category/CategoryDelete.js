@@ -5,7 +5,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
@@ -13,18 +12,15 @@ export const CategoryDelete = ({ category, onCategoryUpdate }) => {
     const [open, setOpen] = useState(false);
     const [error, setError] = useState('');
 
-    const handleOpen = (event) => {
-        event.stopPropagation();
+    const handleOpen = () => {
         setOpen(true);
     };
 
-    const handleClose = (event) => {
-        event.stopPropagation();
+    const handleClose = () => {
         setOpen(false);
     };
 
     const handleDelete = async (event) => {
-        event.stopPropagation();
         try {
             const response = await productInstance.delete(`/categories/${category.CategoryId}`);
             console.log(response);
@@ -40,21 +36,22 @@ export const CategoryDelete = ({ category, onCategoryUpdate }) => {
         }
     };
 
-    const handleSnackbarClose = (event, reason) => {
-        if (event) {
-            event.stopPropagation();
-        }
+    const handleSnackbarClose = (reason) => {
         if (reason === 'clickaway') {
             return;
         }
         setError('');
     };
 
+    const handleWrapperClick = (event) => {
+        event.stopPropagation();
+    };
+
     return (
-        <>
-            <IconButton onClick={handleOpen} aria-label='delete'>
+        <span onClick={handleWrapperClick}>
+            <Button variant='text' onClick={handleOpen}>
                 <DeleteIcon />
-            </IconButton>
+            </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>
                     Are you sure you want to delete '{category.Name}' category?
@@ -71,44 +68,6 @@ export const CategoryDelete = ({ category, onCategoryUpdate }) => {
                     {error}
                 </MuiAlert>
             </Snackbar>
-        </>
+        </span>
     );
 };
-
-// import { productInstance } from '../../api/axios';
-// import IconButton from '@mui/material/IconButton';
-// import DeleteIcon from '@mui/icons-material/Delete';
-
-// export const CategoryDelete = ({ category, onCategoryUpdate }) => {
-
-//     const handleDelete = async (event) => {
-//         event.stopPropagation();
-
-//         const confirmed = window.confirm(`Are you sure you want to delete '${category.Name}' category?`);
-//         if (confirmed) {
-//             try {
-//                 const response = await productInstance.delete(`/categories/${category.CategoryId}`);
-//                 console.log(response);
-//                 onCategoryUpdate();
-//             } catch (error) {
-//                 if (error.response && error.response.status === 500) {
-//                     displayErrorPopup('Please delete subcategories/products first');
-//                 } else {
-//                     console.log(`Error: ${error.message}`);
-//                 }
-//             }
-//         }
-//     }
-
-//     const displayErrorPopup = (message) => {
-//         alert(message);
-//     }
-
-//     return (
-//         // <span onClick={handleDelete} style={{ cursor: 'pointer' }}>➖</span>
-//         <IconButton onClick={handleDelete} aria-label='delete'>
-//             <DeleteIcon />
-//         </IconButton>
-//     );
-
-// }
