@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Typography, Card, CardContent, Grid, Divider, Chip } from '@mui/material';
+import { Typography, Card, CardContent, Grid, Divider, Chip, IconButton } from '@mui/material';
+import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@mui/icons-material';
 import { styled, useTheme } from '@mui/material/styles';
 import { userInfoInstance } from '../../api/axios';
 
@@ -60,6 +61,11 @@ const SectionDivider = styled(Divider)(({ theme }) => ({
     marginTop: theme.spacing(2),
 }));
 
+const ExpandCollapseButton = styled(IconButton)(({ theme }) => ({
+    marginLeft: theme.spacing(1),
+    padding: theme.spacing(1),
+}));
+
 const VendorDetailsGrid = styled(Grid)(({ theme }) => ({
     marginTop: theme.spacing(1),
     display: 'flex',
@@ -85,6 +91,8 @@ export const ProductDetails = () => {
     const product = location.state;
     const [navbarHeight, setNavbarHeight] = useState(0);
     const [userInfo, setUserInfo] = useState(null);
+    const [isBasicDetailsExpanded, setIsBasicDetailsExpanded] = useState(false);
+    const [isOptionalDetailsExpanded, setIsOptionalDetailsExpanded] = useState(false);
 
     useEffect(() => {
         const getUserInfo = async () => {
@@ -137,6 +145,14 @@ export const ProductDetails = () => {
         return date.toLocaleString(undefined, options);
     };
 
+    const toggleBasicDetails = () => {
+        setIsBasicDetailsExpanded((prevState) => !prevState);
+    };
+
+    const toggleOptionalDetails = () => {
+        setIsOptionalDetailsExpanded((prevState) => !prevState);
+    };
+
     if (!product) {
         return (
             <NotFoundContainer theme={theme}>
@@ -171,6 +187,47 @@ export const ProductDetails = () => {
                         <Typography variant='body1'>Name: {product.ProductName}</Typography>
                         <Typography variant='body1'>Description: {product.ProductDescription}</Typography>
                         <Typography variant='body1'>MRP: ₹{product.ProductBasePrice.toLocaleString('en-IN')}</Typography>
+
+                        {/* Basic Details Section */}
+                        <SectionDivider>
+                            <Chip
+                                label='Basic Details'
+                                color='primary'
+                                onClick={toggleBasicDetails}
+                                clickable
+                            />
+                            <ExpandCollapseButton onClick={toggleBasicDetails}>
+                                {isBasicDetailsExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                            </ExpandCollapseButton>
+                        </SectionDivider>
+                        {isBasicDetailsExpanded && product.ProductBasicDetails && Object.keys(product.ProductBasicDetails).length > 0 ? (
+                            Object.entries(product.ProductBasicDetails).map(([key, value]) => (
+                                <Typography variant='body1' key={key}>{key}: {value}</Typography>
+                            ))
+                        ) : (
+                            isBasicDetailsExpanded && <Typography variant='body1'>No basic details available.</Typography>
+                        )}
+
+                        {/* Optional Details Section */}
+                        <SectionDivider>
+                            <Chip
+                                label='Optional Details'
+                                color='primary'
+                                onClick={toggleOptionalDetails}
+                                clickable
+                            />
+                            <ExpandCollapseButton onClick={toggleOptionalDetails}>
+                                {isOptionalDetailsExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                            </ExpandCollapseButton>
+                        </SectionDivider>
+                        {isOptionalDetailsExpanded && product.ProductOptionalDetails && Object.keys(product.ProductOptionalDetails).length > 0 ? (
+                            Object.entries(product.ProductOptionalDetails).map(([key, value]) => (
+                                <Typography variant='body1' key={key}>{key}: {value}</Typography>
+                            ))
+                        ) : (
+                            isOptionalDetailsExpanded && <Typography variant='body1'>No optional details available.</Typography>
+                        )}
+
                         {/* Vendor's Listing Section */}
                         <SectionDivider>
                             <Chip label='Vendors Listing' color='primary' />
