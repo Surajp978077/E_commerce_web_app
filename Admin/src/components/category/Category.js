@@ -6,6 +6,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import { CategoryAdd } from './CategoryAdd';
 import { CategoryDelete } from './CategoryDelete';
+import CategoryEdit from './CategoryEdit';
 
 const Category = () => {
     const [categories, setCategories] = useState([]);
@@ -40,9 +41,9 @@ const Category = () => {
         setUpdateCount(previousCount => previousCount + 1);
     }
 
-    const categoryTree = (categories, category) => (
+    const categoryTree = (categories, parentCategory) => (
         <>
-            <CategoryAdd category={category} onCategoryUpdate={handleUpdate} />
+            <CategoryAdd parentCategory={parentCategory} onCategoryUpdate={handleUpdate} />
             {categories && categories.$values && categories.$values.length > 0 ? (
                 <>
                     {categories.$values.map(category => {
@@ -55,6 +56,7 @@ const Category = () => {
                                     <>
                                         <img src={category.CategoryImageUrl} alt='' style={{ width: '50px', height: '50px', margin: '4%' }} />
                                         {category.Name}
+                                        <CategoryEdit category={category} onCategoryUpdate={handleUpdate} />
                                         <CategoryDelete category={category} onCategoryUpdate={handleUpdate} />
                                     </>}
                             >
