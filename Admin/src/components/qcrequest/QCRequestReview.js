@@ -237,7 +237,7 @@ const QCRequestReview = () => {
 
   const submitRejectRequest = async () => {
     try {
-      const response = await productInstance.put(`qcrequests/${qcRequest.Id}`, reasonForRejecting);
+      const response = await productInstance.put(`qcrequests/reject/${qcRequest.Id}`, reasonForRejecting);
       console.log('Reject request sent:', response);
       showSuccessMessage('Listing rejected');
       qcRequest.Status = response.data.Status;
