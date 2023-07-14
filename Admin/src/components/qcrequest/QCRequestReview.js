@@ -206,6 +206,7 @@ const QCRequestReview = () => {
 
   const addProduct = async () => {
     try {
+      qcRequest.Product.CategoryId = qcRequest.CategoryId;
       const response = await productInstance.post('products', qcRequest.Product);
       qcRequest.ProductVendor.ProductId = response.data.ProdId;
       console.log('Product added:', response);
