@@ -16,8 +16,9 @@ import {
     Snackbar,
     Alert,
 } from '@mui/material';
+import ImagePlaceholder from '../../assets/images/ImagePlaceholder.png';
 
-export const CategoryAdd = ({ category, onCategoryUpdate }) => {
+export const CategoryAdd = ({ parentCategory, onCategoryUpdate }) => {
     const [open, setOpen] = useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -26,6 +27,8 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
     const [nameError, setNameError] = useState('');
     const [categoryDescription, setCategoryDescription] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
+    const [categoryImageUrl, setCategoryImageUrl] = useState('');
+    const [imageUrlError, setImageUrlError] = useState('');
     const [hasSpecifications, setHasSpecifications] = useState(false);
     const [basicDetails, setBasicDetails] = useState(['']);
     const [keySpecErrors, setKeySpecErrors] = useState([]);
@@ -45,6 +48,7 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
             setOpen(false);
             setNameError('');
             setDescriptionError('');
+            setImageUrlError('');
             setKeySpecErrors([]);
         }
     };
@@ -54,6 +58,8 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
         setNameError('');
         setCategoryDescription('');
         setDescriptionError('');
+        setCategoryImageUrl('');
+        setImageUrlError('');
         setHasSpecifications(false);
         setBasicDetails(['']);
         setKeySpecErrors([]);
@@ -68,6 +74,12 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
         setSnackbarOpen(false);
     };
 
+    const handleImageError = () => {
+        if (categoryImageUrl.trim() !== '') {
+            setImageUrlError('Invalid image URL');
+        }
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -80,6 +92,12 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
         // Validate category description
         if (categoryDescription.trim() === '') {
             setDescriptionError('Category description cannot be blank');
+            return;
+        }
+
+        // Validate category imageUrl
+        if (categoryImageUrl.trim() === '') {
+            setImageUrlError('Category image URL cannot be blank');
             return;
         }
 
@@ -113,7 +131,8 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
             const formData = {
                 Name: categoryName,
                 Description: categoryDescription,
-                ParentCategoryId: category ? category.CategoryId : undefined,
+                CategoryImageUrl: categoryImageUrl,
+                ParentCategoryId: parentCategory ? parentCategory.CategoryId : undefined,
                 HasSpecifications: hasSpecifications,
                 BasicDetails: hasSpecifications ? basicDetails : null,
                 OptionalDetails: hasSpecifications ? optionalDetails : null,
@@ -121,7 +140,7 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
 
             const response = await productInstance.post('/categories', formData);
             console.log(response);
-            
+
             handleResetForm();
             onCategoryUpdate();
             setSnackbarMessage('Category added successfully');
@@ -203,9 +222,9 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                 disableEscapeKeyDown
             >
                 <DialogTitle id='responsive-dialog-title'>
-                    {category ? (
+                    {parentCategory ? (
                         <Typography variant='h5' component='div'>
-                            Add subcategory to {category.Name}
+                            Add subcategory to {parentCategory.Name}
                         </Typography>
                     ) : (
                         <Typography variant='h4' component='div'>
@@ -246,6 +265,36 @@ export const CategoryAdd = ({ category, onCategoryUpdate }) => {
                         variant='outlined'
                         error={!!descriptionError}
                         helperText={descriptionError}
+                    />
+                    <TextField
+                        id='categoryImageUrl'
+                        label='Category Image URL'
+                        placeholder='Category Image URL'
+                        required
+                        value={categoryImageUrl}
+                        onChange={(e) => {
+                            setCategoryImageUrl(e.target.value);
+                            setImageUrlError('');
+                        }}
+                        fullWidth
+                        margin='normal'
+                        variant='outlined'
+                        error={!!imageUrlError}
+                        helperText={imageUrlError}
+                    />
+                    <img
+                        src={(categoryImageUrl.trim() === '' || imageUrlError)
+                            ? ImagePlaceholder
+                            : categoryImageUrl
+                        }
+                        alt='Category'
+                        style={{
+                            width: '100%',
+                            height: '200px',
+                            objectFit: 'contain',
+                            opacity: (categoryImageUrl.trim() === '' || imageUrlError) ? '0.5' : '1',
+                        }}
+                        onError={handleImageError}
                     />
                     <FormControlLabel
                         control={
