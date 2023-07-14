@@ -1,107 +1,116 @@
-import React from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Container, Grid, Card, Typography } from '@mui/material';
+import { useState } from 'react';
+import { productInstance } from '../api/axios';
 
-const Dashboard = () => {
-    const disableVendorLink = true;
-    const disableOrderLink = true;
-    const disableOfferLink = true;
+const DashboardCard = ({ title, content, linkTo }) => {
+    const cardStyle = {
+        border: 1,
+        borderColor: 'grey.300',
+        '&:hover': { boxShadow: '0 0 20px rgba(0, 0, 0, 0.3)' },
+        cursor: 'pointer',
+
+    };
 
     return (
-        <Container fluid className='mt-5 w-75'>
-            <Row>
-                <Col md={4} className='mb-4'>
-                    <Link to={'/user'} style={{ textDecoration: 'none' }}>
-                        <Card>
-                            <Card.Header>User</Card.Header>
-                            <Card.Body>
-                                This is the content for User.
-                            </Card.Body>
-                        </Card>
-                    </Link>
-                </Col>
-                <Col md={4} className='mb-4'>
-                    {disableVendorLink ? (
-                        <Card style={{ opacity: '0.6', pointerEvents: 'none', cursor: 'not-allowed' }}>
-                            <Card.Header>Vendor</Card.Header>
-                            <Card.Body>
-                                This is the content for Vendor.
-                            </Card.Body>
-                        </Card>
-                    ) : (
-                        <Link to={'/vendor'} style={{ textDecoration: 'none' }}>
-                            <Card>
-                                <Card.Header>Vendor</Card.Header>
-                                <Card.Body>
-                                    This is the content for Vendor.
-                                </Card.Body>
-                            </Card>
-                        </Link>
-                    )}
-                </Col>
-                <Col md={4} className='mb-4'>
-                    <Link to={'/category'} style={{ textDecoration: 'none' }}>
-                        <Card>
-                            <Card.Header>Category</Card.Header>
-                            <Card.Body>
-                                This is the content for Category.
-                            </Card.Body>
-                        </Card>
-                    </Link>
-                </Col>
-            </Row>
-            <Row>
-                <Col md={4} className='mb-4'>
-                    <Link to={'/product'} style={{ textDecoration: 'none' }}>
-                        <Card>
-                            <Card.Header>Product</Card.Header>
-                            <Card.Body>
-                                This is the content for Product.
-                            </Card.Body>
-                        </Card>
-                    </Link>
-                </Col>
-                <Col md={4} className='mb-4'>
-                    {disableOrderLink ? (
-                        <Card style={{ opacity: '0.6', pointerEvents: 'none', cursor: 'not-allowed' }}>
-                            <Card.Header>Order</Card.Header>
-                            <Card.Body>
-                                This is the content for Order.
-                            </Card.Body>
-                        </Card>
-                    ) : (
-                        <Link to={'/order'} style={{ textDecoration: 'none' }}>
-                            <Card>
-                                <Card.Header>Order</Card.Header>
-                                <Card.Body>
-                                    This is the content for Order.
-                                </Card.Body>
-                            </Card>
-                        </Link>
-                    )}
-                </Col>
-                <Col md={4} className='mb-4'>
-                    {disableOfferLink ? (
-                        <Card style={{ opacity: '0.6', pointerEvents: 'none', cursor: 'not-allowed' }}>
-                            <Card.Header>Offer</Card.Header>
-                            <Card.Body>
-                                This is the content for Offer.
-                            </Card.Body>
-                        </Card>
-                    ) : (
-                        <Link to={'/offer'} style={{ textDecoration: 'none' }}>
-                            <Card>
-                                <Card.Header>Offer</Card.Header>
-                                <Card.Body>
-                                    This is the content for Offer.
-                                </Card.Body>
-                            </Card>
-                        </Link>
-                    )}
-                </Col>
-            </Row>
+        <Grid item xs={12} sm={6} md={4}>
+            <Link to={linkTo} style={{ textDecoration: 'none' }}>
+                <Card sx={cardStyle}>
+                    <Typography variant='h6' component='div' sx={{ p: 2, backgroundColor: '#E1F5FE' }}>
+                        {title}
+                    </Typography>
+                    <Typography variant='body1' sx={{ p: 2 }}>
+                        {content}
+                    </Typography>
+                </Card>
+            </Link>
+        </Grid>
+    );
+};
+
+const DashboardCardDisabled = ({ title, content }) => {
+    const cardStyle = {
+        border: 1,
+        borderColor: 'grey.300',
+        opacity: 0.6,
+        cursor: 'not-allowed',
+    };
+
+    return (
+        <Grid item xs={12} sm={6} md={4}>
+            <Card sx={cardStyle}>
+                <Typography variant='h6' component='div' sx={{ p: 2, backgroundColor: 'lightgrey' }}>
+                    {title}
+                </Typography>
+                <Typography variant='body1' sx={{ p: 2 }}>
+                    {content}
+                </Typography>
+            </Card>
+        </Grid>
+    );
+};
+
+const Dashboard = () => {
+    const [qcRequestCount, setQcRequestCount] = useState();
+
+    useEffect(() => {
+        const GetCountPendingQCRequests = async () => {
+            try {
+                var response = await productInstance.get('qcrequests/count-pending');
+                console.log(response);
+                if (response && response.data !== undefined && response.data !== null) {
+                    setQcRequestCount(response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching count:', error);
+            }
+        };
+
+        GetCountPendingQCRequests();
+    }, []);
+
+    return (
+        <Container sx={{ mt: 5 }}>
+            <Grid container spacing={4}>
+                <DashboardCard
+                    title='QC Requests'
+                    content={<>{qcRequestCount !== undefined && qcRequestCount !== null ? 'Pending requests: ' + qcRequestCount : 'Loading...'}</>}
+                    linkTo='/qc-request'
+                />
+                <DashboardCard
+                    title='User'
+                    content='This is the content for User.'
+                    linkTo='/user'
+                />
+                <DashboardCardDisabled
+                    title='Vendor'
+                    content='This is the content for Vendor.'
+                    linkTo='/vendor'
+                />
+                <DashboardCard
+                    title='Category'
+                    content='This is the content for Category.'
+                    linkTo='/category'
+                />
+                <DashboardCard
+                    title='Product'
+                    content='This is the content for Product.'
+                    linkTo='/product'
+                />
+                <DashboardCardDisabled
+                    title='Order'
+                    content='This is the content for Order.'
+                    linkTo='/order'
+                />
+                <DashboardCardDisabled
+                    title='Offer'
+                    content='This is the content for Offer.'
+                    linkTo='/offer'
+                />
+            </Grid>
         </Container>
     );
-}
+};
 
 export default Dashboard;

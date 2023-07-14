@@ -81,7 +81,7 @@ export const Product = () => {
             />
 
             <Divider sx={{ width: '100%', marginY: '16px' }}>
-                <Chip label="PRODUCTS" />
+                <Chip label='PRODUCTS' />
             </Divider>
 
             {categorySelectedLeaf ? (
@@ -106,9 +106,9 @@ export const Product = () => {
                                             Product Name &nbsp;
                                             {pagination.sortBy === 'ProductName' && (
                                                 <Chip
-                                                    size="small"
+                                                    size='small'
                                                     label={pagination.sortDesc ? <ArrowDownward /> : <ArrowUpward />}
-                                                    color="primary"
+                                                    color='primary'
                                                 />
 
                                             )}
@@ -165,7 +165,7 @@ export const Product = () => {
                                         return (
                                             <TableRow key={product.UniqueId}>
                                                 <TableCell>
-                                                    <img src={product.ProductImageUrl} alt="Product" style={{ width: '50px', height: '50px' }} />
+                                                    <img src={product.ProductImageUrl} alt='Product' style={{ width: '50px', height: '50px' }} />
                                                 </TableCell>
                                                 <TableCell>{product.ProductName}</TableCell>
                                                 <TableCell>{product.ProductBasePrice}</TableCell>
@@ -181,13 +181,13 @@ export const Product = () => {
                         </TableContainer>
                     ) : (
                         <Box sx={{ textAlign: 'center', marginTop: '2rem' }}>
-                            <Typography variant="body1">No products found.</Typography>
+                            <Typography variant='body1'>No products found.</Typography>
                         </Box>
                     )}
                 </>
             ) : (
                 <Box sx={{ textAlign: 'center', marginTop: '2rem' }}>
-                    <Typography variant="body1">Please select a category.</Typography>
+                    <Typography variant='body1'>Please select a category.</Typography>
                 </Box>
             )}
         </Box>

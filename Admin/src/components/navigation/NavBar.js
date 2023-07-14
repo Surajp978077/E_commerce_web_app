@@ -36,8 +36,8 @@ function ListItemLink(props) {
     <ListItemButton
       component={CustomRouterLink}
       sx={{
-        "&.Mui-selected": {
-          backgroundColor: "rgba(0, 0, 0, 0.08)",
+        '&.Mui-selected': {
+          backgroundColor: 'rgba(0, 0, 0, 0.08)',
         },
       }}
       selected={location.pathname === to}

@@ -7,7 +7,7 @@ export const ProductListing = () => {
     // const [selectedResult, setSelectedResult] = useState(
     //     [
     //         { CategoryId: 3, Name: 'Fashion & beauty' },
-    //         { CategoryId: 11, Name: 'Women"s Fashion' },
+    //         { CategoryId: 11, Name: `Women's Fashion` },
     //         { CategoryId: 20, Name: 'beauty' }
     //     ]);
     const [selectedResult, setSelectedResult] = useState([]);

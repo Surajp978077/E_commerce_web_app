@@ -14,6 +14,8 @@ import Order from './components/Order';
 import Offer from './components/Offer';
 import { NotFound } from './components/NotFound';
 import Navbar from './components/navigation/NavBar';
+import QCRequest from './components/qcrequest/QCRequest';
+import QCRequestReview from './components/qcrequest/QCRequestReview';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
       {
         path: 'profile',
         element: <Info />
+      },
+      {
+        path: 'qc-request',
+        element: <QCRequest />
+      },
+      {
+        path: 'qc-request/review',
+        element: <QCRequestReview />
       },
       {
         path: 'user',

@@ -43,7 +43,7 @@ export const Product = () => {
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Divider sx={{ width: '100%', marginBottom: '16px' }} >
-                    <Chip label="PRODUCTS" />
+                    <Chip label='PRODUCTS' />
                 </Divider>
                 <TableContainer
                     component={Paper}

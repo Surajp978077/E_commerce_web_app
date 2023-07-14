@@ -16,16 +16,14 @@ export const Product = () => {
     });
     const [pagination, setPagination] = useState(() => {
         const storedPagination = sessionStorage.getItem('productPagination');
-        return storedPagination
-            ? JSON.parse(storedPagination)
-            : {
-                page: 1,
-                pageSize: 10,
-                sortBy: 'ProductVendorListedOn',
-                sortDesc: false,
-                totalItems: 0,
-                totalPages: 0,
-            };
+        return storedPagination ? JSON.parse(storedPagination) : {
+            totalItems: 0,
+            totalPages: 0,
+            page: 1,
+            pageSize: 10,
+            sortBy: 'ProductVendorListedOn',
+            sortDesc: false,
+        };
     });
     const navigate = useNavigate();
 
@@ -116,24 +114,27 @@ export const Product = () => {
             />
 
             <Divider sx={{ width: '100%', marginY: '16px' }}>
-                <Chip label="PRODUCTS" />
+                <Chip label='PRODUCTS' />
             </Divider>
 
             {categorySelectedLeaf && (
                 <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '1rem' }}>
-                    <Typography variant="body1">Category Selected: {categorySelectedLeaf.Name}</Typography>
-                    <Clear sx={{ cursor: 'pointer' }} size="small" onClick={() => handleCategoryDeselect(categorySelectedLeaf)} />
+                    <Typography variant='body1'>Category Selected: {categorySelectedLeaf.Name}</Typography>
+                    <Clear sx={{ cursor: 'pointer' }} size='small' onClick={() => handleCategoryDeselect(categorySelectedLeaf)} />
                 </Box>
             )}
 
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-                <Pagination count={pagination.totalPages} page={pagination.page > pagination.totalPages ? pagination.totalPages : pagination.page} onChange={handlePageChange} />
+                <Pagination
+                    count={pagination.totalPages}
+                    page={pagination.page > pagination.totalPages ? pagination.totalPages : pagination.page}
+                    onChange={handlePageChange} />
             </Box>
 
             {products.length > 0 ? (
                 <TableContainer component={Paper} sx={{ border: '2px solid #f5f5f5', borderRadius: '10px' }}>
                     <Table>
-                        <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
+                        <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
                             <TableRow>
                                 <TableCell />
                                 <TableCell
@@ -143,9 +144,9 @@ export const Product = () => {
                                     Product Name &nbsp;
                                     {pagination.sortBy === 'ProductName' && (
                                         <Chip
-                                            size="small"
+                                            size='small'
                                             label={pagination.sortDesc ? <ArrowDownward /> : <ArrowUpward />}
-                                            color="primary"
+                                            color='primary'
                                         />
                                     )}
                                 </TableCell>
@@ -202,6 +203,8 @@ export const Product = () => {
                                     {pagination.sortBy === 'ProductVendorVisible' && (
                                         <span>{pagination.sortDesc ? '▼' : '▲'}</span>
                                     )}
+                                    <br />
+                                    (0: Inactive, 1: Active)
                                 </TableCell>
                                 <TableCell />
                             </TableRow>
@@ -209,10 +212,10 @@ export const Product = () => {
                         <TableBody>
                             {products.map((product) => {
                                 return (
-                                    <TableRow key={product.UniqueId}>
+                                    <TableRow key={product.ProductVendorId}>
                                         <TableCell sx={{ width: '70px', padding: '4px 2px 4px 4px' }}>
                                             <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                                <img src={product.ProductImageUrl} alt="Product" style={{ width: '50px', height: '50px' }} />
+                                                <img src={product.ProductImageUrl} alt='Product' style={{ width: '50px', height: '50px' }} />
                                             </Box>
                                         </TableCell>
                                         <TableCell>{product.ProductName}</TableCell>
@@ -223,7 +226,7 @@ export const Product = () => {
                                         <TableCell sx={{ textAlign: 'right' }}>{product.ProductVendorQuantity.toLocaleString('en-IN')}</TableCell>
                                         <TableCell sx={{ textAlign: 'right' }}>{product.ProductVendorVisible}</TableCell>
                                         <TableCell>
-                                            <Button variant="outlined" color="primary" onClick={() => handleViewDetails(product)}>
+                                            <Button variant='outlined' color='primary' onClick={() => handleViewDetails(product)}>
                                                 View Details
                                             </Button>
                                         </TableCell>
@@ -235,7 +238,7 @@ export const Product = () => {
                 </TableContainer>
             ) : (
                 <Box sx={{ textAlign: 'center', marginTop: '2rem' }}>
-                    <Typography variant="body1">No products found.</Typography>
+                    <Typography variant='body1'>No products found.</Typography>
                 </Box>
             )}
         </Box>
