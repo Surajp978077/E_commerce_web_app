@@ -25,15 +25,6 @@ import {
 import ImagePlaceholder from '../../assets/images/ImagePlaceholder.png';
 
 const CategoryEdit = ({ category, onCategoryUpdate }) => {
-  const obj = {
-    nameTest: 'test',
-    otherTest: 'other',
-    etcTest: 'etc'
-  }
-  const test = obj => ({...obj, nameTest: 'updatedTest'});
-  const objUpdated = test(obj);
-  console.log(obj);
-  console.log(objUpdated);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -175,11 +166,25 @@ const CategoryEdit = ({ category, onCategoryUpdate }) => {
     setErrors(validationErrors);
 
     // Check if any validation errors exist
-    return Object.values(validationErrors).every((error) => !error);
+    // return Object.values(validationErrors).every((error) => !error);
+
+    // Check if any validation errors exist
+    const excludedProperties = ['keySpecErrors', 'optionalSpecErrors'];
+    const isValid =
+      Object.entries(validationErrors).every(([key, error]) => {
+        if (excludedProperties.includes(key)) {
+          return true; // Exclude the property from validation
+        }
+        return !error; // Check if the error is falsy
+      }) &&
+      validationErrors.keySpecErrors.every((error) => !error) &&
+      validationErrors.optionalSpecErrors.every((error) => !error);
+    return isValid;
   };
 
   const handleSubmit = async () => {
     const isValid = handleErrors();
+    console.log(isValid);
 
     if (!isValid) {
       return;
