@@ -25,10 +25,13 @@ const QCRequest = () => {
             pageSize: pagination.pageSize,
           },
         });
+        console.log('Response:', response);
         if (response && response.data) {
-          console.log('Response Data:', response.data);
           setQCRequests(response.data.Data);
-          setPagination(prevPagination => ({ ...prevPagination, totalPages: response.data.TotalPages }));
+          setPagination(prevPagination => ({
+            ...prevPagination,
+            totalPages: response.data.TotalPages
+          }));
         }
       } catch (error) {
         console.error('Error fetching qCRequests:', error);
@@ -67,11 +70,11 @@ const QCRequest = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
 
-      <Divider sx={{ marginY: '1rem' }}>
-        <Chip label='QC Requests' />
+      <Divider sx={{ marginY: '1.5rem' }}>
+        <Chip label='QC REQUESTS' />
       </Divider>
 
-      <Box sx={{ marginX: '1rem' }}>
+      <Box sx={{ marginX: '4rem' }}>
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
           <Pagination
@@ -94,7 +97,7 @@ const QCRequest = () => {
                   Category
                 </TableCell>
                 <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer' }}>
-                  Vendor Name RequestDate
+                  Vendor Name
                 </TableCell>
                 <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer' }}>
                   Request Date

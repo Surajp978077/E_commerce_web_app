@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Grid, Card, Typography } from '@mui/material';
+import { Badge, Container, Grid, Card, Typography } from '@mui/material';
 import { useState } from 'react';
 import { productInstance } from '../api/axios';
 
@@ -57,7 +57,7 @@ const Dashboard = () => {
     useEffect(() => {
         const GetCountPendingQCRequests = async () => {
             try {
-                var response = await productInstance.get('qcrequests/count-pending');
+                const response = await productInstance.get('qcrequests/count-pending');
                 console.log(response);
                 if (response && response.data !== undefined && response.data !== null) {
                     setQcRequestCount(response.data);
@@ -74,8 +74,21 @@ const Dashboard = () => {
         <Container sx={{ mt: 5 }}>
             <Grid container spacing={4}>
                 <DashboardCard
-                    title='QC Requests'
-                    content={<>{qcRequestCount !== undefined && qcRequestCount !== null ? 'Pending requests: ' + qcRequestCount : 'Loading...'}</>}
+                    title='QC Request'
+                    content={
+                        <>
+                            <Typography variant='body1' component='div' sx={{ display: 'flex', alignItems: 'center' }}>
+                                {qcRequestCount !== undefined && qcRequestCount !== null ?
+                                    <>
+                                        <span>Pending requests</span>
+                                        {qcRequestCount === 0 && <Badge badgeContent='0' color='primary' sx={{ ml: 2 }} />}
+                                        <Badge badgeContent={qcRequestCount} color='error' sx={{ ml: 2 }} />
+                                    </>
+                                    : <span>Loading...</span>
+                                }
+                            </Typography>
+                        </>
+                    }
                     linkTo='/qc-request'
                 />
                 <DashboardCard

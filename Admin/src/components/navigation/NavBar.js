@@ -112,6 +112,8 @@ export default function Navbar() {
       <List>
         <ListItemLink to='/' primary='Dashboard' />
 
+        <ListItemLink to='/qc-request' primary='QC Request' />
+
         <ListItemLink to='/user' primary='User' />
 
         <ListItemLink to='/category' primary='Category' />
@@ -176,7 +178,7 @@ export default function Navbar() {
               vertical: 'top',
               horizontal: 'right',
             }}
-            open={Boolean(anchorElUser)}
+            open={!!anchorElUser}
             onClose={handleCloseUserMenu}
           >
             <MenuItem

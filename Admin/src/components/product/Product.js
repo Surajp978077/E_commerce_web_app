@@ -39,7 +39,7 @@ export const Product = () => {
                         sortDesc: pagination.sortDesc,
                     },
                 });
-                console.log(response.data);
+                console.log('Response:', response);
                 if (response && response.data) {
                     setProducts(response.data.Data);
                     setPagination(prevPagination => ({

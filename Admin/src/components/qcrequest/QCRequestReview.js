@@ -300,6 +300,7 @@ const QCRequestReview = () => {
                   color='primary'
                   onClick={toggleBasicDetails}
                   clickable
+                  sx={{alignItems:'center'}}
                 />
                 <ExpandCollapseButton onClick={toggleBasicDetails}>
                   {isBasicDetailsExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -375,13 +376,13 @@ const QCRequestReview = () => {
       < CustomDialog open={confirmationDialogOpen} onClose={closeReasonDialog} >
         <DialogTitle>Confirm Accept</DialogTitle>
         <DialogContent>
-          <Typography variant="body1">
+          <Typography variant='body1'>
             Are you sure you want to accept the QC request?
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={closeConfirmationDialog}>Cancel</Button>
-          <Button onClick={handleConfirmAccept} color="primary">Confirm</Button>
+          <Button onClick={handleConfirmAccept} color='primary'>Confirm</Button>
         </DialogActions>
       </CustomDialog >
 
@@ -396,11 +397,14 @@ const QCRequestReview = () => {
             fullWidth
             value={reasonForRejecting}
             onChange={handleReasonChange}
+            required
+            sx={{ marginTop: '5px' }}
+            error={!!reasonForRejecting ? false : true}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={closeReasonDialog}>Cancel</Button>
-          <Button onClick={submitRejectRequest} color='secondary'>Submit</Button>
+          <Button onClick={submitRejectRequest} color='secondary' disabled={!!reasonForRejecting ? false : true}>Submit</Button>
         </DialogActions>
       </CustomDialog >
 
