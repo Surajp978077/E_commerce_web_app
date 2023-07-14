@@ -5,8 +5,8 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Tooltip from "@mui/material/Tooltip";
-import ImagePlaceHolder from "../../assets/images/ImagePlaceholder.png";
-import AddNewFields from "./NewListingAddNewFields";
+import ImagePlaceHolder from "../assets/images/ImagePlaceholder.png";
+import AddNewFields from "../Pages/NewListing/NewListingAddNewFields";
 import CloseIcon from "@mui/icons-material/Close";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -14,8 +14,14 @@ import ErrorIcon from "@mui/icons-material/Error";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 export default function NewProduct(props) {
-  const { qcData, setQcData, setIsInputFilled, isInputFilled, isRejectedItem } =
-    props;
+  const {
+    qcData,
+    setQcData,
+    setIsInputFilled,
+    isInputFilled,
+    isRejectedItem,
+    setSteps,
+  } = props;
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
   const imageURLSubmit = useRef(null);
   const nameDescriptionSubmit = useRef(null);
@@ -24,7 +30,6 @@ export default function NewProduct(props) {
   const priceStockSubmit = useRef(null);
   // eslint-disable-next-line no-unused-vars
   const [render, setRender] = useState(false); // to re-render the component when the accordion submit button is clicked
-
   const [basicDetails, setBasicDetails] = useState(qcData.BasicDetails);
 
   const [optionalDetails, setOptionalDetails] = useState(
@@ -1148,7 +1153,7 @@ export default function NewProduct(props) {
               multiline
               variant="outlined"
               rows={4}
-              value={qcData.VendorMessage}
+              value={qcData.VendorMessage ? qcData.VendorMessage : ""}
               onChange={(e) => {
                 setQcData((prev) => ({
                   ...prev,
@@ -1169,6 +1174,7 @@ export default function NewProduct(props) {
               disabled={isInputFilled ? false : true}
               onClick={(e) => {
                 e.preventDefault();
+                setSteps(2);
               }}
               sx={{ marginLeft: "10px", left: "93vw", position: "absolute" }}
             >

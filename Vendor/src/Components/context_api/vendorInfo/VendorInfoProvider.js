@@ -91,7 +91,6 @@ function VendorInfoProvider(props) {
           const response = await QCInstance.get(`/count-rejected/${vendor.Id}`);
           if (response.status === 200 && response.data) {
             setRejectedStatusCount(response.data);
-            console.log(response.data);
           }
         } catch (error) {
           console.log(error);

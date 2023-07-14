@@ -6,24 +6,19 @@ import {
   Stepper,
   Step,
   StepLabel,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
   Snackbar,
   Alert,
 } from "@mui/material";
 import { fonts } from "../../config/config";
 import Button from "@mui/material/Button";
-import NewProduct from "./NewListingNewProduct";
-import { QCInstance, categoriesInstance } from "../../api/axios";
+import NewProduct from "../../components/NewProduct";
+import { categoriesInstance } from "../../api/axios";
 import ErrorPage from "../../components/Common/ErrorPage";
 import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
 import FinalProductDetails from "./FinalProductPreview";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import NewListingSubmitDialoge from "./NewListingSubmitDialoge";
 
 export default function NewListing() {
   const [activeStep, setActiveStep] = useState(0);
@@ -46,7 +41,6 @@ export default function NewListing() {
   });
   const [dialogOpen, setDialogOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
-  const navigate = useNavigate();
 
   const location = useLocation();
   // const setOpenSnackbar = location.state && location.state.setOpenSnackbar;
@@ -54,53 +48,6 @@ export default function NewListing() {
   const setOpenSnackbar = state && state.setOpenSnackbar;
   const handleClickOpen = () => {
     setDialogOpen(true);
-  };
-
-  const handleClose = () => {
-    setDialogOpen(false);
-  };
-
-  const handleSubmit = () => {
-    setDialogOpen(false);
-    if (setOpenSnackbar) {
-      console.log("setOpenSnackbar");
-      setOpenSnackbar(true);
-    }
-
-    // call the api to submit the product to QC
-    const submitProduct = async () => {
-      try {
-        const response = await QCInstance.post(`/`, {
-          Product: {
-            ProdName: qcData.product.ProdName,
-            Description: qcData.product.Description,
-            Price: qcData.product.Price,
-            ImageURL: qcData.product.ImageURL,
-            BasicDetails: qcData.BasicDetails,
-            OptionalDetails: qcData.OptionalDetails,
-          },
-          ProductVendor: {
-            Price: qcData.productVendor.Price,
-            Quantity: qcData.productVendor.Quantity,
-            Visible: qcData.productVendor.Visible,
-          },
-          CategoryId: qcData.CategoryId,
-          CategoryName: qcData.CategoryName,
-          VendorId: qcData.VendorId,
-          VendorName: qcData.VendorName,
-          Status: 0,
-        });
-        if (
-          response.status === 201 ||
-          (response.status === 200 && response.data)
-        ) {
-          navigate("/listings");
-        }
-      } catch (error) {
-        setOpenError(true);
-      }
-    };
-    submitProduct();
   };
 
   const fetchCategories = async () => {
@@ -285,33 +232,13 @@ export default function NewListing() {
         />
       )}
       {activeStep === 2 && <FinalProductDetails qcData={qcData} />}
-
-      <Dialog
-        open={dialogOpen}
-        onClose={handleClose}
-        sx={{
-          "& .MuiDialog-paper": {
-            height: "200px",
-            borderRadius: "10px",
-            padding: "10px",
-            color: "black",
-            fontFamily: fonts.main,
-          },
-        }}
-      >
-        <DialogTitle>Submit</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to submit the product for the QC verification?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Wait
-          </Button>
-          <Button onClick={handleSubmit}>Submit</Button>
-        </DialogActions>
-      </Dialog>
+      <NewListingSubmitDialoge
+        dialogOpen={dialogOpen}
+        setDialogOpen={setDialogOpen}
+        setOpenSnackbar={setOpenSnackbar}
+        qcData={qcData}
+        setOpenError={setOpenError}
+      />
     </>
   );
 }
