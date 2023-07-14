@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
 import { useLocation, useNavigate } from "react-router";
-import LoadingScreen from "../../components/Common/LoadingScreen";
 
 const ListingInProgress = () => {
   const [products, setProducts] = useState([]);
@@ -28,6 +27,7 @@ const ListingInProgress = () => {
   useEffect(() => {
     fetchRejectedQCRequests();
   }, []);
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -69,7 +69,7 @@ const ListingInProgress = () => {
   }
 
   if (!products.length) {
-    return <p>No products found.</p>;
+    return <p>No more pending products.</p>;
   }
 
   return (
@@ -120,7 +120,18 @@ const ListingInProgress = () => {
                   />
                 </TableCell>
                 <TableCell>{product.Product.ProdName}</TableCell>
-                <TableCell>{product.Product.Description}</TableCell>
+                <TableCell
+                  style={{
+                    maxHeight: "60px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                  }}
+                >
+                  {product.Product.Description}
+                </TableCell>
                 <TableCell>{product.Product.Price}</TableCell>
                 <TableCell>{product.CategoryName}</TableCell>
                 <TableCell>

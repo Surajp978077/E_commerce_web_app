@@ -196,7 +196,7 @@ export default function FinalProductPreview(props) {
               textDecoration: "underline",
             }}
           >
-            Product Vendor Details :
+            Price and Stock Details :
           </h5>
           <div
             style={{

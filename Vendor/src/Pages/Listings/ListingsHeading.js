@@ -104,16 +104,22 @@ export default function Heading(props) {
           </CardContent>
         </Card>
       </Box>
-
-      <Button
-        size="large"
-        sx={{ margin: "20px 20px -2px" }}
-        variant="contained"
-        startIcon={<AddIcon />}
+      <Link
+        to={{
+          pathname: "/new_listing",
+          state: { setOpenSnackbar: props.setOpenSnackbar },
+        }}
+        style={{ textDecoration: "none", color: "white" }}
       >
-        Add a new listing
-      </Button>
-
+        <Button
+          size="large"
+          sx={{ margin: "20px 20px -2px" }}
+          variant="contained"
+          startIcon={<AddIcon />}
+        >
+          Add a new listing
+        </Button>
+      </Link>
       {/* <Divider sx={{ marginBlockStart: "20px" }}>
         <Chip label="PRODUCTS" />
       </Divider> */}

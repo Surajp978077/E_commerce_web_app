@@ -41,11 +41,11 @@ export default function NewListing() {
   });
   const [dialogOpen, setDialogOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
-
   const location = useLocation();
   // const setOpenSnackbar = location.state && location.state.setOpenSnackbar;
   const state = location.state;
   const setOpenSnackbar = state && state.setOpenSnackbar;
+
   const handleClickOpen = () => {
     setDialogOpen(true);
   };
