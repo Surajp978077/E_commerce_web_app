@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -22,6 +24,7 @@ function Home() {
   const [nullFields, setNullFields] = useState([]);
   const [isAnyFieldNull, setIsAnyFieldNull] = useState(false);
   const [lowQuantityItems, setLowQuantityItems] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLowQuantityItems = async () => {
@@ -100,9 +103,20 @@ function Home() {
                 sx={{
                   color: "red",
                   fontWeight: "bold",
+                  display: "flex",
+                  justifyContent: "space-between",
                 }}
               >
                 {lowQuantityItems.length} items are running low on stock!
+                <OpenInNewIcon
+                  sx={{
+                    cursor: "pointer",
+                    color: "black",
+                  }}
+                  onClick={() => {
+                    navigate("/listings");
+                  }}
+                />
               </Typography>
               <List
                 sx={{

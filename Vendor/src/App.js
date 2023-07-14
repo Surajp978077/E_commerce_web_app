@@ -10,8 +10,9 @@ import VendorInfoProvider from "./components/context_api/vendorInfo/VendorInfoPr
 import ErrorPage from "./components/Common/ErrorPage";
 import NewListing from "./Pages/NewListing/NewListingPage";
 import Test3 from "./Test3";
-import QCRejectedItem from "./Pages/QCRejectedItem";
 import ListingsPage from "./Pages/Listings/ListingsPage";
+import RejectedQCPage from "./Pages/RejectedQC/RejectedQCPage";
+import FinalProductPreview from "./Pages/NewListing/FinalProductPreview";
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path: "listings/rejectedQC",
-        element: <QCRejectedItem />,
+        element: <RejectedQCPage />,
       },
       {
         path: "/test",

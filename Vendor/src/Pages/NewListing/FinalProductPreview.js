@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import ImagePlaceholder from "../../assets/images/ImagePlaceholder.png";
 import Stack from "@mui/material/Stack";
-import { Paper } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import { fonts } from "../../config/config";
+import NewListingSubmitDialoge from "./NewListingSubmitDialoge";
 
 export default function FinalProductPreview(props) {
-  const { qcData } = props;
+  const { qcData, isRejectedItem, setOpenSnackbar } = props;
 
   // styles for paper component
   const paperStyles = {
@@ -34,7 +35,12 @@ export default function FinalProductPreview(props) {
     "Listing Status",
   ];
   const productVendorValues = Object.values(qcData.productVendor);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
   return (
     <div
       style={{
@@ -220,7 +226,85 @@ export default function FinalProductPreview(props) {
             ))}
           </div>
         </Paper>
+        {isRejectedItem && qcData.AdminMessage && (
+          <Paper sx={paperStyles}>
+            <h5
+              style={{
+                padding: "10px 0 0 10px",
+                fontFamily: fonts.main,
+                textDecoration: "underline",
+              }}
+            >
+              Admin Message :
+            </h5>
+            <div
+              style={{
+                padding: "10px 10px",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <h6>{qcData.AdminMessage} :</h6>
+              </div>
+            </div>
+          </Paper>
+        )}
+        {isRejectedItem && (
+          <>
+            <Paper sx={paperStyles}>
+              <h5
+                style={{
+                  padding: "10px 0 0 10px",
+                  fontFamily: fonts.main,
+                  textDecoration: "underline",
+                }}
+              >
+                Vendor Message :
+              </h5>
+              <div
+                style={{
+                  padding: "10px 10px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <h6>{qcData.VendorMessage}</h6>
+                </div>
+              </div>
+            </Paper>
+
+            <Button
+              variant="contained"
+              color="success"
+              size="small"
+              onClick={(e) => {
+                e.preventDefault();
+                handleClickOpen();
+              }}
+            >
+              Next
+            </Button>
+          </>
+        )}
       </Stack>
+      <NewListingSubmitDialoge
+        dialogOpen={dialogOpen}
+        setDialogOpen={setDialogOpen}
+        setOpenSnackbar={setOpenSnackbar}
+        qcData={qcData}
+        setOpenError={setOpenError}
+        isRejectedItem={true}
+      />
     </div>
   );
 }
