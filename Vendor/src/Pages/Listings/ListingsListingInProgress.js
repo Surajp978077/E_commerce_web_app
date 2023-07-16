@@ -15,42 +15,46 @@ import {
 } from "@mui/material";
 import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
 import { useLocation, useNavigate } from "react-router";
+import TablePagination from "../../components/Common/TablePagination";
 
 const ListingInProgress = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state variable
   const { vendor } = useContext(VendorInfoContext);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
+    const fetchRejectedQCRequests = async () => {
+      try {
+        const response = await QCInstance.get(`rejected/${vendor.Id}`, {
+          params: {
+            page: currentPage,
+            pageSize: 10,
+          },
+        });
+        if (response && response.data && response.data.Data) {
+          setProducts(response.data.Data);
+          setTotalPages(response.data.TotalPages);
+        }
+        setLoading(false); // Set loading to false after data is fetched
+      } catch (error) {
+        console.log(error);
+        setLoading(false); // Set loading to false in case of error
+      }
+    };
     fetchRejectedQCRequests();
-  }, []);
+  }, [currentPage]);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpenSnackbar(false);
-  };
-
-  const fetchRejectedQCRequests = async () => {
-    try {
-      const response = await QCInstance.get(`rejected/${vendor.Id}`, {
-        params: {
-          page: 1,
-          pageSize: 10,
-        },
-      });
-      if (response && response.data && response.data.Data) {
-        setProducts(response.data.Data);
-      }
-      setLoading(false); // Set loading to false after data is fetched
-    } catch (error) {
-      console.log(error);
-      setLoading(false); // Set loading to false in case of error
-    }
   };
 
   if (loading) {
@@ -125,7 +129,7 @@ const ListingInProgress = () => {
                     maxHeight: "60px",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
-                    display: "-webkit-box",
+                    // display: "-webkit-box",
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
                   }}
@@ -142,6 +146,21 @@ const ListingInProgress = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <div
+        style={{
+          display: "inline",
+          placeitems: "center",
+          margin: "38px",
+          position: "relative",
+        }}
+      >
+        <TablePagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          products={products}
+        />
+      </div>
     </>
   );
 };

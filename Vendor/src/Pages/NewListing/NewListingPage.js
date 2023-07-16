@@ -185,10 +185,10 @@ export default function NewListing() {
           variant="outlined"
           color="success"
           onClick={handleBack}
-          sx={{ marginBottom: "-2%", width: "190px", marginRight: "5px" }}
+          sx={{ marginBottom: "-2%", width: "150px", marginRight: "5px" }}
           disabled={activeStep === 0}
         >
-          Save & Go back
+          Go back
         </Button>
         <Button
           variant="contained"

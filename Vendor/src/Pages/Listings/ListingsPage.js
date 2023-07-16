@@ -31,6 +31,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import ListingInProgress from "./ListingsListingInProgress";
+import TablePagination from "../../components/Common/TablePagination";
 
 const ListingsPage = () => {
   const pageSize = 5;
@@ -67,10 +68,10 @@ const ListingsPage = () => {
 
   useEffect(() => {
     fetchProducts();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: "smooth",
+    // });
     sessionStorage.setItem("listingPage", currentPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, render]);
@@ -588,7 +589,7 @@ const ListingsPage = () => {
                       position: "relative",
                     }}
                   >
-                    <Pagination
+                    {/* <Pagination
                       count={totalPages}
                       page={parseInt(currentPage)}
                       onChange={(event, page) => setCurrentPage(page)}
@@ -599,16 +600,24 @@ const ListingsPage = () => {
                         display: "flex",
                         justifyContent: "center",
                       }}
+                    /> */}
+                    <TablePagination
+                      totalPages={totalPages}
+                      currentPage={currentPage}
+                      setCurrentPage={setCurrentPage}
+                      products={products}
                     />
                   </div>
                 </div>
               </>
             ) : (
-              <Alert sx={{ marginBlockStart: "10px" }} severity="info">
-                <AlertTitle>No products</AlertTitle>
-                You don't have any products listed. Click on{" "}
-                <strong>New Product</strong> button to add a product.
-              </Alert>
+              !isLoading && (
+                <Alert sx={{ marginBlockStart: "10px" }} severity="info">
+                  <AlertTitle>No products</AlertTitle>
+                  You don't have any products listed. Click on{" "}
+                  <strong>New Product</strong> button to add a product.
+                </Alert>
+              )
             )}
             <Dialog
               open={open}
