@@ -13,6 +13,7 @@ import Test3 from "./Test3";
 import ListingsPage from "./Pages/Listings/ListingsPage";
 import RejectedQCPage from "./Pages/RejectedQC/RejectedQCPage";
 import FinalProductPreview from "./Pages/NewListing/FinalProductPreview";
+import Footer from "./components/Layout/Footer";
 
 const router = createBrowserRouter([
   {
@@ -29,9 +30,8 @@ const router = createBrowserRouter([
         element: <AboutPage />,
       },
       {
-        path: "/listings/",
+        path: "/listings/:tabNo?",
         element: <ListingsPage />,
-        children: [],
       },
       {
         path: "new_listing",
@@ -61,7 +61,10 @@ function App() {
   return (
     <UserInfoProvider>
       <VendorInfoProvider>
+      <div className="App">
         <RouterProvider router={router} />
+     <Footer />
+     </div>
       </VendorInfoProvider>
     </UserInfoProvider>
   );

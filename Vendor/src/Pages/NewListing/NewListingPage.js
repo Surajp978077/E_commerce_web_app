@@ -109,7 +109,11 @@ export default function NewListing() {
   }
 
   return (
-    <>
+    <div
+      style={{
+        minHeight: "100vh",
+      }}
+    >
       <Snackbar
         open={openError}
         autoHideDuration={2000}
@@ -239,6 +243,6 @@ export default function NewListing() {
         qcData={qcData}
         setOpenError={setOpenError}
       />
-    </>
+    </div>
   );
 }

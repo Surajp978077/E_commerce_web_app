@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -26,10 +25,28 @@ import {
 import jwtDecode from "jwt-decode";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { VendorInfoContext } from "../context_api/vendorInfo/VendorInfoContext";
-import { FiberManualRecord } from "@mui/icons-material";
+import {
+  FiberManualRecord,
+  ReceiptLongOutlined,
+  ScienceOutlined,
+} from "@mui/icons-material";
+import HomeIcon from "@mui/icons-material/Home";
+import ListSubheader from "@mui/material/ListSubheader";
+import List from "@mui/material/List";
+import Collapse from "@mui/material/Collapse";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import DraftsIcon from "@mui/icons-material/Drafts";
+import SendIcon from "@mui/icons-material/Send";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import StarBorder from "@mui/icons-material/StarBorder";
+import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
+import DonutLargeOutlinedIcon from "@mui/icons-material/DonutLargeOutlined";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined";
 
 function ListItemLink(props) {
-  const { icon, primary, to, rejectedStatusCount } = props;
+  const { icon, primary, to, rejectedStatusCount, onClick } = props;
   const location = useLocation();
 
   const CustomRouterLink = React.forwardRef((props, ref) => (
@@ -41,16 +58,22 @@ function ListItemLink(props) {
       component={CustomRouterLink}
       sx={{
         "&.Mui-selected": {
-          backgroundColor: "rgba(0, 0, 0, 0.08)",
+          // backgroundColor: "rgba(0, 0, 0, 0.08)",
+          backgroundImage:
+            "linear-gradient(to right, #007bff 0%, #007bff 0.2rem, #b8d9f3 10px)",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "100% 100%",
         },
       }}
       selected={location.pathname === to}
+      onClick={onClick}
     >
       {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
       <ListItemText primary={primary} />
-      {to === "/listings" && rejectedStatusCount > 0 && (
-        <FiberManualRecord sx={{ color: colors.theme, fontSize: 12 }} />
-      )}
+      {(to === "/listings" || primary === "Listings in Progress") &&
+        rejectedStatusCount > 0 && (
+          <FiberManualRecord sx={{ color: colors.theme, fontSize: 12 }} />
+        )}
     </ListItemButton>
   );
 }
@@ -90,6 +113,12 @@ export default function Navbar() {
     }));
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
   const isMobile = useMediaQuery("(max-width:600px)");
   const list = (anchor) => (
     <Box
@@ -102,8 +131,6 @@ export default function Navbar() {
             : "20vw",
       }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
     >
       <Toolbar id="offcanvas-header">
         <IconButton sx={{ p: 0 }}>
@@ -122,17 +149,80 @@ export default function Navbar() {
       </Toolbar>
       <Divider />
       <List>
-        <ListItemLink to="/" primary="Home" />
-
-        <ListItemLink to="/profile" primary="Profile" />
-
         <ListItemLink
-          to="/listings"
-          primary="Listings"
-          rejectedStatusCount={rejectedStatusCount}
+          to="/"
+          primary="Home"
+          icon={<HomeIcon />}
+          onClick={toggleDrawer(anchor, false)}
         />
 
-        <ListItemLink to="/Test" primary="Test" />
+        <ListItemLink
+          to="/profile"
+          primary="Profile"
+          icon={<AccountBoxOutlinedIcon />}
+          onClick={toggleDrawer(anchor, false)}
+        />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <ListItemLink
+            to="/listings"
+            primary="Listings Managment"
+            icon={<ReceiptLongOutlined />}
+            rejectedStatusCount={rejectedStatusCount}
+            onClick={toggleDrawer(anchor, false)}
+          />
+
+          <div
+            onClick={handleClick}
+            style={{
+              width: "3em",
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {open ? <ExpandLess /> : <ExpandMore />}
+          </div>
+        </div>
+
+        <Collapse
+          in={open}
+          timeout="auto"
+          unmountOnExit
+          sx={{
+            paddingLeft: "20px",
+          }}
+        >
+          <List component="div" disablePadding>
+            <ListItemLink
+              to={`/listings/${2}`}
+              primary="Listings in Progress"
+              icon={<DonutLargeOutlinedIcon />}
+              onClick={toggleDrawer(anchor, false)}
+              rejectedStatusCount={rejectedStatusCount}
+            />
+          </List>
+
+          <List component="div" disablePadding>
+            <ListItemLink
+              to="/new_listing"
+              primary="Add a new Listing"
+              icon={<AddOutlinedIcon />}
+              onClick={toggleDrawer(anchor, false)}
+            />
+          </List>
+        </Collapse>
+
+        <ListItemLink
+          to="/Test"
+          primary="Test"
+          icon={<ScienceOutlined />}
+          onClick={toggleDrawer(anchor, false)}
+        />
       </List>
     </Box>
   );

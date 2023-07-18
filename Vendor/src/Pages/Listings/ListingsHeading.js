@@ -33,7 +33,7 @@ export default function Heading(props) {
   const isMobile = useMediaQuery("(max-width:600px)");
 
   return (
-    <div>
+    <>
       <div
         style={{
           display: "flex",
@@ -123,6 +123,6 @@ export default function Heading(props) {
       {/* <Divider sx={{ marginBlockStart: "20px" }}>
         <Chip label="PRODUCTS" />
       </Divider> */}
-    </div>
+    </>
   );
 }

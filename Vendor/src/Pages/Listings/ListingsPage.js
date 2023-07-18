@@ -12,7 +12,6 @@ import {
   Alert,
   AlertTitle,
   Switch,
-  Pagination,
   Dialog,
   Badge,
   CircularProgress,
@@ -32,8 +31,10 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import ListingInProgress from "./ListingsListingInProgress";
 import TablePagination from "../../components/Common/TablePagination";
+import { useParams } from "react-router-dom";
 
 const ListingsPage = () => {
+  const { tabNo } = useParams();
   const pageSize = 5;
   const [totalPages, setTotalPages] = useState(0);
   const [products, setProducts] = useState([]);
@@ -56,7 +57,7 @@ const ListingsPage = () => {
 
   const sortOrder = useRef(null);
   const [tabValue, setTabValue] = useState(
-    sessionStorage.getItem("listingTab") || "1"
+    tabNo ? tabNo : sessionStorage.getItem("listingTab") || "1"
   );
 
   const handleChange = (event, newValue) => {
@@ -76,6 +77,8 @@ const ListingsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, render]);
 
+  console.log(tabValue);
+  console.log();
   const fetchProducts = async () => {
     try {
       const response = await vendorInstance.get(`/${id}/products`, {
@@ -175,7 +178,9 @@ const ListingsPage = () => {
   };
 
   return (
-    <>
+    <div style={{
+      minHeight:"100vh"
+    }}>
       <Snackbar
         open={openSnackbar}
         autoHideDuration={3000}
@@ -652,7 +657,7 @@ const ListingsPage = () => {
         </TabContext>
       </Box>
       {/* <Outlet /> */}
-    </>
+    </div>
   );
 };
 

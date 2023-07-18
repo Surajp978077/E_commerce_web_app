@@ -124,6 +124,7 @@ export default function Product(props) {
           margin: "20px 30px",
           display: "flex",
           justifyContent: "flex-end",
+     
         }}
       >
         <Typography
