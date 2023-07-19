@@ -186,7 +186,7 @@ const CategoryEdit = ({ category, onCategoryUpdate }) => {
     const isValid = handleErrors();
     console.log(isValid);
 
-    if (!isValid) {
+    if (!isValid || !!errors.imageUrlError) {
       return;
     }
 

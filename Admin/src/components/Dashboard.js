@@ -10,7 +10,6 @@ const DashboardCard = ({ title, content, linkTo }) => {
         borderColor: 'grey.300',
         '&:hover': { boxShadow: '0 0 20px rgba(0, 0, 0, 0.3)' },
         cursor: 'pointer',
-
     };
 
     return (
@@ -20,7 +19,7 @@ const DashboardCard = ({ title, content, linkTo }) => {
                     <Typography variant='h6' component='div' sx={{ p: 2, backgroundColor: '#E1F5FE' }}>
                         {title}
                     </Typography>
-                    <Typography variant='body1' sx={{ p: 2 }}>
+                    <Typography variant='body1' sx={{ p: 2, display: 'flex', alignItems: 'center' }}>
                         {content}
                     </Typography>
                 </Card>
@@ -76,49 +75,48 @@ const Dashboard = () => {
                 <DashboardCard
                     title='QC Request'
                     content={
-                        <>
-                            <Typography variant='body1' component='div' sx={{ display: 'flex', alignItems: 'center' }}>
-                                {qcRequestCount !== undefined && qcRequestCount !== null ?
-                                    <>
-                                        <span>Pending requests</span>
-                                        {qcRequestCount === 0 && <Badge badgeContent='0' color='primary' sx={{ ml: 2 }} />}
-                                        <Badge badgeContent={qcRequestCount} color='error' sx={{ ml: 2 }} />
-                                    </>
-                                    : <span>Loading...</span>
-                                }
-                            </Typography>
-                        </>
+                        qcRequestCount !== undefined && qcRequestCount !== null ?
+                            <>
+                                <span>Pending requests: </span>
+                                <Badge
+                                    color={qcRequestCount === 0 ? 'primary' : 'error'}
+                                    badgeContent={qcRequestCount}
+                                    showZero
+                                    sx={{ ml: 2 }}
+                                />
+                            </>
+                            : <span>Loading...</span>
                     }
                     linkTo='/qc-request'
                 />
                 <DashboardCard
                     title='User'
-                    content='This is the content for User.'
+                    content='Click to manage Users.'
                     linkTo='/user'
                 />
                 <DashboardCardDisabled
                     title='Vendor'
-                    content='This is the content for Vendor.'
+                    content='Click to manage Vendors.'
                     linkTo='/vendor'
                 />
                 <DashboardCard
                     title='Category'
-                    content='This is the content for Category.'
+                    content='Click to manage Categories.'
                     linkTo='/category'
                 />
                 <DashboardCard
                     title='Product'
-                    content='This is the content for Product.'
+                    content='Click to manage Products.'
                     linkTo='/product'
                 />
                 <DashboardCardDisabled
                     title='Order'
-                    content='This is the content for Order.'
+                    content='Click to manage Orders.'
                     linkTo='/order'
                 />
                 <DashboardCardDisabled
                     title='Offer'
-                    content='This is the content for Offer.'
+                    content='Click to manage Offers.'
                     linkTo='/offer'
                 />
             </Grid>
