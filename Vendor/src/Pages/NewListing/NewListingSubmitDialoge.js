@@ -54,7 +54,8 @@ export default function NewListingSubmitDialoge(props) {
             }
           );
           if (response.status === 200) {
-            navigate("/listings");
+            navigate(`/listings/${2}`);
+            window.location.reload();
           }
         } else {
           const response = await QCInstance.post(`/`, {
@@ -82,6 +83,7 @@ export default function NewListingSubmitDialoge(props) {
             (response.status === 200 && response.data)
           ) {
             navigate("/listings");
+            window.location.reload();
           }
         }
       } catch (error) {

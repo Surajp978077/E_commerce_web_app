@@ -163,7 +163,7 @@ export default function Navbar() {
           }}
         >
           <ListItemLink
-            to="/listings"
+            to={"/listings"}
             primary="Listings Managment"
             icon={<ReceiptLongOutlined />}
             rejectedStatusCount={rejectedStatusCount}

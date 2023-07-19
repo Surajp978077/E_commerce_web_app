@@ -7,7 +7,12 @@ export default function Card() {
   const { userInfo } = useContext(VendorInfoContext);
   // const [userInfo1, setUserInfo1] = useState(userInfo);
   return (
-    <div id="flexbox">
+    <div
+      id="flexbox"
+      style={{
+        minHeight: "100vh",
+      }}
+    >
       <div id="card">
         <Info
           Name={userInfo.UserName}

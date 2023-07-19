@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { productInstance } from "./api/axios";
 import Test2 from "./Test2";
+import Test3 from "./Test3";
 
 const MyComponent = () => {
   const [detailedDescription, setDetailedDescription] = useState({
@@ -68,6 +69,8 @@ const MyComponent = () => {
       {/* Button to trigger the update */}
       <button onClick={handleUpdateDetails}>Update Details</button>
       <Test2 />
+
+      <Test3 />
     </div>
   );
 };
