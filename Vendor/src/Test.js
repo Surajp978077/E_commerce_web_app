@@ -23,7 +23,11 @@ const MyComponent = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        minHeight: "100vh",
+      }}
+    >
       {/* Render the input fields for detailed description */}
       <label>Ram:</label>
       <input

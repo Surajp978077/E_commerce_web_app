@@ -41,11 +41,11 @@ export default function NewListing() {
   });
   const [dialogOpen, setDialogOpen] = useState(false);
   const [openError, setOpenError] = useState(false);
-
   const location = useLocation();
   // const setOpenSnackbar = location.state && location.state.setOpenSnackbar;
   const state = location.state;
   const setOpenSnackbar = state && state.setOpenSnackbar;
+
   const handleClickOpen = () => {
     setDialogOpen(true);
   };
@@ -109,7 +109,11 @@ export default function NewListing() {
   }
 
   return (
-    <>
+    <div
+      style={{
+        minHeight: "100vh",
+      }}
+    >
       <Snackbar
         open={openError}
         autoHideDuration={2000}
@@ -185,10 +189,10 @@ export default function NewListing() {
           variant="outlined"
           color="success"
           onClick={handleBack}
-          sx={{ marginBottom: "-2%", width: "190px", marginRight: "5px" }}
+          sx={{ marginBottom: "-2%", width: "150px", marginRight: "5px" }}
           disabled={activeStep === 0}
         >
-          Save & Go back
+          Go back
         </Button>
         <Button
           variant="contained"
@@ -239,6 +243,6 @@ export default function NewListing() {
         qcData={qcData}
         setOpenError={setOpenError}
       />
-    </>
+    </div>
   );
 }

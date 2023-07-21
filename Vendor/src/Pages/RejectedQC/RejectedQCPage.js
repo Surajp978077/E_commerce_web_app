@@ -35,7 +35,9 @@ export default function RejectedQCPage() {
   );
 
   return (
-    <>
+    <div style={{
+      minHeight:"100vh"
+    }}>
       {steps === 1 && (
         <NewProduct
           qcData={qcData}
@@ -53,6 +55,6 @@ export default function RejectedQCPage() {
           setOpenSnackbar={setOpenSnackbar}
         />
       )}
-    </>
+    </div>
   );
 }

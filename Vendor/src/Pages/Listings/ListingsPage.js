@@ -12,7 +12,6 @@ import {
   Alert,
   AlertTitle,
   Switch,
-  Pagination,
   Dialog,
   Badge,
   CircularProgress,
@@ -31,8 +30,11 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import ListingInProgress from "./ListingsListingInProgress";
+import TablePagination from "../../components/Common/TablePagination";
+import { useParams } from "react-router-dom";
 
 const ListingsPage = () => {
+  const { tabNo } = useParams();
   const pageSize = 5;
   const [totalPages, setTotalPages] = useState(0);
   const [products, setProducts] = useState([]);
@@ -55,7 +57,7 @@ const ListingsPage = () => {
 
   const sortOrder = useRef(null);
   const [tabValue, setTabValue] = useState(
-    sessionStorage.getItem("listingTab") || "1"
+    tabNo ? tabNo : sessionStorage.getItem("listingTab") || "1"
   );
 
   const handleChange = (event, newValue) => {
@@ -67,14 +69,16 @@ const ListingsPage = () => {
 
   useEffect(() => {
     fetchProducts();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: "smooth",
+    // });
     sessionStorage.setItem("listingPage", currentPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, render]);
 
+  console.log(tabValue);
+  console.log();
   const fetchProducts = async () => {
     try {
       const response = await vendorInstance.get(`/${id}/products`, {
@@ -174,7 +178,9 @@ const ListingsPage = () => {
   };
 
   return (
-    <>
+    <div style={{
+      minHeight:"100vh"
+    }}>
       <Snackbar
         open={openSnackbar}
         autoHideDuration={3000}
@@ -588,7 +594,7 @@ const ListingsPage = () => {
                       position: "relative",
                     }}
                   >
-                    <Pagination
+                    {/* <Pagination
                       count={totalPages}
                       page={parseInt(currentPage)}
                       onChange={(event, page) => setCurrentPage(page)}
@@ -599,16 +605,24 @@ const ListingsPage = () => {
                         display: "flex",
                         justifyContent: "center",
                       }}
+                    /> */}
+                    <TablePagination
+                      totalPages={totalPages}
+                      currentPage={currentPage}
+                      setCurrentPage={setCurrentPage}
+                      products={products}
                     />
                   </div>
                 </div>
               </>
             ) : (
-              <Alert sx={{ marginBlockStart: "10px" }} severity="info">
-                <AlertTitle>No products</AlertTitle>
-                You don't have any products listed. Click on{" "}
-                <strong>New Product</strong> button to add a product.
-              </Alert>
+              !isLoading && (
+                <Alert sx={{ marginBlockStart: "10px" }} severity="info">
+                  <AlertTitle>No products</AlertTitle>
+                  You don't have any products listed. Click on{" "}
+                  <strong>New Product</strong> button to add a product.
+                </Alert>
+              )
             )}
             <Dialog
               open={open}
@@ -643,7 +657,7 @@ const ListingsPage = () => {
         </TabContext>
       </Box>
       {/* <Outlet /> */}
-    </>
+    </div>
   );
 };
 

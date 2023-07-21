@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Typography,
   List,
@@ -8,6 +8,7 @@ import {
   Box,
 } from "@mui/material";
 import { categoriesInstance } from "../../api/axios";
+import ErrorPage from "../../components/Common/ErrorPage";
 
 const CategoryList = ({
   categories,
@@ -68,6 +69,7 @@ export const CategoryBrowse = ({
   categoriesSelected,
   setCategoriesSelected,
 }) => {
+  const [errorMessage, setErrorMessage] = useState(null);
   useEffect(() => {
     if (selectedResult && selectedResult.length > 0 && categoriesNestedSearch) {
       setCategoriesNested(categoriesNestedSearch);
@@ -83,7 +85,7 @@ export const CategoryBrowse = ({
         const response = await categoriesInstance.get("/");
         setCategoriesNested([response.data.$values]);
       } catch (error) {
-        console.log("Error fetching categories:", error);
+        setErrorMessage("Error fetching categories:", error);
       }
     };
 
@@ -124,6 +126,10 @@ export const CategoryBrowse = ({
       return newArray;
     });
   };
+
+  if (errorMessage) {
+    return <ErrorPage desc={errorMessage} />;
+  }
 
   return (
     <div>

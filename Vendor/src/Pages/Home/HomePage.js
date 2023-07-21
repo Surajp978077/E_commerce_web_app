@@ -67,7 +67,7 @@ function Home() {
   }
 
   return userInfo.vendor ? (
-    <Container sx={{ marginTop: "30px" }}>
+    <Container sx={{ marginTop: "30px", minHeight: "100vh" }}>
       <Grid container spacing={2}>
         {isAnyFieldNull && (
           <>

@@ -641,6 +641,7 @@ export default function NewProduct(props) {
                             </label>
                             <div style={{ width: "50%" }}>
                               <TextField
+                                required
                                 id={key}
                                 label={key}
                                 variant="outlined"
@@ -1024,21 +1025,25 @@ export default function NewProduct(props) {
                           }}
                         >
                           <ToggleButtonGroup
-                            value={productVendor.Visible}
+                            value={
+                              productVendor.Visible !== null
+                                ? Number(productVendor.Visible)
+                                : []
+                            } // Set value to [] when visible is null
                             exclusive
                             onChange={handleVisible}
                             aria-label="Listing Status"
                             size="small"
                           >
                             <ToggleButton
-                              value="1"
+                              value={1}
                               aria-label="Active"
                               color="info"
                             >
                               <Typography>Active</Typography>
                             </ToggleButton>
                             <ToggleButton
-                              value="0"
+                              value={0}
                               aria-label="Inactive"
                               color="error"
                             >
@@ -1047,6 +1052,7 @@ export default function NewProduct(props) {
                           </ToggleButtonGroup>
                         </div>
                       </div>
+
                       <div
                         style={{
                           display: "flex",
