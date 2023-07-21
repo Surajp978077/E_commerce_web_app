@@ -14,6 +14,19 @@ export default function AboutPage() {
   );
   const [previewImageUrl, setPreviewImageUrl] = useState(imageUrl);
 
+  const address = {
+    Street: userInfo.Address.Street,
+    City: userInfo.Address.City,
+    State: userInfo.Address.State,
+    PinCode: userInfo.Address.Pincode,
+  };
+
+  const userInformation = {
+    Name: userInfo.UserName,
+    GSTIN: userInfo.vendor.GSTIN,
+    DeliveryPinCode: userInfo.vendor.DeliveryPinCode,
+  };
+
   const handleImageUrlChange = (e) => {
     setImageUrl(e.target.value);
     setPreviewImageUrl(e.target.value);
@@ -43,9 +56,6 @@ export default function AboutPage() {
   };
 
   // const [userInfo1, setUserInfo1] = useState(userInfo);
-  useEffect(() => {
-    console.log(imageUrl);
-  }, [imageUrl]);
 
   return (
     <div
@@ -162,6 +172,20 @@ export default function AboutPage() {
               margin="normal"
             />
 
+            <Grid container>
+              {Object.keys(address).map((key, index) => (
+                <Grid item xs={12} md={6} key={index}>
+                  <TextField
+                    label={key}
+                    value={address[key]}
+                    sx={{ width: "75%" }}
+                    required
+                    margin="normal"
+                    size="small"
+                  />
+                </Grid>
+              ))}
+            </Grid>
             <div>
               <Button type="submit" variant="contained" color="primary">
                 Submit

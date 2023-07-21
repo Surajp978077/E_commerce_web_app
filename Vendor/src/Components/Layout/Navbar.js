@@ -121,7 +121,7 @@ export default function Navbar() {
             ? "auto"
             : isMobile
             ? "100vw"
-            : "20vw",
+            : 350,
       }}
       role="presentation"
     >
