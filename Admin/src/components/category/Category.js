@@ -7,6 +7,7 @@ import TreeItem from '@mui/lab/TreeItem';
 import { CategoryAdd } from './CategoryAdd';
 import { CategoryDelete } from './CategoryDelete';
 import CategoryEdit from './CategoryEdit';
+import { Box, Chip, Divider } from '@mui/material';
 
 const Category = () => {
     const [categories, setCategories] = useState([]);
@@ -71,15 +72,21 @@ const Category = () => {
     );
 
     return (
-        <TreeView
-            aria-label='rich object'
-            defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpanded={['root']}
-            defaultExpandIcon={<ChevronRightIcon />}
-            sx={{ flexGrow: 1, maxWidth: 500, overflowY: 'auto', margin: '2%' }}
-        >
-            {categoryTree(categories)}
-        </TreeView>
+        <Box>
+            <Divider sx={{ marginY: '1.5rem', width: '100%' }}>
+                <Chip label='CATEGORIES' />
+            </Divider>
+
+            <TreeView
+                aria-label='rich object'
+                defaultCollapseIcon={<ExpandMoreIcon />}
+                defaultExpanded={['root']}
+                defaultExpandIcon={<ChevronRightIcon />}
+                sx={{ flexGrow: 1, maxWidth: 500, overflowY: 'auto', margin: '2%', marginLeft: '5%' }}
+            >
+                {categoryTree(categories)}
+            </TreeView>
+        </Box>
     );
 }
 
