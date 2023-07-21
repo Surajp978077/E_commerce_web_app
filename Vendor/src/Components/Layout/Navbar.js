@@ -53,8 +53,7 @@ function ListItemLink(props) {
       sx={{
         "&.Mui-selected": {
           // backgroundColor: "rgba(0, 0, 0, 0.08)",
-          backgroundImage:
-            "linear-gradient(to right, #007bff 0%, #007bff 0.2rem, #b8d9f3 10px)",
+          backgroundImage: `linear-gradient(to right, ${colors.theme} 2%, ${colors.secondary} 10px)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "100% 100%",
         },
@@ -75,7 +74,7 @@ function ListItemLink(props) {
 export default function Navbar() {
   const anchor = "left";
   const [state, setState] = React.useState({ [anchor]: false });
-  const { rejectedStatusCount } = React.useContext(VendorInfoContext);
+  const { rejectedStatusCount, userInfo } = React.useContext(VendorInfoContext);
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   var token = localStorage.getItem("token");
@@ -129,7 +128,7 @@ export default function Navbar() {
       <Toolbar id="offcanvas-header">
         <IconButton sx={{ p: 0 }}>
           <Avatar
-            src={decodedToken.profilePic}
+            src={userInfo.vendor.VendorzProfilePicURL}
             sx={{ backgroundColor: colors.theme }}
           ></Avatar>
         </IconButton>
@@ -256,7 +255,7 @@ export default function Navbar() {
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar
                 alt={decodedToken.UserName.charAt(0)}
-                src={decodedToken.profilePic}
+                src={userInfo.vendor.VendorProfilePicURL}
                 sx={{ backgroundColor: colors.theme }}
               >
                 {decodedToken.UserName ? decodedToken.UserName.charAt(0) : ""}

@@ -193,7 +193,9 @@ export default function NewProduct(props) {
     const handlePriceStock = () => {
       if (
         Boolean(productDetails.Price) &&
-        !Object.values(productVendor).some((value) => !Boolean(value))
+        productVendor.Price &&
+        productVendor.Quantity &&
+        productVendor.Visible !== null
       ) {
         setQcData((prev) => ({
           ...prev,
@@ -1019,7 +1021,7 @@ export default function NewProduct(props) {
                             width: "fit-content",
                             border:
                               priceStockSubmit.current === false &&
-                              !Boolean(productVendor.Visible)
+                              productVendor.Visible === null
                                 ? "1px solid red"
                                 : "none",
                           }}

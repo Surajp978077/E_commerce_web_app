@@ -548,7 +548,10 @@ const ListingsPage = () => {
                                 })}
                               </TableCell>
 
-                              <TableCell align="right">
+                              <TableCell
+                                align="right"
+                                sx={{ paddingRight: "2rem" }}
+                              >
                                 {product.Quantity}
                               </TableCell>
 

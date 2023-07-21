@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Card, CardContent, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import { fonts } from "../../config/config";
@@ -67,7 +61,11 @@ export default function Heading(props) {
         }}
       >
         <Card sx={styles.card}>
-          <CardContent>
+          <CardContent
+            sx={{
+              marginLeft: "1rem",
+            }}
+          >
             <Typography gutterBottom variant="h5" component="div">
               {props.productsCount}
             </Typography>
@@ -78,7 +76,11 @@ export default function Heading(props) {
         </Card>
 
         <Card sx={styles.card}>
-          <CardContent>
+          <CardContent
+            sx={{
+              marginLeft: "1rem",
+            }}
+          >
             <Typography gutterBottom variant="h5" component="div">
               {props.ActiveListings}
             </Typography>
@@ -89,7 +91,11 @@ export default function Heading(props) {
         </Card>
 
         <Card sx={styles.card}>
-          <CardContent>
+          <CardContent
+            sx={{
+              marginLeft: "1rem",
+            }}
+          >
             <Typography gutterBottom variant="h5" component="div">
               {props.InactiveListings}
             </Typography>

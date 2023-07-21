@@ -50,6 +50,25 @@ const LineGraph = () => {
               fill="blue"
             />
           ))}
+          <text
+            x={parentDivWidth / 2}
+            y={parentDivHeight - 20}
+            textAnchor="middle"
+            dominantBaseline="hanging"
+          >
+            X Axis
+          </text>
+          <text
+            x={margin.left - 10}
+            y={parentDivHeight / 2}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            transform={`rotate(-90, ${margin.left - 10}, ${
+              parentDivHeight / 2
+            })`}
+          >
+            Y Axis
+          </text>
         </g>
       </svg>
     </div>

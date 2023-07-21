@@ -67,6 +67,7 @@ function VendorInfoProvider(props) {
         ...prevUserInfo,
         vendor: {
           VendorId: vendor.Id,
+          VendorProfilePicURL: vendor.ProfilePicURL,
           VendorName: vendor.Name,
           GSTIN: vendor.GSTIN,
           DeliveryPinCode: vendor.DeliveryPinCode,
