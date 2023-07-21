@@ -11,6 +11,7 @@ function VendorInfoProvider(props) {
   const [isVendorSet, setIsVendorSet] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [rejectedStatusCount, setRejectedStatusCount] = useState();
+  const [pendingStatusCount, setPendingStatusCount] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,6 +67,7 @@ function VendorInfoProvider(props) {
         ...prevUserInfo,
         vendor: {
           VendorId: vendor.Id,
+          VendorProfilePicURL: vendor.ProfilePicURL,
           VendorName: vendor.Name,
           GSTIN: vendor.GSTIN,
           DeliveryPinCode: vendor.DeliveryPinCode,
@@ -90,7 +92,8 @@ function VendorInfoProvider(props) {
         try {
           const response = await QCInstance.get(`/count-rejected/${vendor.Id}`);
           if (response.status === 200 && response.data) {
-            setRejectedStatusCount(response.data);
+            setRejectedStatusCount(response.data.rejectedCount);
+            setPendingStatusCount(response.data.pendingCount);
           }
         } catch (error) {
           console.log(error);
@@ -117,6 +120,7 @@ function VendorInfoProvider(props) {
         vendor,
         userInfo,
         rejectedStatusCount,
+        pendingStatusCount,
       }}
     >
       {props.children}

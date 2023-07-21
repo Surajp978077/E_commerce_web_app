@@ -15,10 +15,11 @@
       "Pincode": "234567"
     },
     "vendor": {
-      "VendorName": "vendor",
-      "VendorId": 3,
-      "GSTIN": null,
-      "DeliveryPinCode": 0
+      "VendorId": "vendor.Id",
+      "VendorProfilePicURL": "vendor.ProfilePicURL",
+      "VendorName": "vendor.Name",
+      "GSTIN": " vendor.GSTIN",
+      "DeliveryPinCode": "vendor.DeliveryPinCode"
     }
   },
 

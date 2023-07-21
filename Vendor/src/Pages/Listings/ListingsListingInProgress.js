@@ -112,7 +112,7 @@ const ListingInProgress = () => {
                   }
                 }}
                 sx={{
-                  backgroundColor: product.Status === 1 ? "#fa7a7a" : "#fbfc44",
+                  backgroundColor: product.Status === 1 ? "#ffaa93" : "#fdf6b5",
                   cursor: product.Status === 1 ? "pointer" : null,
                 }}
               >

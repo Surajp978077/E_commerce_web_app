@@ -56,13 +56,10 @@ const ListingsPage = () => {
   );
 
   const sortOrder = useRef(null);
-  const [tabValue, setTabValue] = useState(
-    tabNo ? tabNo : sessionStorage.getItem("listingTab") || "1"
-  );
+  const [tabValue, setTabValue] = useState(tabNo ? tabNo : "1");
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
-    sessionStorage.setItem("listingTab", newValue);
   };
 
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -77,8 +74,6 @@ const ListingsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, render]);
 
-  console.log(tabValue);
-  console.log();
   const fetchProducts = async () => {
     try {
       const response = await vendorInstance.get(`/${id}/products`, {
@@ -178,9 +173,11 @@ const ListingsPage = () => {
   };
 
   return (
-    <div style={{
-      minHeight:"100vh"
-    }}>
+    <div
+      style={{
+        minHeight: "100vh",
+      }}
+    >
       <Snackbar
         open={openSnackbar}
         autoHideDuration={3000}
@@ -551,7 +548,10 @@ const ListingsPage = () => {
                                 })}
                               </TableCell>
 
-                              <TableCell align="right">
+                              <TableCell
+                                align="right"
+                                sx={{ paddingRight: "2rem" }}
+                              >
                                 {product.Quantity}
                               </TableCell>
 

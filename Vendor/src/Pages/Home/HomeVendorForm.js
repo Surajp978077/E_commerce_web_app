@@ -55,19 +55,17 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
 
   return (
     <>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         {alert ? (
           <Alert
             severity="error"
-            icon={
-              <WarningIcon sx={{ fontSize: "inherit", marginTop: "5px" }} />
-            }
-            sx={{ fontSize: 15, paddingBottom: 0 }}
+            icon={<WarningIcon />}
+            sx={{ width: "100%", margin: "2px", marginTop: "10px" }}
           >
             <strong>Error:</strong> Please enter the details only in{" "}
             <strong>{typeof vendor[field]}</strong> format
             <Button
-              sx={{ color: "inherit", marginLeft: "10vh" }}
+              sx={{ color: "inherit", marginLeft: "1vh" }}
               onClick={() => setAlert(false)}
             >
               <CloseOutlined />
@@ -78,14 +76,12 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
           style={{
             backgroundColor: "#e8e9eb",
             borderRadius: "4px",
-            boxShadow: "0 4px 5px rgba(0, 0, 0, 0.1)",
-            padding: "20px",
-            marginBottom: "20px",
+            boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.75)",
+            padding: "10px",
             marginTop: "10px",
-            maxWidth: "500px",
           }}
         >
-          <h3>Update {fieldDisplayLabels[label]}</h3>
+          <h5>Update {fieldDisplayLabels[label]}</h5>
           <form onSubmit={handleSubmit}>
             <div>
               <label>{fieldDisplayLabels[label]}</label>
@@ -98,17 +94,18 @@ const VendorForm = ({ field, label, setVendor, vendor, setIsVendorSet }) => {
                 fullWidth
                 margin="normal"
                 size="small"
+                sx={{ margin: "0" }}
               />
             </div>
-            `{" "}
+
             <Button
               variant="contained"
               type="submit"
-              sx={{ marginTop: "10px" }}
+              size="small"
+              sx={{ marginTop: "0.2rem" }}
             >
               Submit
             </Button>
-            `
           </form>
         </div>
       </Grid>
