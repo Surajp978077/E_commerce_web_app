@@ -6,13 +6,25 @@ import ImagePlaceholder from "../../assets/images/ImagePlaceholder.png";
 
 export default function AboutPage() {
   const { userInfo } = useContext(VendorInfoContext);
-  const [name, setName] = useState(userInfo.UserName);
-  const [gstin, setGstin] = useState(userInfo.vendor.GSTIN || "");
-  const [pinCode, setPinCode] = useState(userInfo.vendor.DeliveryPinCode || "");
+  const [ProfileData, setProfileData] = useState({
+    UserId: userInfo.UserId,
+    UserName: userInfo.UserName,
+    Email: userInfo.Email,
+    Role: userInfo.Role,
+    Phone: userInfo.Phone,
+    AddressId: userInfo.AddressId,
+    Address: {
+      AddressId: 0,
+      Street: userInfo.Address.Street,
+      City: userInfo.Address.City,
+      State: userInfo.Address.State,
+      Pincode: userInfo.Address.Pincode,
+    },
+  });
   const [imageUrl, setImageUrl] = useState(
     userInfo.vendor.VendorProfilePicURL || ""
   );
-  const [previewImageUrl, setPreviewImageUrl] = useState(imageUrl);
+  const [isEdited, setIsEdited] = useState(false);
 
   const address = {
     Street: userInfo.Address.Street,
@@ -23,29 +35,16 @@ export default function AboutPage() {
 
   const userInformation = {
     Name: userInfo.UserName,
-    GSTIN: userInfo.vendor.GSTIN,
-    DeliveryPinCode: userInfo.vendor.DeliveryPinCode,
-  };
-
-  const handleImageUrlChange = (e) => {
-    setImageUrl(e.target.value);
-    setPreviewImageUrl(e.target.value);
+    GSTIN: userInfo.vendor.GSTIN || "",
+    DeliveryPinCode: userInfo.vendor.DeliveryPinCode || "",
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Create the profile object with form data
-    const profileData = {
-      name,
-      gstin,
-      pinCode,
-      imageUrl,
-    };
-
     // Call the API to submit the profile data
     // Replace the API endpoint and method with your actual implementation
-    console.log(profileData);
+
     // axios.post("/api/profile", profileData)
     //   .then(response => {
     //     console.log("Profile submitted successfully", response.data);
@@ -135,43 +134,24 @@ export default function AboutPage() {
             </div>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Typography variant="h6">Profile Information</Typography>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                margin: "-10px",
-              }}
-            >
-              <label htmlFor="name">Name : </label>
-              <TextField
-                label="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                sx={{ width: "75%" }}
-                required
-                margin="normal"
-                size="small"
-              />
-            </div>
-
-            <TextField
-              label="GSTIN"
-              value={gstin}
-              onChange={(e) => setGstin(e.target.value)}
-              sx={{ width: "75%" }}
-              required
-              margin="normal"
-            />
-            <TextField
-              label="Delivery Pin Code"
-              value={pinCode}
-              onChange={(e) => setPinCode(e.target.value)}
-              sx={{ width: "75%" }}
-              required
-              margin="normal"
-            />
-
+            <Typography variant="h6">Profile Information :</Typography>
+            <Grid container>
+              {Object.keys(userInformation).map((key, index) => (
+                <Grid item sm={12} key={index}>
+                  <TextField
+                    label={key}
+                    value={userInformation[key]}
+                    // onChange={(e) => setName(e.target.value)}
+                    sx={{ width: "75%" }}
+                    // fullWidth
+                    required={key === "Name"}
+                    margin="normal"
+                    size="small"
+                  />
+                </Grid>
+              ))}
+            </Grid>
+            <Typography variant="h6">Address :</Typography>
             <Grid container>
               {Object.keys(address).map((key, index) => (
                 <Grid item xs={12} md={6} key={index}>
@@ -187,7 +167,12 @@ export default function AboutPage() {
               ))}
             </Grid>
             <div>
-              <Button type="submit" variant="contained" color="primary">
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={!isEdited}
+              >
                 Submit
               </Button>
             </div>

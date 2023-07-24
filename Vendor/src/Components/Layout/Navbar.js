@@ -128,7 +128,7 @@ export default function Navbar() {
       <Toolbar id="offcanvas-header">
         <IconButton sx={{ p: 0 }}>
           <Avatar
-            src={userInfo.vendor.VendorzProfilePicURL}
+            src={userInfo.vendor.VendorsProfilePicURL}
             sx={{ backgroundColor: colors.theme }}
           ></Avatar>
         </IconButton>
