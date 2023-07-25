@@ -2,6 +2,7 @@
   "userInfo": {
     "UserId": 6,
     "UserName": "vendor",
+    "ProfilePicURL": "vendor.ProfilePicURL",
     "Email": "vendor@gmail.com",
     "Password": "$2a$11$vPB0965eJYRvFLcOXS.QceiBQLNtctZP7nJnWiG9klFxAfA/USNSC",
     "Role": "Vendor",
@@ -16,7 +17,6 @@
     },
     "vendor": {
       "VendorId": "vendor.Id",
-      "VendorProfilePicURL": "vendor.ProfilePicURL",
       "VendorName": "vendor.Name",
       "GSTIN": " vendor.GSTIN",
       "DeliveryPinCode": "vendor.DeliveryPinCode"

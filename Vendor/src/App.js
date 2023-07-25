@@ -60,10 +60,10 @@ function App() {
   return (
     <UserInfoProvider>
       <VendorInfoProvider>
-      <div className="App">
-        <RouterProvider router={router} />
-     <Footer />
-     </div>
+        <div className="App">
+          <RouterProvider router={router} />
+          <Footer />
+        </div>
       </VendorInfoProvider>
     </UserInfoProvider>
   );
