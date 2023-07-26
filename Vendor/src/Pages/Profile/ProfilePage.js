@@ -393,6 +393,14 @@ export default function ProfilePage() {
                             [key]: e.target.value,
                           },
                         }));
+                        key === "UserName" &&
+                          setProfileData(() => ({
+                            ...ProfileData,
+                            vendor: {
+                              ...ProfileData.vendor,
+                              Name: e.target.value,
+                            },
+                          }));
                       }}
                       sx={{ width: "75%" }}
                       // fullWidth
