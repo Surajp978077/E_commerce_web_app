@@ -22,7 +22,6 @@ import {
   MenuItem,
   Tooltip,
 } from "@mui/material";
-import jwtDecode from "jwt-decode";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { VendorInfoContext } from "../context_api/vendorInfo/VendorInfoContext";
 import {
@@ -31,19 +30,13 @@ import {
   ScienceOutlined,
 } from "@mui/icons-material";
 import HomeIcon from "@mui/icons-material/Home";
-import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import Collapse from "@mui/material/Collapse";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import SendIcon from "@mui/icons-material/Send";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import StarBorder from "@mui/icons-material/StarBorder";
 import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import DonutLargeOutlinedIcon from "@mui/icons-material/DonutLargeOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined";
 
 function ListItemLink(props) {
   const { icon, primary, to, rejectedStatusCount, onClick } = props;
@@ -59,8 +52,7 @@ function ListItemLink(props) {
       sx={{
         "&.Mui-selected": {
           // backgroundColor: "rgba(0, 0, 0, 0.08)",
-          backgroundImage:
-            "linear-gradient(to right, #007bff 0%, #007bff 0.2rem, #b8d9f3 10px)",
+          backgroundImage: `linear-gradient(to right, ${colors.theme} 2%, ${colors.secondary} 10px)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "100% 100%",
         },
@@ -81,11 +73,8 @@ function ListItemLink(props) {
 export default function Navbar() {
   const anchor = "left";
   const [state, setState] = React.useState({ [anchor]: false });
-  const { rejectedStatusCount } = React.useContext(VendorInfoContext);
-
+  const { rejectedStatusCount, userInfo } = React.useContext(VendorInfoContext);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  var token = localStorage.getItem("token");
-  const decodedToken = jwtDecode(token);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -128,19 +117,19 @@ export default function Navbar() {
             ? "auto"
             : isMobile
             ? "100vw"
-            : "20vw",
+            : 350,
       }}
       role="presentation"
     >
       <Toolbar id="offcanvas-header">
         <IconButton sx={{ p: 0 }}>
           <Avatar
-            src={decodedToken.profilePic}
+            src={userInfo.ProfilePicURL}
             sx={{ backgroundColor: colors.theme }}
           ></Avatar>
         </IconButton>
         <Typography sx={{ marginLeft: "10px" }}>
-          Hello, {decodedToken.UserName}
+          Hello, {userInfo.UserName}
         </Typography>
         <ClearIcon
           id="drawer-close-btn"
@@ -169,7 +158,7 @@ export default function Navbar() {
           }}
         >
           <ListItemLink
-            to="/listings"
+            to={"/listings"}
             primary="Listings Managment"
             icon={<ReceiptLongOutlined />}
             rejectedStatusCount={rejectedStatusCount}
@@ -261,11 +250,11 @@ export default function Navbar() {
           <Tooltip title="Open account" sx={{ marginLeft: "auto" }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar
-                alt={decodedToken.UserName.charAt(0)}
-                src={decodedToken.profilePic}
+                alt={userInfo.UserName.charAt(0)}
+                src={userInfo.ProfilePicURL}
                 sx={{ backgroundColor: colors.theme }}
               >
-                {decodedToken.UserName ? decodedToken.UserName.charAt(0) : ""}
+                {userInfo.UserName ? userInfo.UserName.charAt(0) : ""}
               </Avatar>
             </IconButton>
           </Tooltip>

@@ -7,18 +7,20 @@ import ErrorPage from "../../Common/ErrorPage";
 import LoadingScreen from "../../Common/LoadingScreen";
 
 export const UserInfoProvider = (props) => {
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInformation, setUserInformation] = useState(null);
   const [error, setError] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const timerId = useRef(5);
   const [timer, setTimer] = useState(5);
+  const [userInfoUpdated, setUserInfoUpdated] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const decodedToken = jwtDecode(token);
         const response = await userInfoInstance.get(`/${decodedToken.id}`);
         if (response && response.data) {
-          setUserInfo(response.data);
+          setUserInformation(response.data);
         } else {
           throw new Error("Invalid status code");
         }
@@ -54,7 +56,7 @@ export const UserInfoProvider = (props) => {
     return () => {
       window.removeEventListener("storage", tokenChangeListener);
     };
-  }, [token]);
+  }, [token, userInfoUpdated]);
 
   if (error) {
     setTimeout(() => {
@@ -72,7 +74,8 @@ export const UserInfoProvider = (props) => {
       </div>
     );
   }
-  if (userInfo && userInfo.Role !== "Vendor") {
+
+  if (userInformation && userInformation.Role !== "Vendor") {
     return (
       <ErrorPage
         title="You are not a Vendor"
@@ -80,8 +83,15 @@ export const UserInfoProvider = (props) => {
       />
     );
   }
-  return userInfo ? (
-    <UserInfoContext.Provider value={{ userInfo, setUserInfo }}>
+  return userInformation ? (
+    <UserInfoContext.Provider
+      value={{
+        userInformation,
+        setUserInformation,
+        setUserInfoUpdated,
+        userInfoUpdated,
+      }}
+    >
       {props.children}
     </UserInfoContext.Provider>
   ) : (

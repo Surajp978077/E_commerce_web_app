@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ImagePlaceholder from "../../assets/images/ImagePlaceholder.png";
 import Stack from "@mui/material/Stack";
 import { Button, Paper } from "@mui/material";
-import { fonts } from "../../config/config";
+import { colors, fonts } from "../../config/config";
 import NewListingSubmitDialoge from "./NewListingSubmitDialoge";
 
 export default function FinalProductPreview(props) {
@@ -13,7 +13,7 @@ export default function FinalProductPreview(props) {
     width: "90%",
     borderRadius: "10px",
     boxShadow: "0px 0px 10px 0px grey",
-    backgroundColor: "#adf7d5",
+    backgroundColor: colors.secondary,
   };
 
   const productKeys = ["Product Name", "Product Description", "M.R.P (Rs)"];
@@ -56,7 +56,7 @@ export default function FinalProductPreview(props) {
         sx={{
           border: "50px",
           borderRadius: "10px",
-          backgroundColor: "#bcf5ec",
+          // backgroundColor: "#82c2fa",
           padding: "10px 0 20px 0",
         }}
       >
@@ -249,7 +249,7 @@ export default function FinalProductPreview(props) {
                   justifyContent: "space-between",
                 }}
               >
-                <h6>{qcData.AdminMessage} :</h6>
+                <h6>{qcData.AdminMessage} </h6>
               </div>
             </div>
           </Paper>

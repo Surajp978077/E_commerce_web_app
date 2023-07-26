@@ -1,7 +1,7 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./Pages/Home/HomePage";
-import AboutPage from "./Pages/About/AboutPage";
+import ProfilePage from "./Pages/Profile/ProfilePage";
 import { UserInfoProvider } from "./components/context_api/userInfo/UserInfoProvider";
 import Test from "./Test";
 import Navbar from "./components/Layout/Navbar";
@@ -12,7 +12,6 @@ import NewListing from "./Pages/NewListing/NewListingPage";
 import Test3 from "./Test3";
 import ListingsPage from "./Pages/Listings/ListingsPage";
 import RejectedQCPage from "./Pages/RejectedQC/RejectedQCPage";
-import FinalProductPreview from "./Pages/NewListing/FinalProductPreview";
 import Footer from "./components/Layout/Footer";
 
 const router = createBrowserRouter([
@@ -27,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <AboutPage />,
+        element: <ProfilePage />,
       },
       {
         path: "/listings/:tabNo?",
@@ -61,10 +60,10 @@ function App() {
   return (
     <UserInfoProvider>
       <VendorInfoProvider>
-      <div className="App">
-        <RouterProvider router={router} />
-     <Footer />
-     </div>
+        <div className="App">
+          <RouterProvider router={router} />
+          <Footer />
+        </div>
       </VendorInfoProvider>
     </UserInfoProvider>
   );

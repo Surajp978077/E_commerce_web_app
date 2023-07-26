@@ -2,6 +2,7 @@
   "userInfo": {
     "UserId": 6,
     "UserName": "vendor",
+    "ProfilePicURL": "vendor.ProfilePicURL",
     "Email": "vendor@gmail.com",
     "Password": "$2a$11$vPB0965eJYRvFLcOXS.QceiBQLNtctZP7nJnWiG9klFxAfA/USNSC",
     "Role": "Vendor",
@@ -15,10 +16,10 @@
       "Pincode": "234567"
     },
     "vendor": {
-      "VendorName": "vendor",
-      "VendorId": 3,
-      "GSTIN": null,
-      "DeliveryPinCode": 0
+      "VendorId": "vendor.Id",
+      "VendorName": "vendor.Name",
+      "GSTIN": " vendor.GSTIN",
+      "DeliveryPinCode": "vendor.DeliveryPinCode"
     }
   },
 

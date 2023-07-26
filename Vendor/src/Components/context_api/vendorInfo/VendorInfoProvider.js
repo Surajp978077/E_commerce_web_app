@@ -4,14 +4,24 @@ import { UserInfoContext } from "../userInfo/UserInfoContext";
 import { QCInstance, vendorInstance } from "../../../api/axios";
 import LoadingScreen from "../../Common/LoadingScreen";
 import ErrorPage from "../../Common/ErrorPage";
+
 function VendorInfoProvider(props) {
-  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+  const {
+    userInformation,
+    setUserInformation,
+    setUserInfoUpdated,
+    userInfoUpdated,
+  } = useContext(UserInfoContext);
   const [isVendorCreated, setIsVendorCreated] = useState(false); // to avoid creating new vendor more then once
   const [vendor, setVendor] = useState(null);
   const [isVendorSet, setIsVendorSet] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [rejectedStatusCount, setRejectedStatusCount] = useState();
-
+  const [pendingStatusCount, setPendingStatusCount] = useState();
+  const [userInfo, setUserInfo] = useState(userInformation);
+  useEffect(() => {
+    setUserInfo(userInformation);
+  }, [userInformation]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -75,14 +85,15 @@ function VendorInfoProvider(props) {
     };
 
     if (
-      vendor &&
-      JSON.stringify(userInfo.vendor) !== JSON.stringify(vendor) &&
-      !isVendorSet
+      (vendor &&
+        JSON.stringify(userInfo.vendor) !== JSON.stringify(vendor) &&
+        !isVendorSet) ||
+      userInfoUpdated
     ) {
       updateUserInfo();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vendor, setUserInfo, isVendorSet, isVendorCreated]);
+  }, [vendor, setUserInfo, isVendorSet, isVendorCreated, userInformation]);
 
   useEffect(() => {
     const listingPendingStatus = async () => {
@@ -90,7 +101,8 @@ function VendorInfoProvider(props) {
         try {
           const response = await QCInstance.get(`/count-rejected/${vendor.Id}`);
           if (response.status === 200 && response.data) {
-            setRejectedStatusCount(response.data);
+            setRejectedStatusCount(response.data.rejectedCount);
+            setPendingStatusCount(response.data.pendingCount);
           }
         } catch (error) {
           console.log(error);
@@ -116,7 +128,12 @@ function VendorInfoProvider(props) {
         setVendor,
         vendor,
         userInfo,
+        setUserInfo,
         rejectedStatusCount,
+        setRejectedStatusCount,
+        pendingStatusCount,
+        setUserInfoUpdated,
+        setUserInformation,
       }}
     >
       {props.children}

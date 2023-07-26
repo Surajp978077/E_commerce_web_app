@@ -18,7 +18,7 @@ export const fonts = {
 export const colors = {
   theme: "#0080ff",
   primary: "#1E88E5",
-  secondary: "#FFC107",
+  secondary: "#b8d9f3 ",
   tertiary: "#FF5722",
   quaternary: "#4CAF50",
   quinary: "#9C27B0",
