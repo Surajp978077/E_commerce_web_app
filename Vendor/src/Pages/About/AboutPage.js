@@ -6,7 +6,6 @@ import {
   Button,
   Grid,
   Typography,
-  Card,
   Snackbar,
   Alert,
   CircularProgress,
@@ -18,8 +17,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
-import FilledInput from "@mui/material/FilledInput";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -30,8 +27,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { userInfoInstance, vendorInstance } from "../../api/axios";
 
 export default function AboutPage() {
-  const { userInfo, setUserInformation, setUserInfoUpdated } =
-    useContext(VendorInfoContext);
+  const { userInfo, setUserInfoUpdated } = useContext(VendorInfoContext);
   const [ProfileData, setProfileData] = useState({
     User: {
       UserName: userInfo.UserName,
