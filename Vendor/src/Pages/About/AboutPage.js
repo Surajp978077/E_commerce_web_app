@@ -1,7 +1,16 @@
 import { useContext, useEffect } from "react";
 import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
 import React, { useState } from "react";
-import { TextField, Button, Grid, Typography, Card } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Grid,
+  Typography,
+  Card,
+  Snackbar,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
 import ImagePlaceholder from "../../assets/images/ImagePlaceholder.png";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -42,8 +51,13 @@ export default function AboutPage() {
       DeliveryPinCode: userInfo.vendor.DeliveryPinCode || 0,
     },
   });
-  const [imageUrl, setImageUrl] = useState(userInfo.ProfilePicURL || "");
   const [isEdited, setIsEdited] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [openPasswordSnackbar, setOpenPasswordSnackbar] = useState(false);
+  const [openProfileSuccessSnackbar, setOpenProfileSuccessSnackbar] =
+    useState(false);
+  const [openProfileErrorSnackbar, setOpenProfileErrorSnackbar] =
+    useState(false);
   const [ispasswordValid, setIsPasswordValid] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -80,6 +94,13 @@ export default function AboutPage() {
     if (newPassword === confirmedPassword) {
       setConfirmedPasswordErrorMessage("");
     }
+
+    if (newPassword === currentPassword && currentPassword !== "") {
+      setNewPasswordErrorMessage(
+        "New password cannot be same as current password"
+      );
+      setIsPasswordValid(false);
+    }
   };
 
   useEffect(() => {
@@ -88,6 +109,12 @@ export default function AboutPage() {
     } else {
       setCurrentPasswordErrorMessage("");
       setIsPasswordValid(newPassword === confirmedPassword ? true : false);
+    }
+    if (currentPassword === newPassword && currentPassword !== "") {
+      setCurrentPasswordErrorMessage(
+        "New password cannot be same as current password"
+      );
+      setIsPasswordValid(false);
     }
   }, [currentPassword]);
 
@@ -125,10 +152,10 @@ export default function AboutPage() {
         `UpdateVendorInfo/${userInfo.UserId}`,
         ProfileData.User
       );
-      console.log("response", response);
+      setIsLoading(true);
+      setIsEdited(false);
       if (response && response.data) {
         setUserInfoUpdated(true);
-        console.log("Profile submitted successfully");
 
         try {
           const response = await vendorInstance.put(
@@ -138,16 +165,24 @@ export default function AboutPage() {
           console.log("response", response);
           if (response && response.data) {
             setUserInfoUpdated(true);
-            console.log("Vendor profile submitted successfully");
             setIsEdited(false);
-            window.location.reload();
+            setOpenProfileSuccessSnackbar(true);
+            var timer = setTimeout(() => {
+              window.location.reload();
+            }, 2000); // Reload after 2 seconds
           }
         } catch (error) {
           console.log("error", error);
+          setOpenProfileErrorSnackbar(true);
+          setIsLoading(false);
+          setIsEdited(true);
         }
       }
     } catch (error) {
       console.log("error", error);
+      setOpenProfileErrorSnackbar(true);
+      setIsLoading(false);
+      setIsEdited(true);
     }
   };
 
@@ -157,33 +192,32 @@ export default function AboutPage() {
       setCurrentPasswordErrorMessage("Please enter the current password.");
       return;
     }
-
     if (!newPassword || !confirmedPassword) {
       setNewPasswordErrorMessage("Please enter a new password.");
       setConfirmedPasswordErrorMessage("Please confirm the new password.");
       return;
     }
-
     if (newPassword !== confirmedPassword) {
       setConfirmedPasswordErrorMessage("Passwords do not match.");
       return;
     }
-
     try {
       const response = await userInfoInstance.put("UpdatePassword", {
         UserId: userInfo.UserId,
         CurrentPassword: currentPassword,
         NewPassword: newPassword,
       });
-
+      setIsLoading(true);
       if (response && response.data) {
-        console.log("Password updated successfully");
-        setDialogOpen(false);
+        setIsLoading(false);
         setCurrentPassword("");
         setNewPassword("");
         setConfirmedPassword("");
+        setDialogOpen(false);
+        setOpenPasswordSnackbar(true);
       }
     } catch (error) {
+      setIsLoading(false);
       if (error.response && error.response.data) {
         setCurrentPasswordErrorMessage(error.response.data);
       } else {
@@ -192,12 +226,71 @@ export default function AboutPage() {
     }
   };
 
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenPasswordSnackbar(false);
+  };
+
   return (
     <div
       style={{
         minHeight: "100vh",
       }}
     >
+      <Snackbar
+        open={openPasswordSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        sx={{ width: "20%" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="info"
+          sx={{ width: "100%" }}
+        >
+          Password updated successfully
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openProfileSuccessSnackbar}
+        autoHideDuration={3000}
+        onClose={(event, reason) => {
+          if (reason === "clickaway") {
+            return;
+          }
+          setOpenProfileSuccessSnackbar(false);
+        }}
+        sx={{ width: "20%" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="info"
+          sx={{ width: "100%" }}
+        >
+          Profile updated successfully
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={openProfileErrorSnackbar}
+        autoHideDuration={3000}
+        onClose={(event, reason) => {
+          if (reason === "clickaway") {
+            return;
+          }
+          setOpenProfileErrorSnackbar(false);
+        }}
+        sx={{ width: "20%" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          Error updating profile
+        </Alert>
+      </Snackbar>
       <form onSubmit={handleSubmit}>
         <Grid
           container
@@ -228,9 +321,8 @@ export default function AboutPage() {
               }}
             >
               <TextField
-                required
                 id="outlined-required"
-                label="Image URL"
+                label="Profile Pic URL"
                 value={ProfileData.User.ProfilePicURL}
                 name="ImageURL"
                 size="small"
@@ -386,6 +478,7 @@ export default function AboutPage() {
                 variant="contained"
                 color="primary"
                 disabled={!isEdited}
+                startIcon={isLoading ? <CircularProgress size={20} /> : null}
               >
                 Submit
               </Button>
@@ -514,7 +607,11 @@ export default function AboutPage() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose}>Cancel</Button>
-          <Button onClick={handleSubmitPassword} disabled={!ispasswordValid}>
+          <Button
+            onClick={handleSubmitPassword}
+            disabled={!ispasswordValid}
+            startIcon={isLoading ? <CircularProgress size={20} /> : null}
+          >
             Submit
           </Button>
         </DialogActions>
