@@ -21,7 +21,6 @@ function VendorInfoProvider(props) {
   const [userInfo, setUserInfo] = useState(userInformation);
   useEffect(() => {
     setUserInfo(userInformation);
-    console.log("userInformation");
   }, [userInformation]);
   useEffect(() => {
     const fetchData = async () => {
@@ -85,9 +84,6 @@ function VendorInfoProvider(props) {
       setIsVendorSet(true);
     };
 
-    console.log("vendor");
-    console.log(userInfoUpdated);
-
     if (
       (vendor &&
         JSON.stringify(userInfo.vendor) !== JSON.stringify(vendor) &&
@@ -117,12 +113,6 @@ function VendorInfoProvider(props) {
     listingPendingStatus();
   }, [vendor]);
 
-  useEffect(() => {
-    console.log(userInfo);
-    console.log(rejectedStatusCount);
-  }, [userInfo, userInformation]);
-
-  console.log(userInfo);
   if (errorMessage) {
     return <ErrorPage desc={errorMessage} />;
   }

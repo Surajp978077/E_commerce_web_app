@@ -26,7 +26,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { userInfoInstance, vendorInstance } from "../../api/axios";
 
-export default function AboutPage() {
+export default function ProfilePage() {
   const { userInfo, setUserInfoUpdated } = useContext(VendorInfoContext);
   const [ProfileData, setProfileData] = useState({
     User: {
@@ -66,6 +66,7 @@ export default function AboutPage() {
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
   const [confirmedPasswordErrorMessage, setConfirmedPasswordErrorMessage] =
     useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -130,8 +131,6 @@ export default function AboutPage() {
     }
   };
 
-  const [dialogOpen, setDialogOpen] = useState(false);
-  console.log("userInfo", userInfo);
   const handleDialogOpen = () => {
     setDialogOpen(true);
   };
@@ -158,11 +157,11 @@ export default function AboutPage() {
             "updateVendorProfile",
             ProfileData.vendor
           );
-          console.log("response", response);
           if (response && response.data) {
             setUserInfoUpdated(true);
             setIsEdited(false);
             setOpenProfileSuccessSnackbar(true);
+            setIsLoading(false);
             var timer = setTimeout(() => {
               window.location.reload();
             }, 2000); // Reload after 2 seconds
@@ -319,7 +318,7 @@ export default function AboutPage() {
               <TextField
                 id="outlined-required"
                 label="Profile Pic URL"
-                value={ProfileData.User.ProfilePicURL}
+                value={ProfileData.User.ProfilePicURL || ""}
                 name="ImageURL"
                 size="small"
                 variant="outlined"
@@ -361,6 +360,13 @@ export default function AboutPage() {
                 }}
                 alt="Profile Pic"
                 onError={(e) => {
+                  setProfileData(() => ({
+                    ...ProfileData,
+                    User: {
+                      ...ProfileData.User,
+                      ProfilePicURL: null,
+                    },
+                  }));
                   e.target.src = ImagePlaceholder;
                 }}
                 loading="lazy"
@@ -382,12 +388,15 @@ export default function AboutPage() {
                         setIsEdited(true);
                         setProfileData(() => ({
                           ...ProfileData,
-                          User: { ...ProfileData.User, [key]: e.target.value },
+                          User: {
+                            ...ProfileData.User,
+                            [key]: e.target.value,
+                          },
                         }));
                       }}
                       sx={{ width: "75%" }}
                       // fullWidth
-                      required={key === "Name"}
+                      required={key === "UserName" || key === "Phone"}
                       margin="normal"
                       size="small"
                       type={key === "Phone" ? "number" : "text"}
@@ -406,15 +415,19 @@ export default function AboutPage() {
                       label={key}
                       value={ProfileData.vendor[key] || ""}
                       onChange={(e) => {
-                        console.log(ProfileData.vendor);
                         setIsEdited(true);
                         setProfileData(() => ({
                           ...ProfileData,
                           vendor: {
                             ...ProfileData.vendor,
-                            [key]: e.target.value,
+                            [key]: Boolean(e.target.value)
+                              ? e.target.value
+                              : key === "GSTIN"
+                              ? null
+                              : 0,
                           },
                         }));
+                        console.log(ProfileData.vendor);
                       }}
                       sx={{ width: "75%" }}
                       // fullWidth

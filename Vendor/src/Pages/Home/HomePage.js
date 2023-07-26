@@ -17,7 +17,7 @@ import { VendorInfoContext } from "../../components/context_api/vendorInfo/Vendo
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { useNavigate } from "react-router-dom";
 import {
-  DraftsOutlined,
+  ForumOutlined,
   InboxOutlined,
   PeopleAltOutlined,
 } from "@mui/icons-material";
@@ -242,17 +242,21 @@ function Home() {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton
+                onClick={() => {
+                  navigate(`/profile`);
+                }}
+              >
                 <ListItemIcon>
-                  <DraftsOutlined />
+                  <PeopleAltOutlined />
                 </ListItemIcon>
-                <ListItemText primary="Drafts" />
+                <ListItemText primary="Manage your profile" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <PeopleAltOutlined />
+                  <ForumOutlined />
                 </ListItemIcon>
                 <ListItemText primary="Vendor community" />
               </ListItemButton>

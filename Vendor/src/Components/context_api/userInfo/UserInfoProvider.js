@@ -51,17 +51,12 @@ export const UserInfoProvider = (props) => {
       setToken(localStorage.getItem("token"));
     };
 
-    console.log("tokenChangeListener");
-
     window.addEventListener("storage", tokenChangeListener);
 
     return () => {
       window.removeEventListener("storage", tokenChangeListener);
     };
   }, [token, userInfoUpdated]);
-  useEffect(() => {
-    console.log("useEffect", userInformation);
-  }, [userInformation]);
 
   if (error) {
     setTimeout(() => {
