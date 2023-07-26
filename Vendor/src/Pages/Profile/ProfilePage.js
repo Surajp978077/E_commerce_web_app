@@ -221,6 +221,16 @@ export default function ProfilePage() {
     }
   };
 
+  useEffect(() => {
+    setProfileData(() => ({
+      ...ProfileData,
+      vendor: {
+        ...ProfileData.vendor,
+        Name: ProfileData.User.UserName,
+      },
+    }));
+  }, [ProfileData.User.UserName]);
+
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -393,14 +403,6 @@ export default function ProfilePage() {
                             [key]: e.target.value,
                           },
                         }));
-                        key === "UserName" &&
-                          setProfileData(() => ({
-                            ...ProfileData,
-                            vendor: {
-                              ...ProfileData.vendor,
-                              Name: e.target.value,
-                            },
-                          }));
                       }}
                       sx={{ width: "75%" }}
                       // fullWidth
