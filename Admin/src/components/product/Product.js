@@ -1,6 +1,24 @@
 import { useEffect, useState } from 'react';
 import { productInstance } from '../../api/axios';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Divider, Chip, Pagination, Typography, Button } from '@mui/material';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    Box,
+    Divider,
+    Chip,
+    Pagination,
+    Button,
+    CircularProgress,
+    Typography,
+    Snackbar,
+    Alert,
+    useTheme,
+} from '@mui/material';
 import CategorySearch from './CategorySearch';
 import { ArrowDownward, ArrowUpward, Clear } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
@@ -27,8 +45,19 @@ export const Product = () => {
     });
     const navigate = useNavigate();
 
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState('error');
+
+    const theme = useTheme(); // Remove and use styled components.
+
     useEffect(() => {
         const fetchProducts = async () => {
+            setLoading(true);
+            setError(null);
+
             try {
                 const categoryId = categorySelectedLeaf ? categorySelectedLeaf.CategoryId : 0;
                 const response = await productInstance.get(`/productvendor/category/${categoryId}`, {
@@ -47,14 +76,21 @@ export const Product = () => {
                         totalPages: response.data.TotalPages
                     }));
                 }
-            } catch (error) {
-                if (error.response) {
-                    console.log(`ErrorResponseData: ${error.response.data}`);
-                    console.log(`ErrorResponseStatus: ${error.response.status}`);
-                    console.log(`ErrorResponseHeaders: ${error.response.headers}`);
-                } else {
-                    console.log(`ErrorMessage: ${error.message}`);
+
+                // Show Snackbar if data is empty
+                if (response && response.data && response.data.Data.length === 0) {
+                    setSnackbarMessage('No data found.');
+                    setSnackbarSeverity('info');
+                    setSnackbarOpen(true);
                 }
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                setError(true);
+                setSnackbarMessage('Failed to fetch data.');
+                setSnackbarSeverity('error');
+                setSnackbarOpen(true);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -104,8 +140,15 @@ export const Product = () => {
         navigate('/product/details', { state: product });
     };
 
+    const handleSnackbarClose = (reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnackbarOpen(false);
+    };
+
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', margin: '3%' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <CategorySearch
                 selectedResult={selectedResult}
                 setSelectedResult={setSelectedResult}
@@ -131,10 +174,17 @@ export const Product = () => {
                     onChange={handlePageChange} />
             </Box>
 
-            {products.length > 0 ? (
-                <TableContainer component={Paper} sx={{ border: '2px solid #f5f5f5', borderRadius: '10px' }}>
-                    <Table>
-                        <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
+            <Paper
+                variant='outlined'
+                sx={{ border: '2px solid #f5f5f5', borderRadius: '10px', position: 'relative' }}
+            >
+                <TableContainer variant='outlined' component={Paper}>
+                    <Table
+                        sx={{
+                            minHeight: loading || error || products.length === 0 ? '400px' : undefined
+                        }}
+                    >
+                        <TableHead sx={{ backgroundColor: theme.palette.mode === 'dark' ? '#292929' : '#F0EEEE' }}>
                             <TableRow>
                                 <TableCell />
                                 <TableCell
@@ -143,11 +193,7 @@ export const Product = () => {
                                 >
                                     Product Name &nbsp;
                                     {pagination.sortBy === 'ProductName' && (
-                                        <Chip
-                                            size='small'
-                                            label={pagination.sortDesc ? <ArrowDownward /> : <ArrowUpward />}
-                                            color='primary'
-                                        />
+                                        <span>{pagination.sortDesc ? <ArrowDownward /> : <ArrowUpward />}</span>
                                     )}
                                 </TableCell>
                                 <TableCell
@@ -165,7 +211,7 @@ export const Product = () => {
                                 >
                                     Vendor's Name &nbsp;
                                     {pagination.sortBy === 'VendorName' && (
-                                        <span>{pagination.sortDesc ? '▼' : '▲'}</span>
+                                        <span>{pagination.sortDesc ? <ArrowDownward /> : <ArrowUpward />}</span>
                                     )}
                                 </TableCell>
                                 <TableCell
@@ -174,7 +220,7 @@ export const Product = () => {
                                 >
                                     Listed on &nbsp;
                                     {pagination.sortBy === 'ProductVendorListedOn' && (
-                                        <span>{pagination.sortDesc ? '▼' : '▲'}</span>
+                                        <span>{pagination.sortDesc ? <ArrowDownward /> : <ArrowUpward />}</span>
                                     )}
                                 </TableCell>
                                 <TableCell
@@ -183,7 +229,7 @@ export const Product = () => {
                                 >
                                     Price (₹) &nbsp;
                                     {pagination.sortBy === 'ProductVendorPrice' && (
-                                        <span>{pagination.sortDesc ? '▼' : '▲'}</span>
+                                        <span>{pagination.sortDesc ? <ArrowDownward /> : <ArrowUpward />}</span>
                                     )}
                                 </TableCell>
                                 <TableCell
@@ -192,7 +238,7 @@ export const Product = () => {
                                 >
                                     Quantity &nbsp;
                                     {pagination.sortBy === 'ProductVendorQuantity' && (
-                                        <span>{pagination.sortDesc ? '▼' : '▲'}</span>
+                                        <span>{pagination.sortDesc ? <ArrowDownward /> : <ArrowUpward />}</span>
                                     )}
                                 </TableCell>
                                 <TableCell
@@ -201,7 +247,7 @@ export const Product = () => {
                                 >
                                     Listing status &nbsp;
                                     {pagination.sortBy === 'ProductVendorVisible' && (
-                                        <span>{pagination.sortDesc ? '▼' : '▲'}</span>
+                                        <span>{pagination.sortDesc ? <ArrowDownward /> : <ArrowUpward />}</span>
                                     )}
                                     <br />
                                     (0: Inactive, 1: Active)
@@ -210,6 +256,7 @@ export const Product = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            {/* Show table rows when there is data */}
                             {products.map((product) => {
                                 return (
                                     <TableRow key={product.ProductVendorId}>
@@ -233,14 +280,74 @@ export const Product = () => {
                                     </TableRow>
                                 );
                             })}
+
+                            {/* Show loading state */}
+                            {loading && (
+                                <TableRow>
+                                    <TableCell
+                                        sx={{
+                                            position: 'absolute',
+                                            top: '60%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            width: 'fit-content',
+                                            border: 0,
+                                            padding: 0,
+                                        }}
+                                    >
+                                        <CircularProgress />
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
+                            {/* Show 'No data found' message */}
+                            {!loading && !error && products.length === 0 && (
+                                <TableRow>
+                                    <TableCell
+                                        sx={{
+                                            position: 'absolute',
+                                            top: '60%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            width: 'fit-content',
+                                            border: 0,
+                                            padding: 0,
+                                        }}
+                                    >
+                                        <Typography>{snackbarMessage}</Typography>
+                                    </TableCell>
+                                </TableRow>
+                            )}
+
+                            {/* Show error message */}
+                            {!loading && error && (
+                                <TableRow>
+                                    <TableCell
+                                        sx={{
+                                            position: 'absolute',
+                                            top: '60%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            width: 'fit-content',
+                                            border: 0,
+                                            padding: 0,
+                                        }}
+                                    >
+                                        <Typography color='error'>{snackbarMessage}</Typography>
+                                    </TableCell>
+                                </TableRow>
+                            )}
                         </TableBody>
                     </Table>
                 </TableContainer>
-            ) : (
-                <Box sx={{ textAlign: 'center', marginTop: '2rem' }}>
-                    <Typography variant='body1'>No products found.</Typography>
-                </Box>
-            )}
+            </Paper>
+
+            {/* Show Snackbar for 'No data available' or for 'Error' */}
+            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </Box>
     );
 };

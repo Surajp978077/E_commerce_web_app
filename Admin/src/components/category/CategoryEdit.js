@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { productInstance } from '../../api/axios';
-import EditIcon from '@mui/icons-material/Edit';
+import {
+  // Edit as EditIcon,
+  EditOutlined as EditOutlinedIcon,
+} from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ErrorIcon from '@mui/icons-material/Error';
 import {
@@ -276,8 +279,8 @@ const CategoryEdit = ({ category, onCategoryUpdate }) => {
 
   return (
     <span onClick={handleWrapperClick}>
-      <Button variant='text' onClick={handleClickOpen}>
-        <EditIcon />
+      <Button size='small' variant='text' onClick={handleClickOpen}>
+        <EditOutlinedIcon />
       </Button>
       <Dialog
         fullScreen={fullScreen}

@@ -37,7 +37,11 @@ function ListItemLink(props) {
       component={CustomRouterLink}
       sx={{
         '&.Mui-selected': {
-          backgroundColor: 'rgba(0, 0, 0, 0.08)',
+          // backgroundColor: 'rgba(0, 0, 0, 0.08)',
+          backgroundImage:
+            'linear-gradient(to right, #007bff 0%, #007bff 0.2rem, #b8d9f3 10px)',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '100% 100%',
         },
       }}
       selected={location.pathname === to}
@@ -112,7 +116,7 @@ export default function Navbar() {
       <List>
         <ListItemLink to='/' primary='Dashboard' />
 
-        <ListItemLink to='/qc-request' primary='QC Request' />
+        <ListItemLink to='/qcrequest' primary='QC Request' />
 
         <ListItemLink to='/user' primary='User' />
 

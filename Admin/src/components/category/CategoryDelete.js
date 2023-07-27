@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { productInstance } from '../../api/axios';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { 
+    // DeleteOutline as DeleteOutlineIcon,
+    DeleteForeverOutlined as DeleteForeverOutlinedIcon,
+} from '@mui/icons-material';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
@@ -49,8 +52,8 @@ export const CategoryDelete = ({ category, onCategoryUpdate }) => {
 
     return (
         <span onClick={handleWrapperClick}>
-            <Button variant='text' onClick={handleOpen}>
-                <DeleteIcon />
+            <Button size='small' color='error' variant='text' onClick={handleOpen}>
+                <DeleteForeverOutlinedIcon />
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>

@@ -1,9 +1,28 @@
 import { useEffect, useState } from 'react';
-import { Typography, Card, CardContent, Grid, Divider, Chip, IconButton, Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Snackbar, Alert } from '@mui/material';
-import { ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon } from '@mui/icons-material';
-import { styled, useTheme } from '@mui/material/styles';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { productInstance } from '../../api/axios';
+import { styled, useTheme } from '@mui/material/styles';
+import {
+  ExpandMore as ExpandMoreIcon,
+  ExpandLess as ExpandLessIcon
+} from '@mui/icons-material';
+import {
+  Typography,
+  Card,
+  CardContent,
+  Grid,
+  Divider,
+  Chip,
+  IconButton,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions,
+  Snackbar,
+  Alert
+} from '@mui/material';
 
 const NotFoundContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -192,7 +211,7 @@ const QCRequestReview = () => {
 
   useEffect(() => {
     if (redirectTimer === 0) {
-      navigate('/qc-request', { replace: true }); // replace: true to replace the current url with /qc-request
+      navigate('/qcrequest', { replace: true }); // replace: true to replace the current url with /qcrequest
     } else if (startRedirectCountdown) {
       const countdown = setTimeout(() => {
         setRedirectTimer((prevTimer) => prevTimer - 1);
@@ -301,7 +320,7 @@ const QCRequestReview = () => {
                   color='primary'
                   onClick={toggleBasicDetails}
                   clickable
-                  sx={{alignItems:'center'}}
+                  sx={{ alignItems: 'center' }}
                 />
                 <ExpandCollapseButton onClick={toggleBasicDetails}>
                   {isBasicDetailsExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -419,4 +438,4 @@ const QCRequestReview = () => {
   );
 };
 
-export default QCRequestReview;
+export { QCRequestReview };

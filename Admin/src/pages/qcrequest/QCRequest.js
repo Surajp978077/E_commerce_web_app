@@ -1,7 +1,25 @@
 import { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Divider, Chip, Pagination, Button, CircularProgress, Typography, Snackbar, Alert } from '@mui/material';
-import { productInstance } from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
+import { productInstance } from '../../api/axios';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Box,
+  Divider,
+  Chip,
+  Pagination,
+  Button,
+  CircularProgress,
+  Typography,
+  Snackbar,
+  Alert,
+  useTheme
+} from '@mui/material';
 
 const QCRequest = () => {
   const [qcRequests, setQCRequests] = useState([]);
@@ -20,6 +38,8 @@ const QCRequest = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('error');
+
+  const theme = useTheme(); // Remove and use styled components.
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -49,7 +69,7 @@ const QCRequest = () => {
           setSnackbarOpen(true);
         }
       } catch (error) {
-        console.error('Error fetching qCRequests:', error);
+        console.error('Error fetching qcRequests:', error);
         setError(true);
         setSnackbarMessage('Failed to fetch data.');
         setSnackbarSeverity('error');
@@ -70,13 +90,6 @@ const QCRequest = () => {
     setPagination(prevPagination => ({ ...prevPagination, page: page }));
   };
 
-  const handleSnackbarClose = (reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setSnackbarOpen(false);
-  };
-
   const formatDate = (dateString) => {
     const options = {
       year: 'numeric',
@@ -92,16 +105,23 @@ const QCRequest = () => {
   };
 
   const handleReview = (qcRequest) => {
-    navigate('/qc-request/review', { state: qcRequest });
+    navigate('/qcrequest/review', { state: qcRequest });
+  };
+
+  const handleSnackbarClose = (reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Divider sx={{ marginY: '1.5rem', width: '100%' }}>
+      <Divider sx={{ marginY: theme.spacing(2), width: '100%' }}>
         <Chip label='QC REQUESTS' />
       </Divider>
 
-      <Box sx={{ marginX: '4rem', width: '100%', maxWidth: '800px', position: 'relative' }}>
+      <Box sx={{ marginX: '4rem', width: '100%', maxWidth: '800px' }}>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
           <Pagination
             count={pagination.totalPages}
@@ -110,14 +130,18 @@ const QCRequest = () => {
           />
         </Box>
 
-        <Paper sx={{ border: '2px solid #f5f5f5', borderRadius: '10px' }}>
-          <TableContainer component={Box}>
-            <Table sx={{ minHeight: '400px' }}>
-              <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
+        <Paper
+          variant='outlined'
+          sx={{ border: '2px solid #f5f5f5', borderRadius: '10px', position: 'relative' }}
+        >
+          <TableContainer variant='outlined' component={Paper}>
+            <Table
+              sx={{
+                minHeight: loading || error || qcRequests.length === 0 ? '400px' : undefined
+              }}>
+              <TableHead sx={{ backgroundColor: theme.palette.mode === 'dark' ? '#292929' : '#F0EEEE' }}>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem' }}>
-                    Image
-                  </TableCell>
+                  <TableCell />
                   <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem' }}>
                     Product Name
                   </TableCell>
@@ -142,7 +166,7 @@ const QCRequest = () => {
                 {/* Show table rows when there is data */}
                 {!loading && !error && qcRequests.length > 0 &&
                   qcRequests.map((qcRequest) => (
-                    <TableRow key={qcRequest.Id} sx={{ backgroundColor: qcRequest.Status ? '#f0eee9' : null }}>
+                    <TableRow key={qcRequest.Id}>
                       <TableCell>
                         <img src={qcRequest.Product.ImageURL} alt={qcRequest.Product.ProdName} style={{ width: '50px', height: '50px' }} />
                       </TableCell>
@@ -155,7 +179,7 @@ const QCRequest = () => {
                         {qcRequest.Status === 0 ? (
                           <Button
                             variant='outlined'
-                            color='primary'
+                            color='error'
                             onClick={() => handleReview(qcRequest)}
                           >
                             Review
@@ -247,7 +271,7 @@ const QCRequest = () => {
 
 }
 
-export default QCRequest;
+export { QCRequest };
 
 
 
@@ -371,4 +395,4 @@ export default QCRequest;
 //   );
 // };
 
-// export default QCRequest;
+// export { QCRequest };

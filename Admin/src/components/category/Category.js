@@ -73,7 +73,7 @@ const Category = () => {
 
     return (
         <Box>
-            <Divider sx={{ marginY: '1.5rem', width: '100%' }}>
+            <Divider sx={{ marginY: '1rem', width: '100%' }}>
                 <Chip label='CATEGORIES' />
             </Divider>
 
