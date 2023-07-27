@@ -17,10 +17,11 @@ import { VendorInfoContext } from "../../components/context_api/vendorInfo/Vendo
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { useNavigate } from "react-router-dom";
 import {
-  DraftsOutlined,
+  ForumOutlined,
   InboxOutlined,
   PeopleAltOutlined,
 } from "@mui/icons-material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 function Home() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -41,6 +42,7 @@ function Home() {
   const [error, setError] = useState("");
   const [time, setTime] = useState(new Date());
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   useEffect(() => {
     const fetchLowQuantityItems = async () => {
@@ -113,7 +115,7 @@ function Home() {
     { x: 5, y: 12 },
   ];
 
-  const parentDivWidth = 360;
+  const parentDivWidth = isMobile ? 300 : 360;
   const parentDivHeight = 300;
   const margin = { top: 20, right: 20, bottom: 30, left: 50 };
   const chartWidth = parentDivWidth - margin.left - margin.right;
@@ -240,17 +242,21 @@ function Home() {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton
+                onClick={() => {
+                  navigate(`/profile`);
+                }}
+              >
                 <ListItemIcon>
-                  <DraftsOutlined />
+                  <PeopleAltOutlined />
                 </ListItemIcon>
-                <ListItemText primary="Drafts" />
+                <ListItemText primary="Manage your profile" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <PeopleAltOutlined />
+                  <ForumOutlined />
                 </ListItemIcon>
                 <ListItemText primary="Vendor community" />
               </ListItemButton>

@@ -13,7 +13,7 @@ export default function FinalProductPreview(props) {
     width: "90%",
     borderRadius: "10px",
     boxShadow: "0px 0px 10px 0px grey",
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
   };
 
   const productKeys = ["Product Name", "Product Description", "M.R.P (Rs)"];
@@ -249,7 +249,7 @@ export default function FinalProductPreview(props) {
                   justifyContent: "space-between",
                 }}
               >
-                <h6>{qcData.AdminMessage} :</h6>
+                <h6>{qcData.AdminMessage} </h6>
               </div>
             </div>
           </Paper>
