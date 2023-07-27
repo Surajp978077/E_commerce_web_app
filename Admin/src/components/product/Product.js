@@ -242,7 +242,7 @@ export const Product = () => {
                                     )}
                                 </TableCell>
                                 <TableCell
-                                    sx={{ fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer', textAlign: 'right' }}
+                                    sx={{ fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer' }}
                                     onClick={() => handleSort('ProductVendorVisible')}
                                 >
                                     Listing status &nbsp;
@@ -250,7 +250,6 @@ export const Product = () => {
                                         <span>{pagination.sortDesc ? <ArrowDownward /> : <ArrowUpward />}</span>
                                     )}
                                     <br />
-                                    (0: Inactive, 1: Active)
                                 </TableCell>
                                 <TableCell />
                             </TableRow>
@@ -271,7 +270,7 @@ export const Product = () => {
                                         <TableCell>{formatDate(product.ProductVendorListedOn)}</TableCell>
                                         <TableCell sx={{ textAlign: 'right' }}>{product.ProductVendorPrice.toLocaleString('en-IN')}</TableCell>
                                         <TableCell sx={{ textAlign: 'right' }}>{product.ProductVendorQuantity.toLocaleString('en-IN')}</TableCell>
-                                        <TableCell sx={{ textAlign: 'right' }}>{product.ProductVendorVisible}</TableCell>
+                                        <TableCell>{product.ProductVendorVisible === 1 ? 'Active' : 'Inactive'}</TableCell>
                                         <TableCell>
                                             <Button variant='outlined' color='primary' onClick={() => handleViewDetails(product)}>
                                                 View Details

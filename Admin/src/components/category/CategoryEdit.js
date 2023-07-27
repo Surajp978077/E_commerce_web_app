@@ -402,6 +402,7 @@ const CategoryEdit = ({ category, onCategoryUpdate }) => {
                 </Accordion>
 
                 <FormControlLabel
+                  sx={{ paddingLeft: 2, paddingTop: 2 }}
                   control={
                     <Switch
                       checked={hasSpecifications}

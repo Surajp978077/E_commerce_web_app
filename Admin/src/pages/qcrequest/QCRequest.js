@@ -154,10 +154,9 @@ const QCRequest = () => {
                   <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem' }}>
                     Request Date
                   </TableCell>
-                  <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem', textAlign: 'right' }}>
+                  <TableCell sx={{ fontWeight: 'bold', fontSize: '1rem' }}>
                     Status
                     <br />
-                    (0: Pending, 1: Rejected)
                   </TableCell>
                   <TableCell />
                 </TableRow>
@@ -174,7 +173,7 @@ const QCRequest = () => {
                       <TableCell>{qcRequest.CategoryName}</TableCell>
                       <TableCell>{qcRequest.VendorName}</TableCell>
                       <TableCell>{formatDate(qcRequest.RequestDate)}</TableCell>
-                      <TableCell sx={{ textAlign: 'right' }}>{qcRequest.Status}</TableCell>
+                      <TableCell>{qcRequest.Status === 0 ? 'Pending' : 'Rejected'}</TableCell>
                       <TableCell sx={{ textAlign: 'center' }}>
                         {qcRequest.Status === 0 ? (
                           <Button
