@@ -408,7 +408,7 @@ function Home() {
                 textAnchor="middle"
                 dominantBaseline="hanging"
               >
-                X Axis
+                Year 🡢
               </text>
               <text
                 x={margin.left - 10}
@@ -419,7 +419,7 @@ function Home() {
                   parentDivHeight / 2
                 })`}
               >
-                Y Axis
+                Sales 🡢
               </text>
             </g>
           </svg>

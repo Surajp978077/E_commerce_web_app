@@ -10,7 +10,7 @@ export const UserInfoProvider = (props) => {
   const [userInformation, setUserInformation] = useState(null);
   const [error, setError] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const timerId = useRef(5);
+  const timerId = useRef(null); // Initialize with null
   const [timer, setTimer] = useState(5);
   const [userInfoUpdated, setUserInfoUpdated] = useState(false);
 
@@ -55,19 +55,28 @@ export const UserInfoProvider = (props) => {
 
     return () => {
       window.removeEventListener("storage", tokenChangeListener);
+      // Clear the interval when the component is unmounted
+      clearInterval(timerId.current);
     };
   }, [token, userInfoUpdated]);
 
-  if (error) {
-    setTimeout(() => {
+  useEffect(() => {
+    if (error) {
+      // Start the timer only when there is an error
+      timerId.current = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    // Redirect to login page when the timer reaches 0
+    if (timer === 0) {
       window.location.href = LOGINPAGE;
-    }, 5000);
+    }
+  }, [timer]);
 
-    setInterval(() => {
-      timerId.current = timer - 1;
-      setTimer(timer - 1);
-    }, 1000);
-
+  if (error) {
     return (
       <div>
         Error: {error} <br /> Redirecting back to login page in {timer} seconds!

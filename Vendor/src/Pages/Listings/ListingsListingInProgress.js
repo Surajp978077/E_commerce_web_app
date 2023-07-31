@@ -14,7 +14,7 @@ import {
   Box,
 } from "@mui/material";
 import { VendorInfoContext } from "../../components/context_api/vendorInfo/VendorInfoContext";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import TablePagination from "../../components/Common/TablePagination";
 
 const ListingInProgress = () => {
@@ -26,7 +26,6 @@ const ListingInProgress = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     const fetchRejectedQCRequests = async () => {
@@ -106,7 +105,7 @@ const ListingInProgress = () => {
                 key={product.Id}
                 onClick={() => {
                   if (product.Status === 1) {
-                    navigate(`${location.pathname}/rejectedQC`, {
+                    navigate("listings/rejectedQC", {
                       state: { product },
                     });
                   }
