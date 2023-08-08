@@ -105,7 +105,7 @@ const ListingInProgress = () => {
                 key={product.Id}
                 onClick={() => {
                   if (product.Status === 1) {
-                    navigate("listings/rejectedQC", {
+                    navigate("/listings/rejectedQC", {
                       state: { product },
                     });
                   }
