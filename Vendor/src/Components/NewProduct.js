@@ -357,7 +357,7 @@ export default function NewProduct(props) {
               }}
               alt="Product"
               onError={(e) => {
-                e.target.src = ImagePlaceHolder;
+                // e.target.src = ImagePlaceHolder;
                 imageURLSubmit.current = false;
                 setProductDetails((prev) => {
                   return {

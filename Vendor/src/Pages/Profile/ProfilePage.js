@@ -377,7 +377,7 @@ export default function ProfilePage() {
                       ProfilePicURL: null,
                     },
                   }));
-                  e.target.src = ImagePlaceholder;
+                  // e.target.src = ImagePlaceholder;
                 }}
                 loading="lazy"
               />

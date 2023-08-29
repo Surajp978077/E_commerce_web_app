@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, useContext, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -42,7 +42,7 @@ function ListItemLink(props) {
   const { icon, primary, to, rejectedStatusCount, onClick } = props;
   const location = useLocation();
 
-  const CustomRouterLink = React.forwardRef((props, ref) => (
+  const CustomRouterLink = forwardRef((props, ref) => (
     <RouterLink ref={ref} to={to} {...props} />
   ));
 
@@ -57,7 +57,11 @@ function ListItemLink(props) {
           backgroundSize: "100% 100%",
         },
       }}
-      selected={location.pathname === to}
+      selected={
+        location.pathname === to ||
+        (location.pathname.includes("listing") &&
+          primary === "Listings Managment")
+      }
       onClick={onClick}
     >
       {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
@@ -72,9 +76,9 @@ function ListItemLink(props) {
 
 export default function Navbar() {
   const anchor = "left";
-  const [state, setState] = React.useState({ [anchor]: false });
-  const { rejectedStatusCount, userInfo } = React.useContext(VendorInfoContext);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [state, setState] = useState({ [anchor]: false });
+  const { rejectedStatusCount, userInfo } = useContext(VendorInfoContext);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -82,6 +86,7 @@ export default function Navbar() {
 
   function logout() {
     localStorage.removeItem("token");
+    sessionStorage.clear();
     window.location.href = LOGINPAGE;
   }
   const handleCloseUserMenu = () => {

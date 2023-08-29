@@ -56,7 +56,16 @@ const ListingsPage = () => {
   );
 
   const sortOrder = useRef(null);
+
   const [tabValue, setTabValue] = useState(tabNo ? tabNo : "1");
+
+  useEffect(() => {
+    if (tabNo) {
+      setTabValue(tabNo);
+    } else {
+      setTabValue("1");
+    }
+  }, [tabNo]);
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
